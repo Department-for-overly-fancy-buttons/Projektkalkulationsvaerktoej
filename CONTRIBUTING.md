@@ -76,4 +76,5 @@ This guideline has been made by the Department Of Fancy Buttons consisting of ou
 - [Frederik Joensen](https://github.com/Frede-72)
 - [Patrick Schaufuss](https://github.com/PSchaufuss)
 
-This contributing page has been inspired by [Jesse Squires](https://github.com/jessesquires) who has made some great contribution pages on his projects.
+**Inspiration**
+- Our contributing page has been inspired by [Jesse Squires](https://github.com/jessesquires) who has made some great contribution pages on his projects.
