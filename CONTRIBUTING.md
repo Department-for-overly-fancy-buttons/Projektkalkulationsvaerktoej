@@ -72,6 +72,6 @@ If you have read this far: **Thank you!!** To prove you have read the contributi
 
 ## Credits
 This guideline has been made by the Department Of Fancy Buttons consisting of our team of three:
-[FrejaJohannessen](https://github.com/Freja__bot)
-[FrederikJoensen](https://github.com/Frede-72)
-[PatrickSchaufuss](https://github.com/PSchaufuss)
+- [FrejaJohannessen](https://github.com/Freja__bot)
+- [FrederikJoensen](https://github.com/Frede-72)
+- [PatrickSchaufuss](https://github.com/PSchaufuss)
