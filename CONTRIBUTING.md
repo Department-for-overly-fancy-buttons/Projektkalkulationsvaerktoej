@@ -71,7 +71,7 @@ FIXED:
 If you have read this far: **Thank you!!** To prove you have read the contribution guidelines before creating an issue, please write 'FancyButtonsRock' in your message. That way we know you are taking our guidelines seriously. We truely appriciate your time! 
 
 ## Credits
-This guideline has been made by the Department Of Fancy Buttons consisting of our team of three:
+**This guideline has been made by the Department Of Fancy Buttons consisting of our team of three:**
 - [Freja Johannessen](https://github.com/Freja__bot)
 - [Frederik Joensen](https://github.com/Frede-72)
 - [Patrick Schaufuss](https://github.com/PSchaufuss)
