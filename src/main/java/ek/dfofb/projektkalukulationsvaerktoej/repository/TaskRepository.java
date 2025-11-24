@@ -1,31 +1,36 @@
 package ek.dfofb.projektkalukulationsvaerktoej.repository;
 
 import ek.dfofb.projektkalukulationsvaerktoej.model.Account;
-import ek.dfofb.projektkalukulationsvaerktoej.model.Project;
-import ek.dfofb.projektkalukulationsvaerktoej.repository.interfaces.IProjectRepository;
+import ek.dfofb.projektkalukulationsvaerktoej.model.Task;
+import ek.dfofb.projektkalukulationsvaerktoej.repository.interfaces.ITaskRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
-public class ProjectRepository implements IProjectRepository {
+public class TaskRepository implements ITaskRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public ProjectRepository(JdbcTemplate jdbcTemplate) {
+    public TaskRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public Project getProjectByID(int ProjectID) {
+    public Task getTaskByID(int TaskID) {
         return null;
     }
 
     @Override
-    public List<Project> getAllProjects() {
+    public List<Task> getAllTasksForProjects(int projectID) {
         return List.of();
     }
 
     @Override
-    public List<Project> getAllProjectsForAccount(int accountID) {
+    public List<Task> getAllSubTasks(int TaskID) {
+        return List.of();
+    }
+
+    @Override
+    public List<Task> getAllTasksForAccount(int accountID) {
         return List.of();
     }
 
