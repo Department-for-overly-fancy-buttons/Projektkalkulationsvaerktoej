@@ -3,10 +3,17 @@ package ek.dfofb.projektkalukulationsvaerktoej.repository;
 import ek.dfofb.projektkalukulationsvaerktoej.model.Account;
 import ek.dfofb.projektkalukulationsvaerktoej.model.Task;
 import ek.dfofb.projektkalukulationsvaerktoej.repository.interfaces.ITaskRepository;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
 public class TaskRepository implements ITaskRepository {
+    private final JdbcTemplate jdbcTemplate;
+
+    public TaskRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Override
     public Task getTaskByID(int TaskID) {
         return null;
