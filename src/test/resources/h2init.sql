@@ -96,3 +96,5 @@ INSERT INTO Projects (Name, Description, isActive, StartDate, Deadline)
 VALUES ('Ecommerce platform for _Adaptive Problemsolvers_', '_Adaptive Probelmsolvers_ are in need of a brand new platform to run ecommerce. They have re...', true, '2025-12-06', '2026-03-12');
 INSERT INTO Tasks (Name, Description,HourEstimate, Completed, StartDate, Deadline, ProjectID, ParentID)
 VALUES ('Web application', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, true, '2025-12-06', '2026-01-28', 1, 0);
+INSERT INTO Tasks (Name, Description,HourEstimate, Completed, StartDate, Deadline, ProjectID, ParentID)
+VALUES ('Web application Part 2', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, true, '2025-12-06', '2026-01-28', 1, 0);
