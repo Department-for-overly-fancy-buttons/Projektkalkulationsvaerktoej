@@ -12,10 +12,10 @@ public interface ITaskRepository {
 
     Set<Task> getAllTasksForProjects(int projectID);
 
-    List<Task> getAllSubTasks(int taskID);
+    Set<Task> getAllSubTasks(int taskID);
 
-    List<Task> getAllTasksForAccount(int accountID);
+    Set<Task> getAllTasksForAccount(int accountID);
 
-    List<Account> getAllAssignedToProject(int projectID);
+    Set<Account> getAllAssignedToProject(int projectID);
 
 }

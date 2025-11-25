@@ -6,8 +6,10 @@ import ek.dfofb.projektkalukulationsvaerktoej.repository.interfaces.ITaskReposit
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Repository
 public class TaskRepository implements ITaskRepository {
@@ -27,22 +29,26 @@ public class TaskRepository implements ITaskRepository {
     @Override
     public Set<Task> getAllTasksForProjects(int projectID) {
         String sql = "SELECT * FROM Tasks where ProjectID = ?";
-        Set<Task> tasks = (Set<Task>) jdbcTemplate.query(sql,new TaskRowMapper(),projectID);
-        return tasks;
+        List<Task> tasks = jdbcTemplate.query(sql,new TaskRowMapper(),projectID);
+        Set<Task> taskSet = new HashSet<>();
+        for(Task task: tasks){
+            taskSet.add(task);
+        }
+        return taskSet;
     }
 
     @Override
-    public List<Task> getAllSubTasks(int taskID) {
-        return List.of();
+    public Set<Task> getAllSubTasks(int taskID) {
+        return Set.of();
     }
 
     @Override
-    public List<Task> getAllTasksForAccount(int accountID) {
-        return List.of();
+    public Set<Task> getAllTasksForAccount(int accountID) {
+        return Set.of();
     }
 
     @Override
-    public List<Account> getAllAssignedToProject(int projectID) {
-        return List.of();
+    public Set<Account> getAllAssignedToProject(int projectID) {
+        return Set.of();
     }
 }
