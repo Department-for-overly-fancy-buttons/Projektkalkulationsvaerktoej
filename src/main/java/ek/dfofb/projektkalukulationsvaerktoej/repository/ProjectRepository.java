@@ -4,9 +4,10 @@ import ek.dfofb.projektkalukulationsvaerktoej.model.Account;
 import ek.dfofb.projektkalukulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalukulationsvaerktoej.repository.interfaces.IProjectRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public class ProjectRepository implements IProjectRepository {
     private final JdbcTemplate jdbcTemplate;
 
@@ -15,7 +16,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public Project getProjectByID(int ProjectID) {
+    public Project getProjectByID(int projectID) {
         return null;
     }
 
@@ -30,7 +31,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public List<Account> getAllAssignedToProject(int ProjectID) {
+    public List<Account> getAllAssignedToProject(int projectID) {
         return List.of();
     }
 }

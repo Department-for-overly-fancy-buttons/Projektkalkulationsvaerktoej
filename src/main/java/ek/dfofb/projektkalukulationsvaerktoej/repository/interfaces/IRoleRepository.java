@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IRoleRepository {
 
-    Role getRoleFromID(int RoleID);
+    Role getRoleFromID(int roleID);
 
     List<Role> getAllRoles();
 

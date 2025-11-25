@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface IProjectRepository {
 
-    Project getProjectByID(int ProjectID);
+    Project getProjectByID(int projectID);
 
     List<Project> getAllProjects();
 
     List<Project> getAllProjectsForAccount(int accountID);
 
-    List<Account> getAllAssignedToProject(int ProjectID);
+    List<Account> getAllAssignedToProject(int projectID);
 
 }
