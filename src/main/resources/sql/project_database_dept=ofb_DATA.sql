@@ -1,4 +1,3 @@
-USE `projekt_database_dept:ofb`;
 INSERT INTO Permissions (Name, Description)
 VALUES("View", "Gives the user the right to view a project");
 INSERT INTO Permissions (Name, Description)
