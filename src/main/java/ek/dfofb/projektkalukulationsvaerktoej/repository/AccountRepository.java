@@ -3,9 +3,10 @@ package ek.dfofb.projektkalukulationsvaerktoej.repository;
 import ek.dfofb.projektkalukulationsvaerktoej.model.Account;
 import ek.dfofb.projektkalukulationsvaerktoej.repository.interfaces.IAccountRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public class AccountRepository implements IAccountRepository {
     private final JdbcTemplate jdbcTemplate;
 
