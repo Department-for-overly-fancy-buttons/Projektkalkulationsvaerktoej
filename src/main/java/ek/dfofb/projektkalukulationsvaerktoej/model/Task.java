@@ -7,32 +7,31 @@ public class Task {
     private int taskID;
     private String name;
     private String description;
-    private boolean isCompleted;
     private int hourEstimate;
-    private Date startDate;
+    private boolean isCompleted;
     private Date deadLine;
+    private Date startDate;
     private int projectID;
     private int ParentID;
     private Set<Task> tasks;
     private Set<Account> assignedWorkers;
 
-    public Task(int taskID, String name, String description, boolean isCompleted,
-                int hourEstimate, Date startDate, Date deadLine, int projectID,
-                int parentID, Set<Task> tasks, Set<Account> assignedWorkers) {
+    public Task(int taskID, String name, String description, int hourEstimate,
+                boolean isCompleted, Date deadLine, Date startDate, int projectID,
+                int parentID) {
         this.taskID = taskID;
         this.name = name;
         this.description = description;
         this.isCompleted = isCompleted;
         this.hourEstimate = hourEstimate;
-        this.startDate = startDate;
         this.deadLine = deadLine;
+        this.startDate = startDate;
         this.projectID = projectID;
         ParentID = parentID;
-        this.tasks = tasks;
-        this.assignedWorkers = assignedWorkers;
     }
 
-    public Task() {}
+    public Task() {
+    }
 
     public int getTaskID() {
         return taskID;
