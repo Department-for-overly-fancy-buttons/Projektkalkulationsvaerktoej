@@ -25,7 +25,7 @@ public class TaskRepository implements ITaskRepository {
 
     @Override
     public List<Task> getAllTasksForProjects(int projectID) throws DataAccessException {
-        String sql = "SELECT * FROM Tasks where ProjectID = ?";
+        String sql = "SELECT * FROM Tasks where ProjectID = ? AND ParentID = 0";
         return jdbcTemplate.query(sql, new TaskRowMapper(), projectID);
     }
 
