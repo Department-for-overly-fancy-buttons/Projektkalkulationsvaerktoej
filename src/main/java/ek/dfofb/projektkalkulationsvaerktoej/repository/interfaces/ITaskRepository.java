@@ -15,7 +15,7 @@ public interface ITaskRepository {
 
     List<Task> getAllTasksForAccount(int accountID);
 
-    List<Account> getAllAssignedToTask(int taskID);
+    List<Account> getAllAccountsAssignedToTask(int taskID);
 
     boolean assignAccountToTask(int accountID,int taskID);
 
