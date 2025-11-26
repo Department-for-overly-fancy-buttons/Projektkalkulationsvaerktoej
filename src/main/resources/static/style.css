@@ -1,0 +1,120 @@
+/* Extra small devices (phones, 600px and down)
+   @media only screen and (max-width: 600px) {...}
+
+   Small devices (portrait tablets and large phones, 600px and up)
+   @media only screen and (min-width: 600px) {...}
+
+   Medium devices (landscape tablets, 768px and up)
+   @media only screen and (min-width: 768px) {...}
+
+   Large devices (laptops/desktops, 992px and up)
+   @media only screen and (min-width: 992px) {...}
+
+   Extra large devices (large laptops and desktops, 1200px and up)
+   @media only screen and (min-width: 1200px) {...} */
+
+:root {
+    --headerFontSize: 1.50rem;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    min-font-size: 5px;
+}
+
+html {
+}
+
+body {
+    border: 0;
+    margin: 0;
+}
+
+nav {
+    min-height: 5vh;
+    height: 100%;
+
+}
+
+.navigationLink{
+    font-weight: bold;
+    font-size: var(--headerFontSize);
+    float: left;
+}
+
+#loginButton {
+    color: white;
+    background-color: deeppink;
+    white-space: nowrap;
+}
+
+#logoutButton {
+    color: white;
+    background-color: deeppink;
+    white-space: nowrap;
+}
+
+#navigationList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: right;
+}
+
+.navigationListItem {
+    float: right;
+    background-color: blue;
+    border-left: 3px solid aquamarine;
+}
+
+.navigationListItem .navigationLink {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 0 1rem;
+    text-decoration: none;
+    height: -webkit-fill-available;
+}
+
+.navigationListItem .navigationLink:hover {
+    background-color: blueviolet;
+}
+
+.navigationListItem #loginButton:hover {
+    background-color: blueviolet;
+}
+
+.navigationListItem #logoutButton:hover {
+    background-color: blueviolet;
+}
+
+#header {
+    min-height: var(--headerFontSize) + 1;
+    width: 100vw;
+    height: var(--headerFontSize) + 2;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background-color: aqua;
+    display: grid;
+    grid-template-columns: 60% 40% ;
+    position: sticky;
+}
+
+#navbarLogo {
+    height: 24px;
+}
+
+#frontPageLayout {
+    margin: 1%;
+    padding: 1%;
+    background-color: brown;
+}
+
+#frontPageCenterpiece {
+    margin: 2.5%;
+    background-color: darkorange;
+}
