@@ -26,30 +26,27 @@ public class TaskRepository implements ITaskRepository {
     @Override
     public List<Task> getAllTasksForProjects(int projectID) throws DataAccessException {
         String sql = "SELECT * FROM Tasks where ProjectID = ?";
-        return getTasks(projectID, sql);
+        return jdbcTemplate.query(sql, new TaskRowMapper(), projectID);
     }
 
     @Override
     public List<Task> getAllSubTasks(int taskID) throws DataAccessException {
         String sql = "SELECT * FROM Tasks where ParentID = ?";
-        return getTasks(taskID, sql);
+        return jdbcTemplate.query(sql, new TaskRowMapper(), taskID);
     }
 
     @Override
     public List<Task> getAllTasksForAccount(int accountID) throws DataAccessException {
-        String sql = "select * from tasks join TaskList on tasks.TaskID=TaskList.TaskID where TaskList.AccountID = ?";
-        return getTasks(accountID, sql);
-    }
-
-    private List<Task> getTasks(int accountID, String sql) {
-        List<Task> tasks;
-        tasks = jdbcTemplate.query(sql, new TaskRowMapper(), accountID);
-        return tasks;
+        String sql = "select * from tasks join TaskList " +
+                "on tasks.TaskID=TaskList.TaskID where TaskList.AccountID = ?";
+        return jdbcTemplate.query(sql, new TaskRowMapper(), accountID);
     }
 
     @Override
-    public List<Account> getAllAssignedToTask(int taskID) throws DataAccessException {
-        return List.of();
+    public List<Account> getAllAccountsAssignedToTask(int taskID) throws DataAccessException {
+        String sql = "select * from Accounts join TaskList " +
+                "on Accounts.AccountID=TaskList.AccountID where TaskList.TaskID = ?";
+        return jdbcTemplate.query(sql, new AccountRowMapper(), taskID);
     }
 
     @Override
