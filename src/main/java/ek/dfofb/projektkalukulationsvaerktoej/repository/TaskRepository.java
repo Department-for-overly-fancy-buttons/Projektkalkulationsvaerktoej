@@ -30,28 +30,28 @@ public class TaskRepository implements ITaskRepository {
     @Override
     public Set<Task> getAllTasksForProjects(int projectID) throws DataAccessException{
         String sql = "SELECT * FROM Tasks where ProjectID = ?";
-        List<Task> tasks = jdbcTemplate.query(sql, new TaskRowMapper(), projectID);
-        Set<Task> taskSet = new HashSet<>();
-        for (Task task : tasks) {
-            taskSet.add(task);
-        }
-        return taskSet;
+        return getTasks(projectID, sql);
     }
 
     @Override
     public Set<Task> getAllSubTasks(int taskID) throws DataAccessException{
         String sql = "SELECT * FROM Tasks where ParentID = ?";
-        List<Task> tasks = jdbcTemplate.query(sql, new TaskRowMapper(), taskID);
+        return getTasks(taskID, sql);
+    }
+
+    @Override
+    public Set<Task> getAllTasksForAccount(int accountID) throws DataAccessException {
+        String sql = "select * from tasks join TaskList on tasks.TaskID=TaskList.TaskID where TaskList.AccountID = ?";
+        return getTasks(accountID, sql);
+    }
+
+    private Set<Task> getTasks(int accountID, String sql) {
+        List<Task> tasks = jdbcTemplate.query(sql,new TaskRowMapper(),accountID);
         Set<Task> taskSet = new HashSet<>();
         for (Task task : tasks) {
             taskSet.add(task);
         }
         return taskSet;
-    }
-
-    @Override
-    public Set<Task> getAllTasksForAccount(int accountID) throws DataAccessException {
-        return Set.of();
     }
 
     @Override
