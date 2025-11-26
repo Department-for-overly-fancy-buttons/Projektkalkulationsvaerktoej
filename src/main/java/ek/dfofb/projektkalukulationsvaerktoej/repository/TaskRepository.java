@@ -82,7 +82,12 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public boolean deleteTask(int taskID) {
-        return false;
+    public boolean deleteTask(int taskID) throws  DataAccessException{
+        String sql = "DELETE FROM tasks where TaskID = ?";
+        int deletedRows = jdbcTemplate.update(sql,taskID);
+        if(deletedRows == 0){
+            return false;
+        }
+        return true;
     }
 }

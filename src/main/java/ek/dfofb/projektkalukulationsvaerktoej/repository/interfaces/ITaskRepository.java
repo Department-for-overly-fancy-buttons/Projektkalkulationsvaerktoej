@@ -16,10 +16,12 @@ public interface ITaskRepository {
 
     Set<Task> getAllTasksForAccount(int accountID);
 
-    Set<Account> getAllAssignedToProject(int projectID);
+    Set<Account> getAllAssignedToTask(int taskID);
 
     boolean addTask(Task task);
 
     Task updateTask(Task task);
+
+    boolean deleteTask(int taskID);
 
 }
