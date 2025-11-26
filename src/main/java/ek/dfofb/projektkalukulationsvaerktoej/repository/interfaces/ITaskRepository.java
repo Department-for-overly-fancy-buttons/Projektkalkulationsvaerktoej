@@ -10,13 +10,15 @@ public interface ITaskRepository {
 
     Task getTaskByID(int taskID);
 
-    Set<Task> getAllTasksForProjects(int projectID);
+    List<Task> getAllTasksForProjects(int projectID);
 
-    Set<Task> getAllSubTasks(int taskID);
+    List<Task> getAllSubTasks(int taskID);
 
-    Set<Task> getAllTasksForAccount(int accountID);
+    List<Task> getAllTasksForAccount(int accountID);
 
-    Set<Account> getAllAssignedToTask(int taskID);
+    List<Account> getAllAssignedToTask(int taskID);
+
+    boolean assignAccountToTask(int accountID,int taskID);
 
     boolean addTask(Task task);
 

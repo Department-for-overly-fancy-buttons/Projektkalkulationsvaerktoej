@@ -3,9 +3,7 @@ package ek.dfofb.projektkalukulationsvaerktoej.repository;
 import ek.dfofb.projektkalukulationsvaerktoej.model.Task;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -33,7 +31,7 @@ class TaskRepositoryTest {
 
     @Test
     void getAllTasksForProjects() {
-        Set<Task> tasks = taskRepository.getAllTasksForProjects(1);
+        List<Task> tasks = taskRepository.getAllTasksForProjects(1);
         assertThat(tasks.size()).isEqualTo(2);
         assertThat(tasks).isNotEmpty();
         }
@@ -50,6 +48,10 @@ class TaskRepositoryTest {
 
     @Test
     void getAllAssignedToProject() {
+    }
+
+    @Test
+    void assignAccountToTask() {
     }
 
     @Test
@@ -84,4 +86,6 @@ class TaskRepositoryTest {
         assertThat(tasksWithOneRemoved).isEqualTo(tasks-1);
         assertThat(removedTask).isEqualTo(true);
     }
+
+
 }

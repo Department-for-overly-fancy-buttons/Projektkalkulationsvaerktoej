@@ -7,9 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class TaskRepository implements ITaskRepository {
@@ -26,31 +24,32 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public Set<Task> getAllTasksForProjects(int projectID) throws DataAccessException {
+    public List<Task> getAllTasksForProjects(int projectID) throws DataAccessException {
         String sql = "SELECT * FROM Tasks where ProjectID = ?";
         return getTasks(projectID, sql);
     }
 
     @Override
-    public Set<Task> getAllSubTasks(int taskID) throws DataAccessException {
+    public List<Task> getAllSubTasks(int taskID) throws DataAccessException {
         String sql = "SELECT * FROM Tasks where ParentID = ?";
         return getTasks(taskID, sql);
     }
 
     @Override
-    public Set<Task> getAllTasksForAccount(int accountID) throws DataAccessException {
+    public List<Task> getAllTasksForAccount(int accountID) throws DataAccessException {
         String sql = "select * from tasks join TaskList on tasks.TaskID=TaskList.TaskID where TaskList.AccountID = ?";
         return getTasks(accountID, sql);
     }
 
-    private Set<Task> getTasks(int accountID, String sql) {
-        List<Task> tasks = jdbcTemplate.query(sql, new TaskRowMapper(), accountID);
-        return new HashSet<>(tasks);
+    private List<Task> getTasks(int accountID, String sql) {
+        List<Task> tasks;
+        tasks = jdbcTemplate.query(sql, new TaskRowMapper(), accountID);
+        return tasks;
     }
 
     @Override
-    public Set<Account> getAllAssignedToTask(int taskID) throws DataAccessException {
-        return Set.of();
+    public List<Account> getAllAssignedToTask(int taskID) throws DataAccessException {
+        return List.of();
     }
 
     @Override
