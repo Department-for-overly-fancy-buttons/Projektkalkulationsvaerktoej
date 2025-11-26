@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ek.dfofb</groupId>
-    <artifactId>Projektkalukulationsvaerktoej</artifactId>
+    <artifactId>Projektkalkulationsvaerktoej</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Projektkalukulationsvaerktoej</name>
     <description>Projektkalukulationsvaerktoej</description>
