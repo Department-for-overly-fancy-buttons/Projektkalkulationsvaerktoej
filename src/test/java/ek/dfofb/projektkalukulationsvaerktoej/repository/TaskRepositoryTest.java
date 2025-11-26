@@ -47,4 +47,28 @@ class TaskRepositoryTest {
     @Test
     void getAllAssignedToProject() {
     }
+
+    @Test
+    void addTask() {
+        int tasks = taskRepository.getAllTasksForProjects(1).size();
+        Task task = new Task(0,"Web application part 3", "_Adaptive Probelmsolvers_ need a new webplatform. It nee...",50, true, new Date(25-12-06), new Date(2026-01-28), 1, 0);
+        boolean inserted = taskRepository.addTask(task);
+        Task taskInDatabase = taskRepository.getTaskByID(3);
+        assertThat(inserted).isEqualTo(true);
+        assertThat(taskInDatabase.getName()).isEqualTo("Web application part 3");
+        assertThat(taskRepository.getAllTasksForProjects(1).size()).isEqualTo(tasks+1);
+    }
+
+    @Test
+    void updateTask() {
+        int tasks = taskRepository.getAllTasksForProjects(1).size();
+        Task task = taskRepository.getTaskByID(1);
+        task.setName("Not a Web application");
+        taskRepository.updateTask(task);
+        Task updatedTask = taskRepository.getTaskByID(1);
+        assertThat(updatedTask.getName()).isEqualTo("Not a Web application");
+        assertThat(updatedTask.getProjectID()).isEqualTo(1);
+        assertThat(tasks).isEqualTo(2);
+
+    }
 }
