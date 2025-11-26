@@ -106,3 +106,9 @@ INSERT INTO tasklist
 VALUES (1, 1),
        (1, 2),
        (2,1);
+INSERT INTO Tasks (Name, Description,HourEstimate, Completed, StartDate, Deadline, ProjectID, ParentID)
+VALUES ('Web application Part 2 Part 1', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, true, '2025-12-06', '2026-01-28', 1, 2);
+INSERT INTO Tasks (Name, Description,HourEstimate, Completed, StartDate, Deadline, ProjectID, ParentID)
+VALUES ('Web application Part 2 Part 2', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, true, '2025-12-06', '2026-01-28', 1, 2);
+INSERT INTO Tasks (Name, Description,HourEstimate, Completed, StartDate, Deadline, ProjectID, ParentID)
+VALUES ('Web application Part 1 Part 1', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, true, '2025-12-06', '2026-01-28', 1, 1);

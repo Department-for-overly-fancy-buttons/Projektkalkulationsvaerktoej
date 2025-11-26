@@ -38,6 +38,8 @@ class TaskRepositoryTest {
 
     @Test
     void getAllSubTasks() {
+        assertThat(taskRepository.getAllSubTasks(1).size()).isEqualTo(1);
+        assertThat(taskRepository.getAllSubTasks(2).size()).isEqualTo(2);
     }
 
     @Test
@@ -61,13 +63,13 @@ class TaskRepositoryTest {
 
     @Test
     void addTask() {
-        int tasks = taskRepository.getAllTasksForProjects(1).size();
+        int numberOfTasksForProject = taskRepository.getAllTasksForProjects(1).size();
         Task task = new Task(0,"Web application part 3", "_Adaptive Probelmsolvers_ need a new webplatform. It nee...",50, true, new Date(25-12-06), new Date(2026-01-28), 1, 0);
         boolean inserted = taskRepository.addTask(task);
-        Task taskInDatabase = taskRepository.getTaskByID(3);
+        Task taskInDatabase = taskRepository.getTaskByID(6);
         assertThat(inserted).isEqualTo(true);
         assertThat(taskInDatabase.getName()).isEqualTo("Web application part 3");
-        assertThat(taskRepository.getAllTasksForProjects(1).size()).isEqualTo(tasks+1);
+        assertThat(taskRepository.getAllTasksForProjects(1).size()).isEqualTo(numberOfTasksForProject+1);
     }
 
     @Test
