@@ -44,6 +44,8 @@ class TaskRepositoryTest {
 
     @Test
     void getAllTasksForAccount() {
+        assertThat(taskRepository.getAllTasksForAccount(1).size()).isEqualTo(2);
+        assertThat(taskRepository.getAllTasksForAccount(2).size()).isEqualTo(1);
     }
 
     @Test
