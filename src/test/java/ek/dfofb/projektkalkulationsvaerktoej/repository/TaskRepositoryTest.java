@@ -70,6 +70,19 @@ class TaskRepositoryTest {
         assertThat(inserted).isEqualTo(true);
         assertThat(taskInDatabase.getName()).isEqualTo("Web application part 3");
         assertThat(taskRepository.getAllTasksForProjects(1).size()).isEqualTo(numberOfTasksForProject+1);
+        assertThat(taskInDatabase.getProjectID()).isEqualTo(1);
+    }
+
+    @Test
+    void addSubTask() {
+        int numberOfTasksForProject = taskRepository.getAllTasksForProjects(1).size();
+        Task task = new Task(0,"Web application part 3", "_Adaptive Probelmsolvers_ need a new webplatform. It nee...",50, true, new Date(25-12-06), new Date(2026-01-28), 1, 1);
+        boolean inserted = taskRepository.addTask(task);
+        Task taskInDatabase = taskRepository.getTaskByID(6);
+        assertThat(inserted).isEqualTo(true);
+        assertThat(taskInDatabase.getName()).isEqualTo("Web application part 3");
+        assertThat(taskRepository.getAllTasksForProjects(1).size()).isEqualTo(numberOfTasksForProject);
+        assertThat(taskInDatabase.getParentID()).isEqualTo(1);
     }
 
     @Test
