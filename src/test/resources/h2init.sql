@@ -1,4 +1,6 @@
-CREATE TABLE Permissions (
+DROP ALL OBJECTS;
+
+CREATE TABLE Permissions(
                              PermissionID    INT NOT NULL AUTO_INCREMENT,
                              Name VARCHAR(255) UNIQUE NOT NULL,
                              Description VARCHAR(255),
