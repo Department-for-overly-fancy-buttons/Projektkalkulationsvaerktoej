@@ -51,4 +51,14 @@ public class TaskRepository implements ITaskRepository {
     public Set<Account> getAllAssignedToProject(int projectID) {
         return Set.of();
     }
+
+    @Override
+    public boolean addTask(Task task) {
+        return false;
+    }
+
+    @Override
+    public Task updateTask(Task task) {
+        return null;
+    }
 }

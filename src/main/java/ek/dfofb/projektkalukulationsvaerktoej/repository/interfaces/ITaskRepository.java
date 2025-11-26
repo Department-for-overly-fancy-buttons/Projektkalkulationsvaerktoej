@@ -18,4 +18,8 @@ public interface ITaskRepository {
 
     Set<Account> getAllAssignedToProject(int projectID);
 
+    boolean addTask(Task task);
+
+    Task updateTask(Task task);
+
 }

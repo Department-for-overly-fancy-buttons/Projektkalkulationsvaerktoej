@@ -34,4 +34,14 @@ public class ProjectRepository implements IProjectRepository {
     public List<Account> getAllAssignedToProject(int projectID) {
         return List.of();
     }
+
+    @Override
+    public boolean addProject(Project project) {
+        return false;
+    }
+
+    @Override
+    public Project updateProject(Project project) {
+        return null;
+    }
 }

@@ -10,4 +10,8 @@ public interface IRoleRepository {
 
     List<Role> getAllRoles();
 
+    boolean addRole(Role role);
+
+    Role updateRole(Role role);
+
 }

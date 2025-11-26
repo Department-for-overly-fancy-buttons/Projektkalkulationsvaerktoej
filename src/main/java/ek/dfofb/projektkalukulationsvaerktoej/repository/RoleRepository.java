@@ -24,4 +24,14 @@ public class RoleRepository implements IRoleRepository {
     public List<Role> getAllRoles() {
         return List.of();
     }
+
+    @Override
+    public boolean addRole(Role role) {
+        return false;
+    }
+
+    @Override
+    public Role updateRole(Role role) {
+        return null;
+    }
 }

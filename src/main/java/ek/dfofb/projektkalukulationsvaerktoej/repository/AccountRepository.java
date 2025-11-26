@@ -23,4 +23,14 @@ public class AccountRepository implements IAccountRepository {
     public List<Account> getAllAccounts() {
         return List.of();
     }
+
+    @Override
+    public boolean addAccount(Account account) {
+        return false;
+    }
+
+    @Override
+    public Account updateAccount(Account account) {
+        return null;
+    }
 }
