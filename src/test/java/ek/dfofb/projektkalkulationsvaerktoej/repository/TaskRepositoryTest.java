@@ -48,10 +48,15 @@ class TaskRepositoryTest {
 
     @Test
     void getAllAssignedToProject() {
+        assertThat(taskRepository.getAllAccountsAssignedToTask(1).size()).isEqualTo(2);
+        assertThat(taskRepository.getAllAccountsAssignedToTask(2).size()).isEqualTo(1);
     }
 
     @Test
     void assignAccountToTask() {
+        int assignedToTask = taskRepository.getAllAccountsAssignedToTask(2).size();
+        taskRepository.assignAccountToTask(2,2);
+        assertThat(taskRepository.getAllAccountsAssignedToTask(2).size()).isEqualTo(assignedToTask+1);
     }
 
     @Test
