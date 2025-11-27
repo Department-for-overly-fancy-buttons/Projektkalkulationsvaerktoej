@@ -26,11 +26,13 @@ class TaskServiceTest {
     void hoursLeftOnTask() {
 
     assertThat(taskService.hoursLeftOnTask(2)).isEqualTo(200);
-    assertThat(taskService.hoursLeftOnTask(1)).isEqualTo(75);
+    assertThat(taskService.hoursLeftOnTask(1)).isEqualTo(0);
 
     }
 
     @Test
     void percentOfProgressDone() {
+        assertThat(taskService.percentOfProgressDone(1)).isEqualTo(100);
+        assertThat(taskService.percentOfProgressDone(2)).isEqualTo(33);
     }
 }
