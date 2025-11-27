@@ -86,8 +86,25 @@ public class TaskService {
     }
 
     public int percentOfProgressDone(int taskID) {
-
-        return 0;
+        if (getTaskByID(taskID).isCompleted()) {
+            return 100;
+        }
+        List<Task> subTasks = getAllSubTasks(taskID);
+        double completedTasks = 0;
+        double notCompletedTasks = 0;
+        for (Task subTask : subTasks) {
+            if (subTask.isCompleted()) {
+                completedTasks += 1;
+                System.out.println("e");
+            } else {
+                notCompletedTasks += 1;
+            }
+        }
+        if (completedTasks == 0) {
+            return 0;
+        }
+        System.out.println(completedTasks + " / (" + completedTasks + "+" + notCompletedTasks + ") *100");
+        return (int) (completedTasks / (completedTasks + notCompletedTasks) * 100);
     }
 
 }
