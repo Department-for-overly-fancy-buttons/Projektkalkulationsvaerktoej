@@ -7,7 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.sql.Date;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -57,7 +57,7 @@ public class TaskService {
 
     public int timeUntilDeadline(int taskID) {
         Task task = getTaskByID(taskID);
-        return 0;
+        return (int)ChronoUnit.DAYS.between(LocalDate.now(),task.getDeadLine().toLocalDate());
     }
 
     public int hoursLeftOnTask(int taskID) {
@@ -86,8 +86,23 @@ public class TaskService {
     }
 
     public int percentOfProgressDone(int taskID) {
-
-        return 0;
+        if (getTaskByID(taskID).isCompleted()) {
+            return 100;
+        }
+        List<Task> subTasks = getAllSubTasks(taskID);
+        double completedTasks = 0;
+        double notCompletedTasks = 0;
+        for (Task subTask : subTasks) {
+            if (subTask.isCompleted()) {
+                completedTasks += 1;
+            } else {
+                notCompletedTasks += 1;
+            }
+        }
+        if (completedTasks == 0) {
+            return 0;
+        }
+        return (int) (completedTasks / (completedTasks + notCompletedTasks) * 100);
     }
 
 }
