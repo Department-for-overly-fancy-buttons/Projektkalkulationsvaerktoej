@@ -39,7 +39,7 @@ class TaskRepositoryTest {
 
     @Test
     void getAllSubTasks() {
-        assertThat(taskRepository.getAllSubTasks(1).size()).isEqualTo(1);
+        assertThat(taskRepository.getAllSubTasks(1).size()).isEqualTo(0);
         assertThat(taskRepository.getAllSubTasks(2).size()).isEqualTo(2);
     }
 

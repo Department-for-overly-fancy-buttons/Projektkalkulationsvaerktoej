@@ -99,16 +99,16 @@ VALUES ('Markus Substractington', 'substractington@icloud.com', 42, 'asdj3(Fsah2
 INSERT INTO Projects (Name, Description, isActive, StartDate, Deadline)
 VALUES ('Ecommerce platform for _Adaptive Problemsolvers_', '_Adaptive Probelmsolvers_ are in need of a brand new platform to run ecommerce. They have re...', true, '2025-12-06', '2026-03-12');
 INSERT INTO Tasks (Name, Description,HourEstimate, Completed, StartDate, Deadline, ProjectID, ParentID)
-VALUES ('Web application', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, true, '2025-12-06', '2026-01-28', 1, 0);
+VALUES ('Web application', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',75, false, '2025-12-06', '2026-01-28', 1, 0);
 INSERT INTO Tasks (Name, Description,HourEstimate, Completed, StartDate, Deadline, ProjectID, ParentID)
-VALUES ('Web application Part 2', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, true, '2025-12-06', '2026-01-28', 1, 0);
+VALUES ('Web application Part 2', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, false, '2025-12-06', '2026-01-28', 1, 0);
 INSERT INTO tasklist
 VALUES (1, 1),
        (1, 2),
        (2,1);
 INSERT INTO Tasks (Name, Description,HourEstimate, Completed, StartDate, Deadline, ProjectID, ParentID)
-VALUES ('Web application Part 2 Part 1', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, true, '2025-12-06', '2026-01-28', 1, 2);
+VALUES ('Web application Part 2 Part 1', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, false, '2025-12-06', '2026-01-28', 1, 2);
 INSERT INTO Tasks (Name, Description,HourEstimate, Completed, StartDate, Deadline, ProjectID, ParentID)
-VALUES ('Web application Part 2 Part 2', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, true, '2025-12-06', '2026-01-28', 1, 2);
+VALUES ('Web application Part 2 Part 2', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, false, '2025-12-06', '2026-01-28', 1, 2);
 INSERT INTO Tasks (Name, Description,HourEstimate, Completed, StartDate, Deadline, ProjectID, ParentID)
-VALUES ('Web application Part 1 Part 1', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',50, true, '2025-12-06', '2026-01-28', 1, 1);
+VALUES ('Web application Part 1 Part 1', '_Adaptive Probelmsolvers_ need a new webplatform. It nee...',150, false, '2025-12-06', '2026-01-28', 1, 4);
