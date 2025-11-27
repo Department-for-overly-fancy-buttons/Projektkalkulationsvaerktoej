@@ -57,7 +57,7 @@ public class TaskService {
 
     public int timeUntilDeadline(int taskID) {
         Task task = getTaskByID(taskID);
-        return (int)ChronoUnit.DAYS.between(LocalDate.now(),task.getDeadLine().toLocalDate());
+        return (int) ChronoUnit.DAYS.between(LocalDate.now(), task.getDeadLine().toLocalDate());
     }
 
     public int hoursLeftOnTask(int taskID) {
@@ -103,6 +103,18 @@ public class TaskService {
             return 0;
         }
         return (int) (completedTasks / (completedTasks + notCompletedTasks) * 100);
+    }
+
+    public boolean markAsDone(int taskID) {
+        Task task = getTaskByID(taskID);
+        if (task.isCompleted() == false) {
+            task.setCompleted(true);
+            updateTask(task);
+            return true;
+        }
+        task.setCompleted(false);
+        updateTask(task);
+        return false;
     }
 
 }
