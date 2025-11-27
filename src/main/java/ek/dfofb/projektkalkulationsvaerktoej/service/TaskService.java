@@ -7,7 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.sql.Date;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -57,7 +57,7 @@ public class TaskService {
 
     public int timeUntilDeadline(int taskID) {
         Task task = getTaskByID(taskID);
-        return 0;
+        return (int)ChronoUnit.DAYS.between(LocalDate.now(),task.getDeadLine().toLocalDate());
     }
 
     public int hoursLeftOnTask(int taskID) {
