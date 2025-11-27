@@ -95,7 +95,6 @@ public class TaskService {
         for (Task subTask : subTasks) {
             if (subTask.isCompleted()) {
                 completedTasks += 1;
-                System.out.println("e");
             } else {
                 notCompletedTasks += 1;
             }
@@ -103,7 +102,6 @@ public class TaskService {
         if (completedTasks == 0) {
             return 0;
         }
-        System.out.println(completedTasks + " / (" + completedTasks + "+" + notCompletedTasks + ") *100");
         return (int) (completedTasks / (completedTasks + notCompletedTasks) * 100);
     }
 
