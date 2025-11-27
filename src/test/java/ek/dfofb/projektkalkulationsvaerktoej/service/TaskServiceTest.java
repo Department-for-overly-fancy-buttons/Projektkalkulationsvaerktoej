@@ -7,6 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
@@ -20,6 +23,8 @@ class TaskServiceTest {
 
     @Test
     void timeUntilDeadline() {
+        assertThat(taskService.timeUntilDeadline(1)).
+                isEqualTo((int) ChronoUnit.DAYS.between(LocalDate.now(),LocalDate.of(2026,01,28)));
     }
 
     @Test
