@@ -1,0 +1,36 @@
+package ek.dfofb.projektkalkulationsvaerktoej.service;
+
+import ek.dfofb.projektkalkulationsvaerktoej.repository.TaskRepository;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
+
+@SpringBootTest
+@ActiveProfiles("test")
+@Sql(scripts = "classpath:h2init.sql", executionPhase = BEFORE_TEST_METHOD)
+class TaskServiceTest {
+
+    @Autowired
+    private TaskService taskService;
+
+    @Test
+    void timeUntilDeadline() {
+    }
+
+    @Test
+    void hoursLeftOnTask() {
+
+    assertThat(taskService.hoursLeftOnTask(2)).isEqualTo(200);
+    assertThat(taskService.hoursLeftOnTask(1)).isEqualTo(75);
+
+    }
+
+    @Test
+    void percentOfProgressDone() {
+    }
+}
