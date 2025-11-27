@@ -40,4 +40,13 @@ class TaskServiceTest {
         assertThat(taskService.percentOfProgressDone(1)).isEqualTo(100);
         assertThat(taskService.percentOfProgressDone(2)).isEqualTo(33);
     }
+
+    @Test
+    void markAsDone() {
+        taskService.markAsDone(1);
+        assertThat(taskService.getTaskByID(1).isCompleted()).isEqualTo(false);
+        taskService.markAsDone(1);
+        assertThat(taskService.getTaskByID(1).isCompleted()).isEqualTo(true);
+
+    }
 }
