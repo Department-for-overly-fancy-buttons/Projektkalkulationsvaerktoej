@@ -28,6 +28,7 @@ public class AccountRepository implements IAccountRepository {
         return jdbcTemplate.query(sql, new AccountRowMapper());
     }
 
+    @Override
     public List<Account> getAllAccountsWithRoleID(int roleID) {
         String sql = "SELECT * FROM Accounts WHERE RoleID = ?";
         return jdbcTemplate.query(sql, new AccountRowMapper(), roleID);
