@@ -23,6 +23,7 @@ CREATE TABLE Roles (
 CREATE TABLE RolePermissions (
                            RoleID         INT NOT NULL,
                            PermissionID       INT NOT NULL,
+                           UNIQUE (RoleID, PermissionID),
                            PRIMARY KEY (RoleID, PermissionID),
                            FOREIGN KEY (RoleID) REFERENCES Roles (RoleID)
                                ON DELETE CASCADE,
@@ -43,9 +44,9 @@ CREATE TABLE Projects (
 CREATE TABLE Accounts (
 					AccountID INT NOT NULL AUTO_INCREMENT,
                     Name VARCHAR(255) NOT NULL,
-					Email VARCHAR(255),
+					Email VARCHAR(255) UNIQUE NOT NULL,
                     Birthday DATE NOT NULL,
-                    Number VARCHAR(24) NOT NULL,
+                    Number VARCHAR(24) NOT NULL UNIQUE,
                     WeeklyHours INT NOT NULL,
                     Password VARCHAR(255) NOT NULL,
                     RoleID INT NOT NULL,
@@ -58,6 +59,7 @@ CREATE TABLE Accounts (
 CREATE TABLE ProjectMembers (
                         ProjectID INT NOT NULL,
                         AccountID INT NOT NULL,
+                        UNIQUE (ProjectID, AccountID),
                         PRIMARY KEY (ProjectID, AccountID),
                         FOREIGN KEY (ProjectID) REFERENCES Projects (ProjectID)
                             ON DELETE CASCADE,
@@ -84,6 +86,7 @@ CREATE TABLE Tasks (
 CREATE TABLE TaskList (
                         AccountID INT NOT NULL,
                         TaskID INT NOT NULL,
+                        UNIQUE (AccountID, TaskID),
                         PRIMARY KEY (AccountID, TaskID),
                         FOREIGN KEY (AccountID) REFERENCES Accounts (AccountID)
                             ON DELETE CASCADE,
