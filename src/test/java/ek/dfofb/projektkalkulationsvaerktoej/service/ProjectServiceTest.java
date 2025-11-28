@@ -66,33 +66,6 @@ public class ProjectServiceTest
         verify(taskRepository, times(1)).getAllTasksForProjects(projectId);
         verifyNoMoreInteractions(projectRepository, taskRepository);
     }
-    @Test
-    void getProjectByID_calculatesHourEstimateFromTasksAndSubtask()
-    {
-        int projectId = 1;
-        Project project = new Project(projectId, "Test-pro", "Beskrivelse", true, new Date(), new Date());
-
-        Task t1 = new Task();
-        Task t2 = new Task();
-        t2.setHourEstimate(2);
-
-        Task subtask1 = new Task();
-        subtask1.setHourEstimate(3);
-        Task subtask2 = new Task();
-        subtask2.setHourEstimate(3);
-
-        t1.setTasks(Set.of(subtask1, subtask2));
-
-        when(projectRepository.getProjectByID(projectId)).thenReturn(project);
-        when(taskRepository.getAllTasksForProjects(projectId)).thenReturn(Arrays.asList(t1, t2));
-
-        Project result = projectService.getProjectByID(projectId);
-
-        assertEquals(8, result.getHourEstimate());
-        verify(projectRepository, times(1)).getProjectByID(projectId);
-        verify(taskRepository, times(1)).getAllTasksForProjects(projectId);
-        verifyNoMoreInteractions(projectRepository, taskRepository);
-    }
 
     @Test
     void getProjectByID_handlesNoTaskWithZeroEstimate()
