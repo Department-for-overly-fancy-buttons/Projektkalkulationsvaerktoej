@@ -1,6 +1,6 @@
 package ek.dfofb.projektkalkulationsvaerktoej.model;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Set;
 
 public class Task {
@@ -9,23 +9,23 @@ public class Task {
     private String description;
     private int hourEstimate;
     private boolean isCompleted;
-    private Date deadLine;
     private Date startDate;
+    private Date deadLine;
     private int projectID;
     private int ParentID;
     private Set<Task> tasks;
     private Set<Account> assignedWorkers;
 
     public Task(int taskID, String name, String description, int hourEstimate,
-                boolean isCompleted, Date deadLine, Date startDate, int projectID,
+                boolean isCompleted, Date startDate, Date deadLine, int projectID,
                 int parentID) {
         this.taskID = taskID;
         this.name = name;
         this.description = description;
         this.isCompleted = isCompleted;
         this.hourEstimate = hourEstimate;
-        this.deadLine = deadLine;
         this.startDate = startDate;
+        this.deadLine = deadLine;
         this.projectID = projectID;
         ParentID = parentID;
     }
