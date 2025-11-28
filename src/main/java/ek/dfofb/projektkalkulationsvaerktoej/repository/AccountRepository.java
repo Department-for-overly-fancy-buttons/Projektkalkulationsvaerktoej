@@ -28,6 +28,11 @@ public class AccountRepository implements IAccountRepository {
         return jdbcTemplate.query(sql, new AccountRowMapper());
     }
 
+    public List<Account> getAllAccountsWithRoleID(int roleID) {
+        String sql = "SELECT * FROM Accounts WHERE RoleID = ?";
+        return jdbcTemplate.query(sql, new AccountRowMapper(), roleID);
+    }
+
     @Override
     public boolean addAccount(Account account) throws DataAccessException {
         String sql = "INSERT INTO Accounts(Name, Email, Birthday, " +

@@ -10,6 +10,8 @@ public interface IAccountRepository {
 
     List<Account> getAllAccounts();
 
+    List<Account> getAllAccountsWithRoleID(int roleID);
+
     boolean addAccount(Account account);
 
     Account updateAccount(Account account);

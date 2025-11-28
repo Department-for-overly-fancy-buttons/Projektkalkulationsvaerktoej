@@ -24,6 +24,10 @@ public class AccountService {
         return accountRepository.getAllAccounts();
     }
 
+    public List<Account> getAllAccountsWithRoleID(int roleID) {
+        return accountRepository.getAllAccountsWithRoleID(roleID);
+    }
+
     public boolean addAccount(Account account) {
         return accountRepository.addAccount(account);
     }
