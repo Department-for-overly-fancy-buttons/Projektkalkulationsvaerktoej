@@ -13,4 +13,6 @@ public interface IAccountRepository {
     boolean addAccount(Account account);
 
     Account updateAccount(Account account);
+
+    boolean deleteAccount(int accountID);
 }
