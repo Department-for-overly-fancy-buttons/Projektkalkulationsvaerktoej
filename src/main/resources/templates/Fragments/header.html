@@ -1,5 +1,5 @@
 <div th:fragment="header" id="header">
-    <img id="navbarLogo" th:src="@{images/Dept=ofb_Logo.png}" alt="Department for overly fancy buttons logo"/>
+    <img id="navbarLogo" th:src="@{/images/Dept_ofb_Logo.png}" alt="Department for overly fancy buttons logo"/>
     <nav>
         <ul id="navigationList">
         <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}==null" href="/project//view-projects" title="Go to project overview">Projects</a></li>
