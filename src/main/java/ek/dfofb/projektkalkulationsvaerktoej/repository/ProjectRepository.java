@@ -3,45 +3,86 @@ package ek.dfofb.projektkalkulationsvaerktoej.repository;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalkulationsvaerktoej.repository.interfaces.IProjectRepository;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 @Repository
 public class ProjectRepository implements IProjectRepository {
+
     private final JdbcTemplate jdbcTemplate;
 
-    public ProjectRepository(JdbcTemplate jdbcTemplate) {
+    public ProjectRepository(JdbcTemplate jdbcTemplate)
+    {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public Project getProjectByID(int projectID) {
-        return null;
+    public Project getProjectByID(int projectID) throws DataAccessException
+    {
+        String sql = "SELECT * FROM Projects WHERE ProjectID = ?";
+        return jdbcTemplate.queryForObject(sql, new ProjectRowMapper(), projectID);
     }
 
     @Override
-    public List<Project> getAllProjects() {
-        return List.of();
+    public List<Project> getAllProjects() throws DataAccessException
+    {
+        String sql = "SELECT * FROM Projects";
+        return jdbcTemplate.query(sql, new ProjectRowMapper());
     }
 
     @Override
-    public List<Project> getAllProjectsForAccount(int accountID) {
-        return List.of();
+    public List<Project> getAllProjectsForAccount(int accountID) throws DataAccessException
+    {
+        String sql = "SELECT p.* FROM Projects p " +
+                "JOIN ProjectMembers pm ON p.ProjectID = pm.ProjectID " +
+                "WHERE pm.AccountID = ?";
+        return jdbcTemplate.query(sql, new ProjectRowMapper(), accountID);
     }
 
     @Override
-    public List<Account> getAllAssignedToProject(int projectID) {
-        return List.of();
+    public List<Account> getAllAssignedToProject(int projectID) throws DataAccessException
+    {
+        String sql = "SELECT a.* FROM Accounts a " +
+                "JOIN ProjectMembers pm ON a.AccountID = pm.AccountID " +
+                "WHERE pm.ProjectID = ?";
+        return jdbcTemplate.query(sql, new AccountRowMapper(), projectID);
     }
 
     @Override
-    public boolean addProject(Project project) {
-        return false;
+    public boolean addProject(Project project) throws DataAccessException
+    {
+        String sql = "INSERT INTO Projects (Name, Description, IsActive, StartDate, Deadline) " +
+                "VALUES (?, ?, ?, ?, ?)";
+        int rows = jdbcTemplate.update
+                (
+                sql,
+                project.getName(),
+                project.getDescription(),
+                project.isActive(),
+                project.getStartDate(),
+                project.getDeadline()
+                );
+        return rows == 1;
     }
 
     @Override
-    public Project updateProject(Project project) {
-        return null;
+    public Project updateProject(Project project) throws DataAccessException
+    {
+        String sql = "UPDATE Projects SET Name = ?, Description = ?, IsActive = ?, " +
+                "StartDate = ?, Deadline = ? WHERE ProjectID = ?";
+        jdbcTemplate.update
+                (
+                sql,
+                project.getName(),
+                project.getDescription(),
+                project.isActive(),
+                project.getStartDate(),
+                project.getDeadline(),
+                project.getProjectID()
+                );
+        return project;
     }
 }
