@@ -50,7 +50,7 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public boolean assignAccountToTask(int accountID, int taskID) {
+    public boolean assignAccountToTask(int accountID, int taskID) throws DataAccessException {
         String sql = "INSERT INTO taskList (AccountID,TaskID) VALUES(?,?)";
         int rowsInserted = jdbcTemplate.update(sql, accountID, taskID);
         return rowsInserted == 1;
