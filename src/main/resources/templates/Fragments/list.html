@@ -29,6 +29,17 @@
         <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
     </tr>
+    <tr th:each="project : ${projects}">
+        <td th:text="${project.name}"></td>
+        <td th:text="${project.description}"></td>
+        <!-- osv -->
+
+        <td>
+            <form th:action="@{'/project/delete/' + ${project.projectID}}" method="post">
+                <button type="submit">Slet</button>
+            </form>
+        </td>
+    </tr>
     </tbody>
 </table>
 </body>

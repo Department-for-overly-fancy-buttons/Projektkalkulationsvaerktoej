@@ -69,6 +69,14 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
+    public boolean deleteProject(int projectID)
+    {
+        String sql = "DELETE FROM Projects WHERE ProjectID = ?";
+        int rows = jdbcTemplate.update(sql, projectID);
+        return rows > 0;
+    }
+
+    @Override
     public Project updateProject(Project project) throws DataAccessException
     {
         String sql = "UPDATE Projects SET Name = ?, Description = ?, IsActive = ?, " +

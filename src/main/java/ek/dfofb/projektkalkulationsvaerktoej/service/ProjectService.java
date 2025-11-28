@@ -45,6 +45,7 @@ public class ProjectService
             {
                 total += getTotalHoursForTask(sub);
             }
+            task.setHourEstimate(total);
         }
         return total;
     }
@@ -59,5 +60,10 @@ public class ProjectService
     public Project updateProject(Project project)
     {
         return projectRepository.updateProject(project);
+    }
+
+    public boolean deleteProject(int id)
+    {
+        return projectRepository.deleteProject(id);
     }
 }

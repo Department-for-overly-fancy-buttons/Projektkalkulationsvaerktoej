@@ -10,10 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -71,6 +68,42 @@ public class ProjectServiceTest
     }
 
     @Test
+    void getProjectByID_calculatesHourEstimateFromTasksAndSubtask()
+    {
+        int projectId = 1;
+        Project project = new Project(projectId, "Test-pro", "Beskrivelse", true, new Date(), new Date());
+
+        Task t1 = new Task();
+        Task t2 = new Task();
+        t2.setHourEstimate(2);
+
+        Task subtask1 = new Task();
+        subtask1.setHourEstimate(3);
+        Task subtask2 = new Task();
+        subtask2.setHourEstimate(3);
+
+        Task subsubtask1 = new Task();
+        subtask1.setHourEstimate(1);
+        Task subsubtask2 = new Task();
+        subsubtask2.setHourEstimate(2);
+
+
+
+        t1.setTasks(Set.of(subtask1, subtask2));
+        subtask2.setTasks(Set.of(subsubtask1, subsubtask2));
+
+        when(projectRepository.getProjectByID(projectId)).thenReturn(project);
+        when(taskRepository.getAllTasksForProjects(projectId)).thenReturn(Arrays.asList(t1, t2));
+
+        Project result = projectService.getProjectByID(projectId);
+
+        assertEquals(8, result.getHourEstimate());
+        verify(projectRepository, times(1)).getProjectByID(projectId);
+        verify(taskRepository, times(1)).getAllTasksForProjects(projectId);
+        verifyNoMoreInteractions(projectRepository, taskRepository);
+    }
+
+    @Test
     void getProjectByID_handlesNoTaskWithZeroEstimate()
     {
         int projectId = 99;
@@ -108,6 +141,18 @@ public class ProjectServiceTest
 
         assertSame(project, result);
         verify(projectRepository, times(1)).updateProject(project);
+        verifyNoMoreInteractions(projectRepository, taskRepository);
+    }
+
+    @Test
+    void deleteProject_assignedToRepository() {
+        int projectId = 1;
+        when(projectRepository.deleteProject(projectId)).thenReturn(true);
+
+        boolean result = projectService.deleteProject(projectId);
+
+        assertTrue(result);
+        verify(projectRepository, times(1)).deleteProject(projectId);
         verifyNoMoreInteractions(projectRepository, taskRepository);
     }
 }

@@ -5,7 +5,8 @@ import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 
 import java.util.List;
 
-public interface IProjectRepository {
+public interface IProjectRepository
+{
 
     Project getProjectByID(int projectID);
 
@@ -18,5 +19,7 @@ public interface IProjectRepository {
     boolean addProject(Project project);
 
     Project updateProject(Project project);
+
+    boolean deleteProject(int projectID);
 
 }
