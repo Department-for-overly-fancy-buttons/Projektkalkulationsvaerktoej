@@ -12,42 +12,46 @@ public class Role
 
     public Role(){}
 
-    public Role(List<Integer> permissionList, String description, String name, int roleID) {
+    public Role(List<Integer> permissionList, String description, String name, int roleID)
+    {
         this.permissionList = permissionList;
         this.description = description;
         this.name = name;
         this.roleID = roleID;
     }
 
-    public int getRoleID() {
+    public int getRoleID()
+    {
         return roleID;
     }
 
-    public void setRoleID(int roleID) {
-        this.roleID = roleID;
-    }
-
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(String description)
+    {
         this.description = description;
     }
 
-    public List<Integer> getPermissionList() {
+    public List<Integer> getPermissionList()
+    {
         return permissionList;
     }
 
-    public void setPermissionList(List<Integer> permissionList) {
+    public void setPermissionList(List<Integer> permissionList)
+    {
         this.permissionList = permissionList;
     }
 }

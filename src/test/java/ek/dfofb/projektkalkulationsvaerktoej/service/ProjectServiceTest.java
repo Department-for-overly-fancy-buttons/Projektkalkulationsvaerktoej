@@ -10,10 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -65,6 +62,33 @@ public class ProjectServiceTest
         Project result = projectService.getProjectByID(projectId);
 
         assertEquals(7, result.getHourEstimate());
+        verify(projectRepository, times(1)).getProjectByID(projectId);
+        verify(taskRepository, times(1)).getAllTasksForProjects(projectId);
+        verifyNoMoreInteractions(projectRepository, taskRepository);
+    }
+    @Test
+    void getProjectByID_calculatesHourEstimateFromTasksAndSubtask()
+    {
+        int projectId = 1;
+        Project project = new Project(projectId, "Test-pro", "Beskrivelse", true, new Date(), new Date());
+
+        Task t1 = new Task();
+        Task t2 = new Task();
+        t2.setHourEstimate(2);
+
+        Task subtask1 = new Task();
+        subtask1.setHourEstimate(3);
+        Task subtask2 = new Task();
+        subtask2.setHourEstimate(3);
+
+        t1.setTasks(Set.of(subtask1, subtask2));
+
+        when(projectRepository.getProjectByID(projectId)).thenReturn(project);
+        when(taskRepository.getAllTasksForProjects(projectId)).thenReturn(Arrays.asList(t1, t2));
+
+        Project result = projectService.getProjectByID(projectId);
+
+        assertEquals(8, result.getHourEstimate());
         verify(projectRepository, times(1)).getProjectByID(projectId);
         verify(taskRepository, times(1)).getAllTasksForProjects(projectId);
         verifyNoMoreInteractions(projectRepository, taskRepository);

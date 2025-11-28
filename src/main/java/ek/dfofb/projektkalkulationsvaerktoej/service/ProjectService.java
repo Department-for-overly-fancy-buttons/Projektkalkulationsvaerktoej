@@ -7,6 +7,8 @@ import ek.dfofb.projektkalkulationsvaerktoej.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+//TODO: Vi kan eventuelt her lave en default startDate /isActive hvis ikke vi allerede har sat det manuelt.
+// Det kan vi eventuelt snakke om i skolen
 
 @Service
 public class ProjectService
@@ -31,7 +33,6 @@ public class ProjectService
 
         List<Task> tasks = taskRepository.getAllTasksForProjects(id);
         int sum = tasks.stream().mapToInt(Task::getHourEstimate).sum();
-
         project.setHourEstimate(sum);
         return project;
     }
@@ -39,8 +40,6 @@ public class ProjectService
     public boolean createProject(Project project)
     {
         return projectRepository.addProject(project);
-        // Vi kan eventuelet her lave en default startDate /isActive hvis ikke vi allerede har sat det manuelt.
-        // Det kan vi eventuelt snakke om i skolen
     }
 
     public Project updateProject(Project project)
