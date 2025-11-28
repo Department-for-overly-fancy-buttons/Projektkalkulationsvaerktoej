@@ -37,7 +37,7 @@ public class AccountRepository implements IAccountRepository {
     @Override
     public boolean addAccount(Account account) throws DataAccessException {
         String sql = "INSERT INTO Accounts(Name, Email, Birthday, " +
-                "Number, WeeklyHours, Password, RoleID";
+                "Number, WeeklyHours, Password, RoleID) VALUES(?,?,?,?,?,?,?)";
         int rowsInserted = jdbcTemplate.update(sql, account.getName(),
                 account.getEmail(), account.getBirthday(), account.getNumber(),
                 account.getWeeklyHours(), account.getPassword(), account.getRoleID());
