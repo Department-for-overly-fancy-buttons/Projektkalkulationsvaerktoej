@@ -30,10 +30,23 @@ public class ProjectService
         Project project = projectRepository.getProjectByID(id);
 
         List<Task> tasks = taskRepository.getAllTasksForProjects(id);
-        int sum = tasks.stream().mapToInt(Task::getHourEstimate).sum();
+        int sum = tasks.stream().mapToInt(this::getTotalHoursForTask).sum();
 
         project.setHourEstimate(sum);
         return project;
+    }
+
+    private int getTotalHoursForTask(Task task)
+    {
+        int total = task.getHourEstimate();
+        if (task.getTasks() != null)
+        {
+            for (Task sub : task.getTasks())
+            {
+                total += getTotalHoursForTask(sub);
+            }
+        }
+        return total;
     }
 
     public boolean createProject(Project project)
