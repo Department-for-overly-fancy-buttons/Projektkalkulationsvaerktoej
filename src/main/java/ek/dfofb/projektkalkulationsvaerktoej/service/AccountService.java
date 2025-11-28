@@ -1,9 +1,7 @@
 package ek.dfofb.projektkalkulationsvaerktoej.service;
 
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
-import ek.dfofb.projektkalkulationsvaerktoej.repository.AccountRowMapper;
 import ek.dfofb.projektkalkulationsvaerktoej.repository.interfaces.IAccountRepository;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
