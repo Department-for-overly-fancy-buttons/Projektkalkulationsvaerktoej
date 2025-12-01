@@ -107,7 +107,7 @@ public class TaskService {
 
     public boolean markAsDone(int taskID) {
         Task task = getTaskByID(taskID);
-        if (task.isCompleted() == false) {
+        if (!task.isCompleted()) {
             task.setCompleted(true);
             updateTask(task);
             return true;
