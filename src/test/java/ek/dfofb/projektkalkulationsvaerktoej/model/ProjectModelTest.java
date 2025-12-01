@@ -18,7 +18,7 @@ public class ProjectModelTest
         assertEquals(1, project.getProjectID());
         assertEquals("projektNavn", project.getName());
         assertEquals("beskrivelse", project.getDescription());
-        assertTrue(project.isActive());
+        assertTrue(project.getIsActive());
         assertEquals(start, project.getStartDate());
         assertEquals(deadline, project.getDeadline());
     }
@@ -39,7 +39,7 @@ public class ProjectModelTest
 
         assertEquals("Test", project.getName());
         assertEquals("Beskr", project.getDescription());
-        assertFalse(project.isActive());
+        assertFalse(project.getIsActive());
         assertEquals(start, project.getStartDate());
         assertEquals(deadline, project.getDeadline());
         assertEquals(42, project.getHourEstimate());

@@ -60,7 +60,7 @@ public class Project
         this.description = description;
     }
 
-    public boolean isActive()
+    public boolean getIsActive()
     {
         return isActive;
     }

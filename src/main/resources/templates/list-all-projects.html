@@ -25,7 +25,7 @@
         <td th:text="${project.projectID}"></td>
         <td th:text="${project.name}"></td>
         <td th:text="${project.description}"></td>
-        <td th:text="${project.active}"></td>
+        <td th:text="${project.isActive}"></td>
         <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
     </tr>
