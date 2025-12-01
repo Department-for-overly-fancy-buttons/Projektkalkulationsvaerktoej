@@ -1,9 +1,8 @@
 package ek.dfofb.projektkalkulationsvaerktoej.model;
 
-import java.util.Date;
+import java.sql.Date;
 
-public class Account
-{
+public class Account {
     private int accountID;
     private String name;
     private String email;
@@ -11,11 +10,11 @@ public class Account
     private String number;
     private int weeklyHours;
     private String password;
-    private Role role;
+    private int roleID;
 
-    public Account(){};
+    public Account() {}
 
-    public Account(int accountID, String name, String email, Date birthday, String number, int weeklyHours, String password) {
+    public Account(int accountID, String name, String email, Date birthday, String number, int weeklyHours, String password, int roleID) {
         this.accountID = accountID;
         this.name = name;
         this.email = email;
@@ -23,6 +22,15 @@ public class Account
         this.number = number;
         this.weeklyHours = weeklyHours;
         this.password = password;
+        this.roleID = roleID;
+    }
+
+    public int getRoleID() {
+        return roleID;
+    }
+
+    public void setRoleID(int roleID) {
+        this.roleID = roleID;
     }
 
     public int getAccountID() {
@@ -79,13 +87,5 @@ public class Account
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }
