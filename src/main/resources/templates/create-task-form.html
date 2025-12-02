@@ -40,6 +40,6 @@
     <button type="submit">Opret opgave</button>
 </form>
 
-<a th:href="@{/project/list}">Tilbage til projektliste</a>
+<a th:href="@{/project/{projectName}(projectName=${projectName})}">Tilbage til projekt</a>
 </body>
 </html>
