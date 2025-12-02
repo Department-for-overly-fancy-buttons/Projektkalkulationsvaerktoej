@@ -28,6 +28,13 @@
         <td th:text="${project.isActive}"></td>
         <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
+        <td>
+            <form method="post" th:action="@{/project/getID}" th:object="${project}">
+                <button type="submit">Info</button>
+                <input type="hidden" name="projectID" th:value="${project.projectID}"/>
+                <input type="hidden" name="projectName" th:value="${project.name}">
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
