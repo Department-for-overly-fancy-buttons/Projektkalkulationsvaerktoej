@@ -18,7 +18,7 @@
         <th>Aktiv</th>
         <th>Startdato</th>
         <th>Deadline</th>
-        <th>Tidsestimat</th>
+        <th>Tidsestimat (timer)</th>
     </tr>
     </thead>
     <tbody>
@@ -56,7 +56,7 @@
         <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
         <td th:text="${task.hourEstimate}"></td>
         <td>
-            <form method="post" th:action="@{/task/getID}" th:object="${task}">
+            <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
                 <button type="submit">Info</button>
                 <input type="hidden" name="taskID" th:value="${task.taskID}"/>
                 <input type="hidden" name="taskName" th:value="${task.name}">
