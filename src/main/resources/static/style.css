@@ -24,12 +24,15 @@
 }
 
 html {
+    /*font-size: 25px;*/
 }
 
 body {
     border: 0;
     margin: 0;
 }
+
+/* Start of header style */
 
 nav {
     min-height: 5vh;
@@ -108,6 +111,63 @@ nav {
     height: 24px;
 }
 
+/* End of header style */
+
+/* Start of project-overview style */
+
+.overview {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.projectItem {
+    width: 13rem;
+    height: 5rem;
+    background-color: darkorange;
+    border-radius: 5%;
+    margin: 0.5% 2%;
+    padding: 0.5rem;
+    overflow: hidden;
+}
+
+.projectItemText {
+    margin: 0.25rem 0;
+}
+
+#progressbarBorder {
+    width: 50%;
+    height: 1rem;
+    background-color: deeppink;
+}
+
+#progressbarProgress {
+    height: -webkit-fill-available;
+    min-width: 1%;
+    background-color: blue;
+}
+
+#overviewLayout {
+    margin: 1%;
+    padding: 1%;
+    background-color: brown;
+    display: flex;
+    flex-direction: column;
+}
+
+#createProjectButton {
+    height: 5rem;
+    padding: 0 4rem;
+}
+
+.Descriptor {
+
+}
+
+/* End of project-overview style */
+
+/* Start of front-page style */
+
 #frontPageLayout {
     margin: 1%;
     padding: 1%;
@@ -118,3 +178,5 @@ nav {
     margin: 2.5%;
     background-color: darkorange;
 }
+
+/* End of front-page style */

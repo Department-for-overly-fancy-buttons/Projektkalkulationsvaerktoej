@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>projects</title>
+    <link rel="styleSheet" th:href="@{/style.css}"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div id="overviewLayout">
+    <div class="Descriptor">
+        <h1>test description header</h1>
+    </div>
+    <div class="overview">
+            <div class="projectItem" th:each="project : ${projectList}">
+                <p class="projectItemText" th:text="${project.title}"></p>
+                <p class="projectItemText" th:text="${project.deadline}"></p>
+                <div id="progressbarBorder">
+                    <div id="progressbarProgress" th:style="'width:' + (${percentOfProgressDone.removeFirst()}) + '%'">
+                    </div>
+                </div>
+            </div>
+        <div class="projectItem">
+        <input id="createProjectButton" type="image" onclick="location.href='/'" th:src="@{/images/Dept=ofb_Logo.png}" alt="Create new project">
+    </div>
+    </div>
+</div>
+
+</body>
+</html>
