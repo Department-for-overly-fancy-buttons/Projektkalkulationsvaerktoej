@@ -74,7 +74,8 @@ public class ProjectController {
     public String addTask(@ModelAttribute Task task) {
         System.out.println(task.getProjectID());
         taskService.addTask(task);
+        String projectName = projectService.getProjectByID(task.getProjectID()).getName();
         //Redirect til listen af tasks eller den nye task
-        return ("redirect:/project/list");
+        return ("redirect:/project/" + projectName);
     }
 }
