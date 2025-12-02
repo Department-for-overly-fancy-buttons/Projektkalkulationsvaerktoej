@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Opret projekt</title>
+</head>
+<body>
+<h1>Opret nyt projekt</h1>
+
+<form th:action="@{/project/create}" th:object="${project}" method="post">
+    <div>
+        <label for="name">Navn:</label>
+        <input id="name" type="text" th:field="*{name}" required/>
+    </div>
+
+    <div>
+        <label for="description">Beskrivelse:</label>
+        <textarea id="description" th:field="*{description}"></textarea>
+    </div>
+
+    <div>
+        <label for="startDate">Startdato:</label>
+        <input id="startDate" type="date" th:field="*{startDate}"/>
+    </div>
+
+    <div>
+        <label for="deadline">Deadline:</label>
+        <input id="deadline" type="date" th:field="*{deadline}"/>
+    </div>
+
+    <div>
+        <label for="isActive">Aktiv:</label>
+        <input id="isActive" type="checkbox" th:field="*{isActive}"/>
+    </div>
+
+    <button type="submit">Gem projekt</button>
+</form>
+
+<a th:href="@{/project/list}">Tilbage til projektliste</a>
+</body>
+</html>

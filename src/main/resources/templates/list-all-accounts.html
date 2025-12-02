@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Projekter</title>
+</head>
+<body>
+<h1>Projekter</h1>
+
+<a th:href="@{/account/create}">Opret ny bruger</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Navn</th>
+        <th>Email</th>
+        <th>TelefonNummer</th>
+        <th>Fødselsdato</th>
+        <th>Rolle</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${accounts}">
+        <td th:text="${account.name}"></td>
+        <td th:text="${account.email}"></td>
+        <td th:text="${account.number}"></td>
+        <td th:text="${#dates.format(account.birthday, 'yyyy-MM-dd')}"></td>
+        <td th:text="'indsæt rollenavn'"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

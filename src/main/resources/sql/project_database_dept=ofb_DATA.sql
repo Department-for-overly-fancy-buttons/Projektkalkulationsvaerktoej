@@ -67,11 +67,6 @@ VAlUES (4,1),
 		(5,1),
         (5,2),
         (5,3);
-SELECT * FROM Roles;
-SELECT * FROM RolePermissions;
-SELECT Roles.Name, Permissions.Name, Permissions.Description FROM RolePermissions
-JOIN Permissions ON RolePermissions.PermissionID=Permissions.PermissionID
-JOIN Roles ON RolePermissions.RoleID=Roles.RoleID;
 
 INSERT INTO Accounts (Name, Email, WeeklyHours, Password, RoleID)
 VALUES ("Markus Addington", "addington@icloud.com", 42, "asdj3(Fsah2", 4),
@@ -95,7 +90,6 @@ VALUES ("Ecommerce platform for _Adaptive Problemsolvers_", "_Adaptive Probelmso
 		("Update mobile portal for _Tangible value_", "_Tangible value_ has requested an update to their current onli...", false, DATE("2025-11-11"), DATE("2026-03-5")),
 		("Set up of Language model AI at _Smaller corpo firm_", "_Smaller corpo firm_ is launching an AI, and has aksed to collabo...", false, DATE("2025-07-09"), DATE("2026-01-27")),
 		("Advertising campaign for ECOMCON", "We are in need of a campaign for the semi Annuel Ecommerce conventi...", false, DATE("2025-09-18"), DATE("2026-04-19"));
-SELECT * FROM Projects;
 
 INSERT INTO ProjectMembers
 VALUES (1, 1),
@@ -118,11 +112,6 @@ VALUES (1, 1),
 (2, 13),
 (3, 13);
 
-SELECT Projects.Name, Accounts.Name, Roles.Name FROM ProjectMembers
-JOIN Projects ON ProjectMembers.ProjectID=Projects.ProjectID
-JOIN Accounts ON ProjectMembers.AccountID=Accounts.AccountID
-JOIN Roles ON Accounts.RoleID=Roles.RoleID;
-
 INSERT INTO Tasks (Name, Description, Completed, StartDate, Deadline, ProjectID, ParentID)
 VALUES ("Web application", "_Adaptive Probelmsolvers_ need a new webplatform. It nee...", true, DATE("2025-12-06"), DATE("2026-01-28"), 1, 0),
 		("Mobile application", "_Adaptive Probelmsolvers_ needs a matching", true, DATE("2026-01-28"), DATE("2026-03-18"), 1, 0),
@@ -132,4 +121,3 @@ VALUES ("Web application", "_Adaptive Probelmsolvers_ need a new webplatform. It
 		("AI language model", "_Smaller corpo firm_ is launching an AI, and has aksed to collabo...", false, DATE("2025-07-09"), DATE("2026-01-27"), 4, 0),
 		("Customer analysis", "IDentify our customers and thei...", false, DATE("2025-09-18"), DATE("2025-10-29"), 5, 0),
         ("Campaign", "build a campaign for the semi Annuel Ecommerce conventi...", false, DATE("2025-11-01"), DATE("2026-04-19"), 5, 0);
-SELECT * FROM Tasks;

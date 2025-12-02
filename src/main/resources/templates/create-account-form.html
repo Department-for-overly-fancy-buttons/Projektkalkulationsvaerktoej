@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Opret bruger</title>
+</head>
+<body>
+<h1>Opret ny bruger</h1>
+
+<form th:action="@{/account/create}" th:object="${account}" method="post">
+    <div>
+        <label for="nameAccount">Navn:</label>
+        <input id="nameAccount" type="text" th:field="*{name}" required/>
+    </div>
+
+    <div>
+        <label for="email">Email:</label>
+        <input id="email" type="email" th:field="*{email}" required></input>
+    </div>
+
+    <div>
+        <label for="Fødselsdato">Fødselsdato:</label>
+        <input id="Fødselsdato" type="date" th:field="*{birthday}"/>
+    </div>
+
+    <div>
+        <label for="description">Phone number:</label>
+        <input id="description" th:field="*{number}" required></input>
+    </div>
+
+
+    <div>
+        <label for="workHours">Arbejdstimer per uge:</label>
+        <input id="workHours" type="number" th:field="*{weeklyHours}" required></input>
+    </div>
+
+    <div>
+        <label for="password">Kodeord:</label>
+        <input id="password" type="password" th:field="*{password}" required></input>
+    </div>
+
+    <div>
+        <label for="roleID">rolle (skal være dropdown)</label>
+        <input id="roleID" type="number" th:field="*{roleID}" required></input>
+    </div>
+
+    <!--drop down with role menu-->
+
+    <button type="submit">Opret bruger</button>
+</form>
+
+<a th:href="@{/account/list}">Tilbage til liste over brugere</a>
+</body>
+</html>

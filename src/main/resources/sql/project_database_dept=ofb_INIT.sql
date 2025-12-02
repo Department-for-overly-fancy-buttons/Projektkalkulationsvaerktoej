@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS `project_database_dept:ofb`;
-CREATE DATABASE `project_database_dept:ofb`
+CREATE DATABASE `project_database_dept:ofb`;
   DEFAULT CHARACTER SET utf8mb4;
 USE `project_database_dept:ofb`;
 
