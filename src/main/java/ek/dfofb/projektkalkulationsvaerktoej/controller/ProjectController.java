@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("project")
 public class ProjectController {
@@ -53,7 +55,16 @@ public class ProjectController {
         }
         int projectID = (int) httpSession.getAttribute(projectName);
         Project project = projectService.getProjectByID(projectID);
+        List<Task> tasks = taskService.getAllTasksForProjects(projectID);
+
+        //Skal nok rykkes til servicelaget
+        int hours = 0;
+        for(Task task: tasks){
+            hours += taskService.hoursLeftOnTask(task.getTaskID());
+        }
+        model.addAttribute("hourEstimate",hours);
         model.addAttribute("project", project);
+        model.addAttribute("tasks",tasks);
         return "showProject";
     }
 
@@ -72,10 +83,12 @@ public class ProjectController {
 
     @PostMapping("/create/task")
     public String addTask(@ModelAttribute Task task) {
-        System.out.println(task.getProjectID());
         taskService.addTask(task);
+        if(task.getParentID()!=0){
+            //skal redirecte til tasken den er lavet under
+            return ("redirect:/project/list");
+        }
         String projectName = projectService.getProjectByID(task.getProjectID()).getName();
-        //Redirect til listen af tasks eller den nye task
         return ("redirect:/project/" + projectName);
     }
 }
