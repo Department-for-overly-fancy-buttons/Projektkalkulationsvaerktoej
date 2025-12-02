@@ -74,15 +74,29 @@ public class TaskService {
             return taskRepository.addTask(task);
         }catch (DataIntegrityViolationException exception){
             throw new DuplicateTaskException("A task of the chosen name (" + task.getName() + ") already exists in this project");
+        } catch (DataAccessException e) {
+            throw new DatabaseOperationException("A fatal error has occurred while attempting to create task");
         }
     }
 
     public Task updateTask(Task task) {
-        return taskRepository.updateTask(task);
+        try {
+            return taskRepository.updateTask(task);
+        }catch (DataIntegrityViolationException exception){
+            throw new DuplicateTaskException("A task of the chosen name (" + task.getName() + ") already exists in this project");
+        }catch (DataAccessException exception){
+            throw new DatabaseOperationException("A fatal error has occurred while attempting to update task");
+        }
     }
 
     public boolean deleteTask(int taskID) throws DataAccessException {
-        return taskRepository.deleteTask(taskID);
+        try {
+            return taskRepository.deleteTask(taskID);
+        }catch (DataIntegrityViolationException exception){
+            throw new TaskNotFoundException("A task, with id (" + taskID + ") could not be found");
+        }catch (DataAccessException exception){
+            throw new DatabaseOperationException("A fatal error has occurred while attempting to delete task");
+        }
     }
 
     public int timeUntilDeadline(int taskID) {

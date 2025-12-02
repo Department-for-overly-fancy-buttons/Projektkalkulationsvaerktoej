@@ -1,6 +1,6 @@
 package ek.dfofb.projektkalkulationsvaerktoej.exceptions;
 
-public class AccountNotFoundException extends RuntimeException
+public class AccountNotFoundException extends EntryNotFoundException
 {
     public AccountNotFoundException(String message)
     {
