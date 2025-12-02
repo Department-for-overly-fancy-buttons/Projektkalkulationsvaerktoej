@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Projekt</title>
+</head>
+<body>
+<h1>Projekt</h1>
+
+<a th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret ny Opgave</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>Aktiv</th>
+        <th>Startdato</th>
+        <th>Deadline</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${project.projectID}"></td>
+        <td th:text="${project.name}"></td>
+        <td th:text="${project.description}"></td>
+        <td th:text="${project.isActive}"></td>
+        <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
