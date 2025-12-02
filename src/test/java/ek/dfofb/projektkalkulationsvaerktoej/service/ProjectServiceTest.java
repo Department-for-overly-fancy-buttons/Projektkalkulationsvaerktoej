@@ -1,5 +1,6 @@
 package ek.dfofb.projektkalkulationsvaerktoej.service;
 
+import ek.dfofb.projektkalkulationsvaerktoej.exceptions.ProjectNotFoundException;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Task;
 import ek.dfofb.projektkalkulationsvaerktoej.repository.ProjectRepository;
@@ -110,4 +111,13 @@ public class ProjectServiceTest
         verify(projectRepository, times(1)).updateProject(project);
         verifyNoMoreInteractions(projectRepository, taskRepository);
     }
+
+    @Test
+    void getProjectByID_throwsProjectNotFoundException_whenGivenUnusedID(){
+        int unusedProjectID = 9999999;
+        when(projectRepository.getProjectByID(unusedProjectID)).thenThrow(ProjectNotFoundException.class);
+
+        assertThrows(ProjectNotFoundException.class, () -> {Project project = projectRepository.getProjectByID(unusedProjectID);});
+    }
+
 }
