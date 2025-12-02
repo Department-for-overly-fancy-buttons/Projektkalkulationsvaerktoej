@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Projekter</title>
+</head>
+<body>
+<h1>Projekter</h1>
+
+<a th:href="@{/project/create}">Opret nyt projekt</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>Aktiv</th>
+        <th>Startdato</th>
+        <th>Deadline</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project : ${projects}">
+        <td th:text="${project.projectID}"></td>
+        <td th:text="${project.name}"></td>
+        <td th:text="${project.description}"></td>
+        <td th:text="${project.active}"></td>
+        <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
