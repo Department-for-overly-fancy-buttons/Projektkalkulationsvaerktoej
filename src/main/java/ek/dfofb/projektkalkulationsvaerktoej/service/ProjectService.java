@@ -43,6 +43,7 @@ public class ProjectService
             Project project = projectRepository.getProjectByID(id);
             int sum;
 
+            //DOes this exxception checking make sense?
             try {
                 List<Task> tasks = taskRepository.getAllTasksForProjects(id);
                 sum = tasks.stream().mapToInt(Task::getHourEstimate).sum();
