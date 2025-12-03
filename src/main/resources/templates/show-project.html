@@ -30,6 +30,9 @@
         <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
         <td th:text="${hourEstimate}"></td>
+        <td>
+            <a th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger projekt</a>
+        </td>
     </tr>
     </tbody>
 </table>

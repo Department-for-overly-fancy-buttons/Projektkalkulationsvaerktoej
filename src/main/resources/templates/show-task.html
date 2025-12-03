@@ -10,11 +10,11 @@
 <!--skal sende til create subtask-->
 <td th:switch="${task.parentID}">
     <div th:case="'0'"><a
-            th:href="@{/project/{projectName}/{taskName}/create/task (projectName = ${projectName}, taskName = ${taskName})}">Opret
+            th:href="@{/project/{projectName}/{taskName}/create/task (projectName = ${projectName}, taskName = ${task.name})}">Opret
         ny opgave</a>
     </div>
     <div th:case="*">
-        <a th:href="@{/project/{projectName}/{taskName}/create/task (projectName = ${projectName}, taskName = ${subTaskName})}">Opret
+        <a th:href="@{/project/{projectName}/{taskName}/create/task (projectName = ${projectName}, taskName = ${task.name})}">Opret
             ny underopgave</a>
     </div>
 </td>
@@ -40,6 +40,9 @@
         <td th:text="${#dates.format(task.startDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
         <td th:text="${hourEstimate}"></td>
+        <td>
+            <a th:href="@{/project/{projectName}/{taskName}/edit (projectName=${projectName},taskName=${task.name})}">Rediger opgave</a>
+        </td>
     </tr>
     </tbody>
 </table>
