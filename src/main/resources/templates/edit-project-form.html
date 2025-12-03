@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="da">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Opdater projekt</title>
+</head>
+<body>
+<h1>Opdater projekt</h1>
+
+<form th:action="@{/project/edit}" th:object="${project}" method="post">
+    <div>
+        <label for="name">Navn:</label>
+        <input id="name" type="text" th:field="*{name}" required th:value="${project.name}"/>
+    </div>
+
+    <div>
+        <label for="description">Beskrivelse:</label>
+        <textarea id="description" th:field="*{description}" th:value="${project.description}"></textarea>
+    </div>
+
+    <div>
+        <label for="startDate">Startdato:</label>
+        <input id="startDate" type="date" th:field="*{startDate}" th:value="${project.startDate}"/>
+    </div>
+
+    <div>
+        <label for="deadline">Deadline:</label>
+        <input id="deadline" type="date" th:field="*{deadline}" th:value="${project.deadline}"/>
+    </div>
+
+    <div>
+        <label for="isActive">Aktiv:</label>
+        <input id="isActive" type="checkbox" th:field="*{isActive}" th:value="${project.isActive}"/>
+    </div>
+
+    <button type="submit">Gem projekt</button>
+</form>
+
+<a th:href="@{/project/{projectName}(projectName=${projectName})}">Tilbage til projekt</a>
+
+</body>
+</html>
