@@ -58,19 +58,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="task : ${tasks}">
-        <td th:text="${task.taskID}"></td>
-        <td th:text="${task.name}"></td>
-        <td th:text="${task.description}"></td>
-        <td th:text="${task.isCompleted()}"></td>
-        <td th:text="${#dates.format(task.startDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
-        <td th:text="${task.hourEstimate}"></td>
+    <tr th:each="taskList : ${tasks}">
+        <td th:text="${taskList.taskID}"></td>
+        <td th:text="${taskList.name}"></td>
+        <td th:text="${taskList.description}"></td>
+        <td th:text="${taskList.isCompleted()}"></td>
+        <td th:text="${#dates.format(taskList.startDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(taskList.deadLine, 'yyyy-MM-dd')}"></td>
+        <td th:text="${taskList.hourEstimate}"></td>
         <td>
             <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
                 <button type="submit">Info</button>
-                <input type="hidden" name="taskID" th:value="${task.taskID}"/>
-                <input type="hidden" name="taskName" th:value="${task.name}">
+                <input type="hidden" name="taskID" th:value="${taskList.taskID}"/>
+                <input type="hidden" name="taskName" th:value="${taskList.name}">
             </form>
         </td>
     </tr>
@@ -80,13 +80,12 @@
     <div th:case="'0'"><a
             th:href="@{/project/{projectName}(projectName=${projectName})}">Tilbage til projekt</a>
     </div>
-    <div th:case="${mainTaskID}">
-        <a th:href="@{/project/{projectName}/{taskName}(projectName=${projectName},taskName=${mainTask})}">Tilbage til
-            over opgaven</a>
-    </div>
     <div th:case="*">
-        <a th:href="@{/project/{projectName}/{taskName}/{subTaskName}(projectName=${projectName},taskName=${taskName},subTaskName=${subTaskName})}">Tilbage til
-            over opgave</a>
+        <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
+            <button type="submit">Tilbage</button>
+            <input type="hidden" name="taskID" th:value="${mainTaskID}"/>
+            <input type="hidden" name="taskName" th:value="${mainTask}">
+        </form>
     </div>
 </td>
 </body>

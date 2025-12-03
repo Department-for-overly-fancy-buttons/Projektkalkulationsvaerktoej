@@ -44,6 +44,10 @@
     <button type="submit">Opret opgave</button>
 </form>
 
-<a th:href="@{/project/{projectName}(projectName=${projectName})}">Tilbage til projekt</a>
+<form method="post" th:action="@{/project/task/getID}" th:object="${task}">
+    <button type="submit">Tilbage</button>
+    <input type="hidden" name="taskID" th:value="${task.parentID}"/>
+    <input type="hidden" name="taskName" th:value="${taskName}">
+</form>
 </body>
 </html>

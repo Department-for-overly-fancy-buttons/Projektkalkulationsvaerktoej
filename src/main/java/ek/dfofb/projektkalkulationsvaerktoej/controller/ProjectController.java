@@ -51,14 +51,11 @@ public class ProjectController {
     @PostMapping("/task/getID")
     public String saveCurrentTaskID(String taskName, int taskID, HttpSession httpSession) {
         String projectName = projectService.getProjectByID(taskService.getTaskByID(taskID).getProjectID()).getName();
-        if (taskService.getTaskByID(taskID).getParentID() == 0) {
-            httpSession.setAttribute(taskName, taskID);
+        httpSession.setAttribute("currentTask", taskID);
+        int parentID = taskService.getTaskByID(taskID).getParentID();
+        if (parentID == 0) {
             return "redirect:/project/" + projectName + "/" + taskName;
         }
-        int parentID = taskService.getTaskByID(taskID).getParentID();
-        httpSession.setAttribute(taskName, parentID);
-        String subTask = "sub" + taskName;
-        httpSession.setAttribute(subTask, taskID);
         return "redirect:/project/" + projectName + "/" + taskService.getTaskByID(parentID).getName() + "/" + taskName;
     }
 
@@ -95,16 +92,14 @@ public class ProjectController {
 
     @GetMapping("/{projectName}/{taskName}/create/task")
     public String createSubTask(Model model, @PathVariable String projectName, @PathVariable String taskName, HttpSession httpSession) {
-        if (httpSession.getAttribute(projectName) == null || (httpSession.getAttribute(taskName) == null && httpSession.getAttribute("sub" + taskName) == null)) {
+        int taskID = (Integer) httpSession.getAttribute("currentTask");
+        String currentTask = taskService.getTaskByID(taskID).getName();
+        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null || !currentTask.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
         Task task = new Task();
         task.setProjectID((Integer) httpSession.getAttribute(projectName));
-        if (httpSession.getAttribute(taskName) == null) {
-            task.setParentID((Integer) httpSession.getAttribute("sub" + taskName));
-        } else {
-            task.setParentID((Integer) httpSession.getAttribute(taskName));
-        }
+        task.setParentID((Integer) httpSession.getAttribute("currentTask"));
         model.addAttribute("task", task);
         return "create-sub-task-form";
     }
@@ -123,10 +118,11 @@ public class ProjectController {
 
     @GetMapping("/{projectName}/{taskName}")
     public String showTask(Model model, @PathVariable String projectName, @PathVariable String taskName, HttpSession httpSession) {
-        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute(taskName) == null) {
+        int taskID = (Integer) httpSession.getAttribute("currentTask");
+        String name = taskService.getTaskByID(taskID).getName();
+        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null || !name.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
-        int taskID = (Integer) httpSession.getAttribute(taskName);
         model.addAttribute("task", taskService.getTaskByID(taskID));
         model.addAttribute("tasks", taskService.getAllSubTasks(taskID));
         model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID));
@@ -135,25 +131,23 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectName}/{taskName}/{subTaskName}")
-    public String showSubTask(Model model, @PathVariable String projectName, @PathVariable String taskName, @PathVariable String subTaskName, HttpSession httpSession) {
-        if (httpSession.getAttribute(projectName) == null || (httpSession.getAttribute(taskName) == null && httpSession.getAttribute("sub" + subTaskName) == null)) {
+    public String showSubTask(Model model, @PathVariable String projectName, @PathVariable String taskName, @PathVariable(required = false) String subTaskName, HttpSession httpSession) {
+        int taskID = (Integer) httpSession.getAttribute("currentTask");
+        int mainTaskID = taskService.getTaskByID(taskID).getParentID();
+        String currentTask = taskService.getTaskByID(taskID).getName();
+        String mainTaskName = taskService.getTaskByID(mainTaskID).getName();
+        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null
+                || !currentTask.equalsIgnoreCase(subTaskName) || !mainTaskName.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
-        if (taskService.getTaskByID((Integer) httpSession.getAttribute(taskName)).getParentID() != 0) {
-            String previousTask = taskService.getTaskByID(taskService.getTaskByID((Integer) httpSession.getAttribute("sub" + taskName)).getParentID()).getName();
-            model.addAttribute("taskName", previousTask);
-            System.out.println(previousTask);
-        }
-        int taskID = (Integer) httpSession.getAttribute("sub" + subTaskName);
-        int mainTaskID = (Integer) httpSession.getAttribute(taskName);
+
         model.addAttribute("task", taskService.getTaskByID(taskID));
         model.addAttribute("tasks", taskService.getAllSubTasks(taskID));
-        model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID));
         model.addAttribute("projectName", projectName);
-        model.addAttribute("subTaskName", taskName);
+        model.addAttribute("subTaskName", currentTask);
         model.addAttribute("mainTaskID", mainTaskID);
-        model.addAttribute("mainTask",taskService.getTaskByID(mainTaskID).getName());
-        System.out.println(mainTaskID + " " + taskID);
+        model.addAttribute("mainTask", mainTaskName);
+        model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID));
         return "show-task";
     }
 
