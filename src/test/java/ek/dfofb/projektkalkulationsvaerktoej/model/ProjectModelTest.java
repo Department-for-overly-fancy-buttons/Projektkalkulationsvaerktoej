@@ -32,7 +32,7 @@ public class ProjectModelTest
 
         project.setName("Test");
         project.setDescription("Beskr");
-        project.setActive(false);
+        project.setIsActive(false);
         project.setStartDate(start);
         project.setDeadline(deadline);
         project.setHourEstimate(42);
