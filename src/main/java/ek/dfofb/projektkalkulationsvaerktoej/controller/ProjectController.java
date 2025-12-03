@@ -140,7 +140,6 @@ public class ProjectController {
                 || !currentTask.equalsIgnoreCase(subTaskName) || !mainTaskName.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
-
         model.addAttribute("task", taskService.getTaskByID(taskID));
         model.addAttribute("tasks", taskService.getAllSubTasks(taskID));
         model.addAttribute("projectName", projectName);
@@ -149,6 +148,37 @@ public class ProjectController {
         model.addAttribute("mainTask", mainTaskName);
         model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID));
         return "show-task";
+    }
+
+    @GetMapping("/{projectName}/edit")
+    public String editProject(Model model, @PathVariable String projectName, HttpSession httpSession) {
+        if (httpSession.getAttribute(projectName) == null) {
+            return "redirect:/project/list";
+        }
+        int projectID = (int) httpSession.getAttribute(projectName);
+        Project project = projectService.getProjectByID(projectID);
+        model.addAttribute("project", project);
+        return "edit-project-form";
+    }
+
+    @GetMapping("/{projectName}/{taskName}/edit")
+    public String editTask(Model model, @PathVariable String projectName, @PathVariable String taskName, HttpSession httpSession) {
+        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null) {
+            return "redirect:/project/list";
+        }
+        Task task = taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask"));
+        model.addAttribute("task", task);
+        return "edit-task-form";
+    }
+
+    @PostMapping("/edit")
+    public String updateProject() {
+        return "";
+    }
+
+    @PostMapping("/task/edit")
+    public String updateTask() {
+        return "";
     }
 
 }
