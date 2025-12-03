@@ -3,8 +3,7 @@ package ek.dfofb.projektkalkulationsvaerktoej.model;
 import java.sql.Date;
 import java.util.Set;
 
-public class Project
-{
+public class Project {
     private int projectID;
     private String name;
     private String description;
@@ -15,13 +14,11 @@ public class Project
     private Set<Account> assignedWorkers;
     private Set<Task> tasks;
 
-    public Project()
-    {
+    public Project() {
 
     }
 
-    public Project(int projectID, String name, String description, boolean isActive, Date startDate, Date deadline)
-    {
+    public Project(int projectID, String name, String description, boolean isActive, Date startDate, Date deadline) {
         this.projectID = projectID;
         this.name = name;
         this.description = description;
@@ -30,87 +27,75 @@ public class Project
         this.deadline = deadline;
     }
 
-    public int getProjectID()
-    {
+    public void setProjectID(int projectID) {
+        this.projectID = projectID;
+    }
+
+    public int getProjectID() {
         return projectID;
     }
 
-    public int getHourEstimate()
-    {
+    public int getHourEstimate() {
         return hourEstimate;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description)
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public boolean getIsActive()
-    {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active)
-    {
+    public void setIsActive(boolean active) {
         isActive = active;
     }
 
-    public Date getStartDate()
-    {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate)
-    {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public Date getDeadline()
-    {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Date deadline)
-    {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 
-    public Set<Account> getAssignedWorkers()
-    {
+    public Set<Account> getAssignedWorkers() {
         return assignedWorkers;
     }
 
-    public void setAssignedWorkers(Set<Account> assignedWorkers)
-    {
+    public void setAssignedWorkers(Set<Account> assignedWorkers) {
         this.assignedWorkers = assignedWorkers;
     }
 
-    public Set<Task> getTasks()
-    {
+    public Set<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Set<Task> tasks)
-    {
+    public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
-    public void setHourEstimate(int hourEstimate)
-    {
+
+    public void setHourEstimate(int hourEstimate) {
         this.hourEstimate = hourEstimate;
     }
 
