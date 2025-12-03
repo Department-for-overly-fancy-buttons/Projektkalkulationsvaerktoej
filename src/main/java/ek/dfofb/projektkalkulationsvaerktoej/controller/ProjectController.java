@@ -31,7 +31,7 @@ public class ProjectController {
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         Project project = new Project();
-        project.setActive(true);
+        project.setIsActive(true);
         model.addAttribute("project", project);
         return "create-project-form";
     }
@@ -172,13 +172,17 @@ public class ProjectController {
     }
 
     @PostMapping("/edit")
-    public String updateProject() {
-        return "";
+    public String updateProject(@ModelAttribute Project project, HttpSession httpSession) {
+        projectService.updateProject(project);
+        String projectName = projectService.getProjectByID(project.getProjectID()).getName();
+        return saveCurrentProjectID(projectName,project.getProjectID(),httpSession);
     }
 
     @PostMapping("/task/edit")
-    public String updateTask() {
-        return "";
+    public String updateTask(@ModelAttribute Task task, HttpSession httpSession) {
+        taskService.updateTask(task);
+        String taskName = taskService.getTaskByID(task.getTaskID()).getName();
+        return saveCurrentTaskID(taskName,task.getTaskID(),httpSession);
     }
 
 }
