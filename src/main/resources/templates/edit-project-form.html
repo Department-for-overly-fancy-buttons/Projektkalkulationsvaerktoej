@@ -7,30 +7,34 @@
 <body>
 <h1>Opdater projekt</h1>
 
-<form th:action="@{/project/edit}" th:object="${project}" method="post">
+<form action="#" th:action="@{/project/edit}" th:object="${project}" method="post">
     <div>
         <label for="name">Navn:</label>
-        <input id="name" type="text" th:field="*{name}" required th:value="${project.name}"/>
+        <input id="name" type="text" th:field="*{name}" required/>
     </div>
 
     <div>
         <label for="description">Beskrivelse:</label>
-        <textarea id="description" th:field="*{description}" th:value="${project.description}"></textarea>
+        <textarea id="description" th:field="*{description}"></textarea>
     </div>
 
     <div>
         <label for="startDate">Startdato:</label>
-        <input id="startDate" type="date" th:field="*{startDate}" th:value="${project.startDate}"/>
+        <input id="startDate" type="date" th:field="*{startDate}"/>
     </div>
 
     <div>
         <label for="deadline">Deadline:</label>
-        <input id="deadline" type="date" th:field="*{deadline}" th:value="${project.deadline}"/>
+        <input id="deadline" type="date" th:field="*{deadline}"/>
     </div>
 
     <div>
         <label for="isActive">Aktiv:</label>
-        <input id="isActive" type="checkbox" th:field="*{isActive}" th:value="${project.isActive}"/>
+        <input id="isActive" type="checkbox" th:field="*{isActive}"/>
+    </div>
+
+    <div>
+        <input id="projectID" type="hidden" th:field="*{projectID}"/>
     </div>
 
     <button type="submit">Gem projekt</button>

@@ -7,39 +7,43 @@
 <body>
 <h1 th:text="'Opdater ' + ${task.name}"></h1>
 
-<form th:action="@{/project/create/task}" th:object="${task}" method="post">
+<form action="#" th:action="@{/project/task/edit}" th:object="${task}" method="post">
     <div>
         <label for="name">Navn:</label>
-        <input id="name" type="text" th:field="*{name}" required th:value="${task.name}"/>
+        <input id="name" type="text" th:field="*{name}" required/>
     </div>
 
     <div>
         <label for="description">Beskrivelse:</label>
-        <textarea id="description" th:field="*{description}" th:value="${task.description}"></textarea>
+        <textarea id="description" th:field="*{description}"></textarea>
     </div>
 
-<!-- todo hide when a task has subtasks-->
+    <!-- todo hide when a task has subtasks-->
     <div>
         <label for="hourEstimate">Forventet antal timer:</label>
-        <input id="hourEstimate" type="number" th:field="*{hourEstimate}" th:value="${task.hourEstimate}"/>
+        <input id="hourEstimate" type="number" th:field="*{hourEstimate}"/>
     </div>
 
     <div>
         <label for="startDate">Startdato:</label>
-        <input id="startDate" type="date" th:field="*{startDate}" th:value="${task.startDate}"/>
+        <input id="startDate" type="date" th:field="*{startDate}"/>
     </div>
 
     <div>
         <label for="deadline">Deadline:</label>
-        <input id="deadline" type="date" th:field="*{deadLine}" th:value="${task.deadLine}"/>
+        <input id="deadline" type="date" th:field="*{deadLine}"/>
     </div>
 
     <div>
-        <input id="projectIDForTask" type="hidden" th:field="*{projectID}" th:value="task.projectID"/>
+        <input id="taskID" type="hidden" th:field="*{taskID}"/>
     </div>
 
     <div>
-        <input id="parentIDForTask" type="hidden" th:field="*{parentID}" th:value="task.parentID"/>
+        <input id="projectIDForTask" type="hidden" th:field="*{projectID}"/>
+    </div>
+
+    <div>
+        <input id="parentIDForTask" type="hidden" th:field="*{parentID}"/>
     </div>
 
     <button type="submit">Opdater opgave</button>
