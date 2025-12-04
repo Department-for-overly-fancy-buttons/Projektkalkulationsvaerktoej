@@ -22,15 +22,23 @@ public class AccountController {
     }
 
     @GetMapping("/list")
-    public String listProjects(Model model) {
+    public String listProjects(Model model, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:login";
+        }
         model.addAttribute("accounts", accountService.getAllAccounts());
         return "list-all-accounts";
     }
 
     @GetMapping("/create")
-    public String showCreateForm(Model model) {
-        Account account = new Account();
-        model.addAttribute("account", account);
+    public String showCreateForm(Model model, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:login";
+        }
+        Account newAccount = new Account();
+        model.addAttribute("account", newAccount);
         return "create-account-form";
     }
 
@@ -60,7 +68,7 @@ public class AccountController {
     }
 
     @GetMapping("log_out")
-    public String logOut(HttpSession session){
+    public String logOut(HttpSession session) {
         session.removeAttribute("account");
         return "redirect:login";
     }
