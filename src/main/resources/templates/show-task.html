@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Opgave</title>
+</head>
+<body>
+<h1 th:text="${task.name}"></h1>
+
+<!--skal sende til create subtask-->
+<td th:switch="${task.parentID}">
+    <div th:case="'0'"><a
+            th:href="@{/project/{projectName}/{taskName}/create/task (projectName = ${projectName}, taskName = ${task.name})}">Opret
+        ny opgave</a>
+    </div>
+    <div th:case="*">
+        <a th:href="@{/project/{projectName}/{taskName}/create/task (projectName = ${projectName}, taskName = ${task.name})}">Opret
+            ny underopgave</a>
+    </div>
+</td>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>Fuldført</th>
+        <th>Startdato</th>
+        <th>Deadline</th>
+        <th>Tidsestimat (timer)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${task.taskID}"></td>
+        <td th:text="${task.name}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.isCompleted}"></td>
+        <td th:text="${#dates.format(task.startDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
+        <td th:text="${hourEstimate}"></td>
+        <td>
+            <a th:href="@{/project/{projectName}/{taskName}/edit (projectName=${projectName},taskName=${task.name})}">Rediger opgave</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h1 th:text="'Opgaver for ' + ${task.name}"></h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>Fuldført</th>
+        <th>Startdato</th>
+        <th>Deadline</th>
+        <th>Tidsestimat (timer)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="taskList : ${tasks}">
+        <td th:text="${taskList.taskID}"></td>
+        <td th:text="${taskList.name}"></td>
+        <td th:text="${taskList.description}"></td>
+        <td th:text="${taskList.isCompleted()}"></td>
+        <td th:text="${#dates.format(taskList.startDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(taskList.deadLine, 'yyyy-MM-dd')}"></td>
+        <td th:text="${taskList.hourEstimate}"></td>
+        <td>
+            <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
+                <button type="submit">Info</button>
+                <input type="hidden" name="taskID" th:value="${taskList.taskID}"/>
+                <input type="hidden" name="taskName" th:value="${taskList.name}">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<td th:switch="${task.parentID}">
+    <div th:case="'0'"><a
+            th:href="@{/project/{projectName}(projectName=${projectName})}">Tilbage til projekt</a>
+    </div>
+    <div th:case="*">
+        <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
+            <button type="submit">Tilbage</button>
+            <input type="hidden" name="taskID" th:value="${mainTaskID}"/>
+            <input type="hidden" name="taskName" th:value="${mainTask}">
+        </form>
+    </div>
+</td>
+</body>
+</html>

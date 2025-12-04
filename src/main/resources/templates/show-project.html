@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Projekt</title>
+</head>
+<body>
+<h1>Projekt</h1>
+
+<a th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret ny Opgave</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>Aktiv</th>
+        <th>Startdato</th>
+        <th>Deadline</th>
+        <th>Tidsestimat (timer)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${project.projectID}"></td>
+        <td th:text="${project.name}"></td>
+        <td th:text="${project.description}"></td>
+        <td th:text="${project.isActive}"></td>
+        <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
+        <td th:text="${hourEstimate}"></td>
+        <td>
+            <a th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger projekt</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>Fuldført</th>
+        <th>Startdato</th>
+        <th>Deadline</th>
+        <th>Tidsestimat (timer)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.taskID}"></td>
+        <td th:text="${task.name}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.isCompleted()}"></td>
+        <td th:text="${#dates.format(task.startDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
+        <td th:text="${task.hourEstimate}"></td>
+        <td>
+            <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
+                <button type="submit">Info</button>
+                <input type="hidden" name="taskID" th:value="${task.taskID}"/>
+                <input type="hidden" name="taskName" th:value="${task.name}">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/project/list}">Tilbage til projektliste</a>
+</body>
+</html>

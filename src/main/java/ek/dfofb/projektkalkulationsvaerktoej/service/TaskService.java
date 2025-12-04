@@ -23,7 +23,9 @@ public class TaskService {
 
     public Task getTaskByID(int taskID) {
         try {
-            return taskRepository.getTaskByID(taskID);
+            Task task = taskRepository.getTaskByID(taskID);
+            task.setHourEstimate(hoursLeftOnTask(taskID));
+            return task;
         } catch (DataAccessException exception) {
             throw new TaskNotFoundException("Failed to find a task, with the corresponding id:" + taskID);
         }
@@ -31,16 +33,24 @@ public class TaskService {
 
     public List<Task> getAllTasksForProjects(int projectID) {
         try {
-            return taskRepository.getAllTasksForProjects(projectID);
-        }catch (DataAccessException exception){
+            List<Task> tasks = taskRepository.getAllTasksForProjects(projectID);
+            for (Task task : tasks) {
+                task.setHourEstimate(hoursLeftOnTask(task.getTaskID()));
+            }
+            return tasks;
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred, while attempting to access tasks for project, with id: " + projectID);
         }
     }
 
     public List<Task> getAllSubTasks(int taskID) {
         try {
-            return taskRepository.getAllSubTasks(taskID);
-        }catch (DataAccessException exception){
+            List<Task> tasks = taskRepository.getAllSubTasks(taskID);
+            for (Task task : tasks) {
+                task.setHourEstimate(hoursLeftOnTask(task.getTaskID()));
+            }
+            return tasks;
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred, while attempting to access subtasks for task, with id:" + taskID);
         }
     }
@@ -48,7 +58,7 @@ public class TaskService {
     public List<Task> getAllTasksForAccount(int accountID) {
         try {
             return taskRepository.getAllTasksForAccount(accountID);
-        }catch (DataAccessException exception) {
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred, while attempting to access tasks assigned to account with id: " + accountID);
         }
     }
@@ -56,7 +66,7 @@ public class TaskService {
     public List<Account> getAllAccountsAssignedToTask(int taskID) {
         try {
             return taskRepository.getAllAccountsAssignedToTask(taskID);
-        }catch (DataAccessException exception){
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred, while attempting to access accounts assigned to task, with id:" + taskID);
         }
     }
@@ -64,7 +74,7 @@ public class TaskService {
     public boolean assignAccountToTask(int accountID, int taskID) {
         try {
             return taskRepository.assignAccountToTask(accountID, taskID);
-        }catch (DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
             throw new DuplicateTasklistEntryException("an account with id (" + accountID + ") is already assigned a task with id (" + taskID + ")");
         }
     }
@@ -72,7 +82,7 @@ public class TaskService {
     public boolean addTask(Task task) {
         try {
             return taskRepository.addTask(task);
-        }catch (DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
             throw new DuplicateTaskException("A task of the chosen name (" + task.getName() + ") already exists in this project");
         } catch (DataAccessException e) {
             throw new DatabaseOperationException("A fatal error has occurred while attempting to create task");
@@ -82,9 +92,9 @@ public class TaskService {
     public Task updateTask(Task task) {
         try {
             return taskRepository.updateTask(task);
-        }catch (DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
             throw new DuplicateTaskException("A task of the chosen name (" + task.getName() + ") already exists in this project");
-        }catch (DataAccessException exception){
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred while attempting to update task");
         }
     }
@@ -92,9 +102,9 @@ public class TaskService {
     public boolean deleteTask(int taskID) throws DataAccessException {
         try {
             return taskRepository.deleteTask(taskID);
-        }catch (DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
             throw new TaskNotFoundException("A task, with id (" + taskID + ") could not be found");
-        }catch (DataAccessException exception){
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred while attempting to delete task");
         }
     }
@@ -105,7 +115,7 @@ public class TaskService {
     }
 
     public int hoursLeftOnTask(int taskID) {
-        Task task = getTaskByID(taskID);
+        Task task = taskRepository.getTaskByID(taskID);
         if (task.isCompleted()) {
             return 0;
         }
@@ -120,10 +130,10 @@ public class TaskService {
         int hours = 0;
         for (Task subTask : subTasks) {
             if (subTask.isCompleted()) {
-            } else if (getAllSubTasks(subTask.getTaskID()).isEmpty()) {
+            } else if (taskRepository.getAllSubTasks(subTask.getTaskID()).isEmpty()) {
                 hours += subTask.getHourEstimate();
             } else {
-                hours += getHoursForSubTasks(getAllSubTasks(subTask.getTaskID()));
+                hours += getHoursForSubTasks(taskRepository.getAllSubTasks(subTask.getTaskID()));
             }
         }
         return hours;

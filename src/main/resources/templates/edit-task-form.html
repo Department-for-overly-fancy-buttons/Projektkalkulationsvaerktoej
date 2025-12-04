@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="da">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Opret opgave</title>
+</head>
+<body>
+<h1 th:text="'Opdater ' + ${task.name}"></h1>
+
+<form action="#" th:action="@{/project/task/edit}" th:object="${task}" method="post">
+    <div>
+        <label for="name">Navn:</label>
+        <input id="name" type="text" th:field="*{name}" required/>
+    </div>
+
+    <div>
+        <label for="description">Beskrivelse:</label>
+        <textarea id="description" th:field="*{description}"></textarea>
+    </div>
+
+    <!-- todo hide when a task has subtasks-->
+    <div>
+        <label for="hourEstimate">Forventet antal timer:</label>
+        <input id="hourEstimate" type="number" th:field="*{hourEstimate}"/>
+    </div>
+
+    <div>
+        <label for="startDate">Startdato:</label>
+        <input id="startDate" type="date" th:field="*{startDate}"/>
+    </div>
+
+    <div>
+        <label for="deadline">Deadline:</label>
+        <input id="deadline" type="date" th:field="*{deadLine}"/>
+    </div>
+
+    <div>
+        <input id="taskID" type="hidden" th:field="*{taskID}"/>
+    </div>
+
+    <div>
+        <input id="projectIDForTask" type="hidden" th:field="*{projectID}"/>
+    </div>
+
+    <div>
+        <input id="parentIDForTask" type="hidden" th:field="*{parentID}"/>
+    </div>
+
+    <button type="submit">Opdater opgave</button>
+</form>
+
+<form method="post" th:action="@{/project/task/getID}" th:object="${task}">
+    <button type="submit">Tilbage</button>
+    <input type="hidden" name="taskID" th:value="${task.taskID}"/>
+    <input type="hidden" name="taskName" th:value="${task.name}">
+</form>
+</body>
+</html>
