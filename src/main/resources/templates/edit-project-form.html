@@ -5,6 +5,7 @@
     <title>Opdater projekt</title>
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}"></div>
 <h1>Opdater projekt</h1>
 
 <form action="#" th:action="@{/project/edit}" th:object="${project}" method="post">
