@@ -60,4 +60,10 @@ public class AccountRepository implements IAccountRepository {
         int deletedRows = jdbcTemplate.update(sql, accountID);
         return deletedRows != 0;
     }
+
+    @Override
+    public Account getAccountFromEmailAndPassword(String eMail, String password) throws DataAccessException {
+        String sql = "SELECT * FROM Accounts where Email = ? AND Password = ?";
+        return jdbcTemplate.queryForObject(sql, new AccountRowMapper(), eMail, password);
+    }
 }

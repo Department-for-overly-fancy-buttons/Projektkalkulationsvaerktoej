@@ -1,5 +1,6 @@
 package ek.dfofb.projektkalkulationsvaerktoej.controller;
 
+import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Task;
 import ek.dfofb.projektkalkulationsvaerktoej.service.ProjectService;
@@ -23,13 +24,21 @@ public class ProjectController {
     }
 
     @GetMapping("/list")
-    public String listProjects(Model model) {
+    public String listProjects(Model model, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
         model.addAttribute("projects", projectService.getAllProjects());
         return "list-all-projects";
     }
 
     @GetMapping("/create")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(Model model, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
         Project project = new Project();
         project.setIsActive(true);
         model.addAttribute("project", project);
@@ -61,6 +70,10 @@ public class ProjectController {
 
     @GetMapping("/{projectName}")
     public String showProject(Model model, @PathVariable String projectName, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
         if (httpSession.getAttribute(projectName) == null) {
             return "redirect:/project/list";
         }
@@ -81,6 +94,10 @@ public class ProjectController {
 
     @GetMapping("/{projectName}/create/task")
     public String createTask(Model model, @PathVariable String projectName, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
         if (httpSession.getAttribute(projectName) == null) {
             return "redirect:/project/list";
         }
@@ -92,6 +109,10 @@ public class ProjectController {
 
     @GetMapping("/{projectName}/{taskName}/create/task")
     public String createSubTask(Model model, @PathVariable String projectName, @PathVariable String taskName, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
         int taskID = (Integer) httpSession.getAttribute("currentTask");
         String currentTask = taskService.getTaskByID(taskID).getName();
         if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null || !currentTask.equalsIgnoreCase(taskName)) {
@@ -118,6 +139,10 @@ public class ProjectController {
 
     @GetMapping("/{projectName}/{taskName}")
     public String showTask(Model model, @PathVariable String projectName, @PathVariable String taskName, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
         int taskID = (Integer) httpSession.getAttribute("currentTask");
         String name = taskService.getTaskByID(taskID).getName();
         if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null || !name.equalsIgnoreCase(taskName)) {
@@ -132,6 +157,10 @@ public class ProjectController {
 
     @GetMapping("/{projectName}/{taskName}/{subTaskName}")
     public String showSubTask(Model model, @PathVariable String projectName, @PathVariable String taskName, @PathVariable(required = false) String subTaskName, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
         int taskID = (Integer) httpSession.getAttribute("currentTask");
         int mainTaskID = taskService.getTaskByID(taskID).getParentID();
         String currentTask = taskService.getTaskByID(taskID).getName();
@@ -152,6 +181,10 @@ public class ProjectController {
 
     @GetMapping("/{projectName}/edit")
     public String editProject(Model model, @PathVariable String projectName, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
         if (httpSession.getAttribute(projectName) == null) {
             return "redirect:/project/list";
         }
@@ -163,6 +196,10 @@ public class ProjectController {
 
     @GetMapping("/{projectName}/{taskName}/edit")
     public String editTask(Model model, @PathVariable String projectName, @PathVariable String taskName, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
         if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null) {
             return "redirect:/project/list";
         }
@@ -175,14 +212,14 @@ public class ProjectController {
     public String updateProject(@ModelAttribute Project project, HttpSession httpSession) {
         projectService.updateProject(project);
         String projectName = projectService.getProjectByID(project.getProjectID()).getName();
-        return saveCurrentProjectID(projectName,project.getProjectID(),httpSession);
+        return saveCurrentProjectID(projectName, project.getProjectID(), httpSession);
     }
 
     @PostMapping("/task/edit")
     public String updateTask(@ModelAttribute Task task, HttpSession httpSession) {
         taskService.updateTask(task);
         String taskName = taskService.getTaskByID(task.getTaskID()).getName();
-        return saveCurrentTaskID(taskName,task.getTaskID(),httpSession);
+        return saveCurrentTaskID(taskName, task.getTaskID(), httpSession);
     }
 
 }
