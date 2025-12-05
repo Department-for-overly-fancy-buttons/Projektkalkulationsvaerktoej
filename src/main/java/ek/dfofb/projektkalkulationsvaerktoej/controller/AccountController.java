@@ -63,7 +63,7 @@ public class AccountController {
         //TODO find rollen og sæt den på account eller som sin egen session attribute
         session.setAttribute("account", foundAccount);
         session.setMaxInactiveInterval(1800);
-        return "redirect:/project/list";
+        return "redirect:/project";
     }
 
     @GetMapping("log_out")
