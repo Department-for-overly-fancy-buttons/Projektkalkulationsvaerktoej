@@ -3,7 +3,6 @@ package ek.dfofb.projektkalkulationsvaerktoej.service;
 import ek.dfofb.projektkalkulationsvaerktoej.exceptions.AccountNotFoundException;
 import ek.dfofb.projektkalkulationsvaerktoej.exceptions.DatabaseOperationException;
 import ek.dfofb.projektkalkulationsvaerktoej.exceptions.DuplicateAccountException;
-import ek.dfofb.projektkalkulationsvaerktoej.exceptions.TaskNotFoundException;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
 import ek.dfofb.projektkalkulationsvaerktoej.repository.interfaces.IAccountRepository;
 import org.springframework.dao.DataAccessException;

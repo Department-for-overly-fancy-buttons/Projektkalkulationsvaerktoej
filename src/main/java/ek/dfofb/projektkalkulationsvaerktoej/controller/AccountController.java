@@ -1,7 +1,6 @@
 package ek.dfofb.projektkalkulationsvaerktoej.controller;
 
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
-import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalkulationsvaerktoej.service.AccountService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
