@@ -5,6 +5,7 @@
     <title>Opret opgave</title>
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}"></div>
 <h1 th:text="'Opret ny opgave for ' + ${projectName}"></h1>
 
 <form th:action="@{/project/create/task}" th:object="${task}" method="post">

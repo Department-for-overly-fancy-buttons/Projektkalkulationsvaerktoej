@@ -1,7 +1,6 @@
 package ek.dfofb.projektkalkulationsvaerktoej.controller;
 
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
-import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalkulationsvaerktoej.service.AccountService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -64,7 +63,7 @@ public class AccountController {
         //TODO find rollen og sæt den på account eller som sin egen session attribute
         session.setAttribute("account", foundAccount);
         session.setMaxInactiveInterval(1800);
-        return "redirect:/project/list";
+        return "redirect:/project";
     }
 
     @GetMapping("log_out")

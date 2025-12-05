@@ -5,6 +5,7 @@
     <title>Opret projekt</title>
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}"></div>
 <h1>Opret nyt projekt</h1>
 
 <form th:action="@{/project/create}" th:object="${project}" method="post">

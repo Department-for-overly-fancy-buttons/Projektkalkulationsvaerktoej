@@ -5,6 +5,7 @@
     <title>Projekt</title>
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}"></div>
 <h1>Projekt</h1>
 
 <a th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret ny Opgave</a>
