@@ -57,7 +57,11 @@ public class TaskService {
 
     public List<Task> getAllTasksForAccount(int accountID) {
         try {
-            return taskRepository.getAllTasksForAccount(accountID);
+            List<Task> tasks = taskRepository.getAllTasksForAccount(accountID);
+            for (Task task : tasks) {
+                task.setHourEstimate(hoursLeftOnTask(task.getTaskID()));
+            }
+            return tasks;
         } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred, while attempting to access tasks assigned to account with id: " + accountID);
         }
@@ -143,7 +147,7 @@ public class TaskService {
         if (getTaskByID(taskID).isCompleted()) {
             return 100;
         }
-        List<Task> subTasks = getAllSubTasks(taskID);
+        List<Task> subTasks = taskRepository.getAllSubTasks(taskID);
         double completedTasks = 0;
         double notCompletedTasks = 0;
         for (Task subTask : subTasks) {
