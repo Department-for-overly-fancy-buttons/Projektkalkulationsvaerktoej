@@ -23,13 +23,26 @@ public class TaskController {
 
     @PostMapping("/task/getID")
     public String saveCurrentTaskID(String taskName, int taskID, HttpSession httpSession) {
-        String projectName = projectService.getProjectByID(taskService.getTaskByID(taskID).getProjectID()).getName();
+        int projectID = taskService.getTaskByID(taskID).getProjectID();
+        String projectName = projectService.getProjectByID(projectID).getName();
+        httpSession.setAttribute(projectName,projectID);
         httpSession.setAttribute("currentTask", taskID);
         int parentID = taskService.getTaskByID(taskID).getParentID();
         if (parentID == 0) {
             return "redirect:/project/" + projectName + "/" + taskName;
         }
         return "redirect:/project/" + projectName + "/" + taskService.getTaskByID(parentID).getName() + "/" + taskName;
+    }
+
+    @GetMapping()
+    public String myTasks(Model model, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
+        model.addAttribute("tasks", taskService.getAllTasksForAccount(account.getAccountID()));
+        model.addAttribute("task",new Task());
+        return "show-my-tasks";
     }
 
     @GetMapping("/{projectName}/create/task")
