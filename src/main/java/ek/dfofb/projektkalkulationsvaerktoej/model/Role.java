@@ -54,4 +54,14 @@ public class Role
     {
         this.permissionList = permissionList;
     }
+
+    public boolean hasPermission(int permissionId)
+    {
+        return permissionList != null && permissionList.contains(permissionId);
+    }
+
+    public boolean hasPermission(Permission permission)
+    {
+        return hasPermission(permission.getId());
+    }
 }
