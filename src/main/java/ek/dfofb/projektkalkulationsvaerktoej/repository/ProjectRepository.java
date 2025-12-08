@@ -60,7 +60,7 @@ public class ProjectRepository implements IProjectRepository {
                 sql,
                 project.getName(),
                 project.getDescription(),
-                project.isActive(),
+                project.getIsActive(),
                 project.getStartDate(),
                 project.getDeadline()
                 );
@@ -77,7 +77,7 @@ public class ProjectRepository implements IProjectRepository {
                 sql,
                 project.getName(),
                 project.getDescription(),
-                project.isActive(),
+                project.getIsActive(),
                 project.getStartDate(),
                 project.getDeadline(),
                 project.getProjectID()

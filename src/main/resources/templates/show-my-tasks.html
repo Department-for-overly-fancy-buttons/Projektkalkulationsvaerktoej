@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Opgave</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<h1>Mine opgaver</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>Fuldført</th>
+        <th>Startdato</th>
+        <th>Deadline</th>
+        <th>Tidsestimat (timer)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="taskList : ${tasks}">
+        <td th:text="${taskList.taskID}"></td>
+        <td th:text="${taskList.name}"></td>
+        <td th:text="${taskList.description}"></td>
+        <td th:text="${taskList.isCompleted()}"></td>
+        <td th:text="${#dates.format(taskList.startDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(taskList.deadLine, 'yyyy-MM-dd')}"></td>
+        <td th:text="${taskList.hourEstimate}"></td>
+        <td>
+            <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
+                <button type="submit">Info</button>
+                <input type="hidden" name="taskID" th:value="${taskList.taskID}"/>
+                <input type="hidden" name="taskName" th:value="${taskList.name}">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/project/list}">Tilbage til projektListe</a>
+</div>
+</td>
+</body>
+</html>

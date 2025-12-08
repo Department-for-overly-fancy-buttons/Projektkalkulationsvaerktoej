@@ -1,10 +1,10 @@
 package ek.dfofb.projektkalkulationsvaerktoej.controller;
 
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
-import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Role;
 import ek.dfofb.projektkalkulationsvaerktoej.service.AccountService;
 import ek.dfofb.projektkalkulationsvaerktoej.service.RoleService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,34 +23,61 @@ public class AccountController {
     private final AccountService accountService;
     private final RoleService roleService;
 
-    public AccountController(AccountService accountService, RoleService roleService)
-    {
+    public AccountController(AccountService accountService, RoleService roleService) {
         this.accountService = accountService;
         this.roleService = roleService;
     }
 
     @GetMapping("/create")
-    public String showCreateForm(Model model)
-    {
-        Account account = new Account();
+    public String showCreateForm(Model model, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:login";
+        }
+        Account newAccount = new Account();
         List<Role> roles = roleService.getAllRoles();
-
-        model.addAttribute("account", account);
         model.addAttribute("roles", roles);
-
+        model.addAttribute("account", newAccount);
         return "create-account-form";
     }
 
     @PostMapping("/create")
-    public String handleCreateForm(@ModelAttribute Account account)
-    {
+    public String handleCreateForm(@ModelAttribute Account account) {
         accountService.addAccount(account);
-        return "redirect:/account/list";
+        return "redirect:list";
+    }
+
+    @GetMapping("/login")
+    public String logInForm(Model model, HttpSession session) {
+        if (session.getAttribute("account") == null) {
+            model.addAttribute("account", new Account());
+            return "log-in-form";
+        } else {
+            return "redirect:/project/list";
+        }
+    }
+
+    @PostMapping("/login")
+    public String LogIn(@ModelAttribute Account account, HttpSession session) {
+        Account foundAccount = accountService.logIn(account.getEmail(), account.getPassword());
+        //TODO find rollen og sæt den på account eller som sin egen session attribute
+        session.setAttribute("account", foundAccount);
+        session.setMaxInactiveInterval(1800);
+        return "redirect:/project";
+    }
+
+    @GetMapping("log_out")
+    public String logOut(HttpSession session) {
+        session.removeAttribute("account");
+        return "redirect:login";
     }
 
     @GetMapping("/list")
-    public String listAccounts(Model model)
-    {
+    public String listAccounts(Model model, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:login";
+        }
         List<Account> accounts = accountService.getAllAccounts();
         List<Role> roles = roleService.getAllRoles();
 
@@ -61,9 +88,6 @@ public class AccountController {
 
         return "list-all-accounts";
     }
-
-
-
 
 
 }

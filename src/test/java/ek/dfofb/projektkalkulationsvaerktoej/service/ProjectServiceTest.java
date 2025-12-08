@@ -1,5 +1,6 @@
 package ek.dfofb.projektkalkulationsvaerktoej.service;
 
+import ek.dfofb.projektkalkulationsvaerktoej.exceptions.ProjectNotFoundException;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Task;
 import ek.dfofb.projektkalkulationsvaerktoej.repository.ProjectRepository;
@@ -10,7 +11,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.sql.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -31,8 +35,8 @@ public class ProjectServiceTest
     @Test
     void getAllProjects_returnsListFromRepository()
     {
-        Project p1 = new Project(1, "Projekt1", "Beskrivelse1", true, new Date(), new Date());
-        Project p2 = new Project(1, "Projekt2", "Beskrivelse2", true, new Date(), new Date());
+        Project p1 = new Project(1, "Projekt1", "Beskrivelse1", true, new Date(02-02-2002), new Date(02-02-2002));
+        Project p2 = new Project(1, "Projekt2", "Beskrivelse2", true, new Date(02-02-2002), new Date(02-02-2002));
         List<Project> projects = Arrays.asList(p1, p2);
 
         when(projectRepository.getAllProjects()).thenReturn(projects);
@@ -49,7 +53,7 @@ public class ProjectServiceTest
     void getProjectByID_calculatesHourEstimateFromTasks()
     {
         int projectId = 1;
-        Project project = new Project(projectId, "Test-pro", "Beskrivelse", true, new Date(), new Date());
+        Project project = new Project(projectId, "Test-pro", "Beskrivelse", true, new Date(02-02-2002), new Date(02-02-2002));
 
         Task t1 = new Task();
         t1.setHourEstimate(5);
@@ -71,7 +75,7 @@ public class ProjectServiceTest
     void getProjectByID_handlesNoTaskWithZeroEstimate()
     {
         int projectId = 99;
-        Project project = new Project(projectId, "TomtProjekt", "IngenOpgaver", true, new Date(), new Date());
+        Project project = new Project(projectId, "TomtProjekt", "IngenOpgaver", true, new Date(02-02-2002), new Date(02-02-2002));
 
         when(projectRepository.getProjectByID(projectId)).thenReturn(project);
         when(taskRepository.getAllTasksForProjects(projectId)).thenReturn(Collections.emptyList());
@@ -86,7 +90,7 @@ public class ProjectServiceTest
     @Test
     void createProject_returnsTrueWhenRepositorySucceeds() {
 
-        Project project = new Project(0, "NytProjekt", "EnBeskrivelse", true, new Date(), new Date());
+        Project project = new Project(0, "NytProjekt", "EnBeskrivelse", true, new Date(02-02-2002), new Date(02-02-2002));
         when(projectRepository.addProject(project)).thenReturn(true);
 
         boolean result = projectService.createProject(project);
@@ -98,7 +102,7 @@ public class ProjectServiceTest
 
     @Test
     void updateProject_delegatesToRepository() {
-        Project project = new Project(1, "OpdateretProjekt", "Beskrivelse", true, new Date(), new Date());
+        Project project = new Project(1, "OpdateretProjekt", "Beskrivelse", true, new Date(02-02-2002), new Date(02-02-2002));
         when(projectRepository.updateProject(project)).thenReturn(project);
 
         Project result = projectService.updateProject(project);
@@ -107,4 +111,13 @@ public class ProjectServiceTest
         verify(projectRepository, times(1)).updateProject(project);
         verifyNoMoreInteractions(projectRepository, taskRepository);
     }
+
+    @Test
+    void getProjectByID_throwsProjectNotFoundException_whenGivenUnusedID(){
+        int unusedProjectID = 9999999;
+        when(projectRepository.getProjectByID(unusedProjectID)).thenThrow(ProjectNotFoundException.class);
+
+        assertThrows(ProjectNotFoundException.class, () -> {Project project = projectRepository.getProjectByID(unusedProjectID);});
+    }
+
 }
