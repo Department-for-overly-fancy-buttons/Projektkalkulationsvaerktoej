@@ -42,7 +42,12 @@
         <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
         <td th:text="${hourEstimate}"></td>
         <td>
-            <a th:href="@{/project/{projectName}/{taskName}/edit (projectName=${projectName},taskName=${task.name})}">Rediger opgave</a>
+            <a th:href="@{/project/{projectName}/{taskName}/edit (projectName=${projectName},taskName=${task.name})}">Rediger
+                opgave</a>
+        </td>
+        <td th:if="${tasks.isEmpty()} or ${hourEstimate} == 0">
+            <a th:href="@{/project/{projectName}/{taskName}/complete (projectName=${projectName},taskName=${task.name})}">Færdiggør
+                opgave</a>
         </td>
     </tr>
     </tbody>
@@ -66,7 +71,7 @@
         <td th:text="${taskList.taskID}"></td>
         <td th:text="${taskList.name}"></td>
         <td th:text="${taskList.description}"></td>
-        <td th:text="${taskList.isCompleted()}"></td>
+        <td th:text="${taskList.isCompleted}"></td>
         <td th:text="${#dates.format(taskList.startDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${#dates.format(taskList.deadLine, 'yyyy-MM-dd')}"></td>
         <td th:text="${taskList.hourEstimate}"></td>

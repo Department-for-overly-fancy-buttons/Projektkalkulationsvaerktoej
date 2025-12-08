@@ -19,7 +19,9 @@
         <th>Aktiv</th>
         <th>Startdato</th>
         <th>Deadline</th>
-        <th>Tidsestimat (timer)</th>
+        <th>Tidsestimat(timer)</th>
+        <th>Tidsestimat(timer) tilbage</th>
+        <th>Tid brugt</th>
     </tr>
     </thead>
     <tbody>
@@ -30,7 +32,10 @@
         <td th:text="${project.isActive}"></td>
         <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
-        <td th:text="${hourEstimate}"></td>
+        <td th:text="${hourEstimateInitial}"></td>
+        <td th:text="${hourEstimateRemaining}"></td>
+        <td th:text="'Tid brugt'"></td>
+
         <td>
             <a th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger projekt</a>
         </td>
@@ -55,7 +60,7 @@
         <td th:text="${task.taskID}"></td>
         <td th:text="${task.name}"></td>
         <td th:text="${task.description}"></td>
-        <td th:text="${task.isCompleted()}"></td>
+        <td th:text="${task.isCompleted}"></td>
         <td th:text="${#dates.format(task.startDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
         <td th:text="${task.hourEstimate}"></td>

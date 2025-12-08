@@ -25,7 +25,7 @@ public class TaskController {
     public String saveCurrentTaskID(String taskName, int taskID, HttpSession httpSession) {
         int projectID = taskService.getTaskByID(taskID).getProjectID();
         String projectName = projectService.getProjectByID(projectID).getName();
-        httpSession.setAttribute(projectName,projectID);
+        httpSession.setAttribute(projectName, projectID);
         httpSession.setAttribute("currentTask", taskID);
         int parentID = taskService.getTaskByID(taskID).getParentID();
         if (parentID == 0) {
@@ -41,7 +41,7 @@ public class TaskController {
             return "redirect:/account/login";
         }
         model.addAttribute("tasks", taskService.getAllTasksForAccount(account.getAccountID()));
-        model.addAttribute("task",new Task());
+        model.addAttribute("task", new Task());
         return "show-my-tasks";
     }
 
@@ -103,7 +103,7 @@ public class TaskController {
         }
         model.addAttribute("task", taskService.getTaskByID(taskID));
         model.addAttribute("tasks", taskService.getAllSubTasks(taskID));
-        model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID));
+        model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID, false));
         model.addAttribute("projectName", projectName);
         return "show-task";
     }
@@ -128,7 +128,7 @@ public class TaskController {
         model.addAttribute("subTaskName", currentTask);
         model.addAttribute("mainTaskID", mainTaskID);
         model.addAttribute("mainTask", mainTaskName);
-        model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID));
+        model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID, false));
         return "show-task";
     }
 
@@ -139,7 +139,8 @@ public class TaskController {
         if (account == null) {
             return "redirect:/account/login";
         }
-        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null) {
+        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null ||
+                !taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask")).getName().equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
         Task task = taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask"));
@@ -147,10 +148,37 @@ public class TaskController {
         return "edit-task-form";
     }
 
+    @GetMapping("/{projectName}/{taskName}/complete")
+    public String completeTask(Model model, @PathVariable String projectName, @PathVariable String taskName, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
+        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null ||
+                !taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask")).getName().equalsIgnoreCase(taskName)) {
+            return "redirect:/project/list";
+        }
+        Task task = taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask"));
+        for (Task subTask : taskService.getAllSubTasks(task.getTaskID())) {
+            if (subTask.getIsCompleted() == false) {
+                return "redirect:/project/list";
+            }
+        }
+        model.addAttribute("task", task);
+        return "complete-task-form";
+    }
+
 
     @PostMapping("/task/edit")
     public String updateTask(@ModelAttribute Task task, HttpSession httpSession) {
         taskService.updateTask(task);
+        String taskName = taskService.getTaskByID(task.getTaskID()).getName();
+        return saveCurrentTaskID(taskName, task.getTaskID(), httpSession);
+    }
+
+    @PostMapping("/task/complete")
+    public String markTaskAsDone(@ModelAttribute Task task, HttpSession httpSession) {
+        taskService.markAsDone(task.getTaskID());
         String taskName = taskService.getTaskByID(task.getTaskID()).getName();
         return saveCurrentTaskID(taskName, task.getTaskID(), httpSession);
     }

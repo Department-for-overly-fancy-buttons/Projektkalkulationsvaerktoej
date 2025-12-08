@@ -61,7 +61,7 @@ public class TaskRepository implements ITaskRepository {
         String sql = "INSERT INTO Tasks (Name, Description, HourEstimate, Completed," +
                 "  Deadline, StartDate, ProjectID, ParentID) VALUES (?,?,?,?,?,?,?,?)";
         int rowsInserted = jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getHourEstimate(),
-                task.isCompleted(), task.getDeadLine(), task.getStartDate(),
+                task.getIsCompleted(), task.getDeadLine(), task.getStartDate(),
                 task.getProjectID(), task.getParentID());
         return rowsInserted == 1;
     }
@@ -71,7 +71,7 @@ public class TaskRepository implements ITaskRepository {
         String sql = "UPDATE tasks SET Name=?, Description=?, HourEstimate=?, Completed=?, " +
                 "Deadline=?, StartDate=? WHERE TaskID = ?";
         jdbcTemplate.update(sql, task.getName(), task.getDescription(), task.getHourEstimate(),
-                task.isCompleted(), task.getDeadLine(), task.getStartDate(), task.getTaskID());
+                task.getIsCompleted(), task.getDeadLine(), task.getStartDate(), task.getTaskID());
         return task;
     }
 

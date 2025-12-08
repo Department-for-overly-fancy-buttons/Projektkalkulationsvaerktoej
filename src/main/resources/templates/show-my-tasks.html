@@ -24,7 +24,7 @@
         <td th:text="${taskList.taskID}"></td>
         <td th:text="${taskList.name}"></td>
         <td th:text="${taskList.description}"></td>
-        <td th:text="${taskList.isCompleted()}"></td>
+        <td th:text="${taskList.isCompleted}"></td>
         <td th:text="${#dates.format(taskList.startDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${#dates.format(taskList.deadLine, 'yyyy-MM-dd')}"></td>
         <td th:text="${taskList.hourEstimate}"></td>

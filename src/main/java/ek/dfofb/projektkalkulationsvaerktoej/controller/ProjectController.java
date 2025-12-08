@@ -72,11 +72,14 @@ public class ProjectController {
         List<Task> tasks = taskService.getAllTasksForProjects(projectID);
 
         //Skal nok rykkes til servicelaget
-        int hours = 0;
+        int hoursInitial = 0;
+        int hoursRemaining = 0;
         for (Task task : tasks) {
-            hours += taskService.hoursLeftOnTask(task.getTaskID());
+            hoursRemaining += taskService.hoursLeftOnTask(task.getTaskID(), false);
+            hoursInitial += taskService.hoursLeftOnTask(task.getTaskID(), true);
         }
-        model.addAttribute("hourEstimate", hours);
+        model.addAttribute("hourEstimateRemaining", hoursRemaining);
+        model.addAttribute("hourEstimateInitial", hoursInitial);
         model.addAttribute("project", project);
         model.addAttribute("tasks", tasks);
         return "show-project";

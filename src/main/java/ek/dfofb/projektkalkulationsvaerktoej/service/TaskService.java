@@ -24,7 +24,7 @@ public class TaskService {
     public Task getTaskByID(int taskID) {
         try {
             Task task = taskRepository.getTaskByID(taskID);
-            task.setHourEstimate(hoursLeftOnTask(taskID));
+            task.setHourEstimate(hoursLeftOnTask(taskID, false));
             return task;
         } catch (DataAccessException exception) {
             throw new TaskNotFoundException("Failed to find a task, with the corresponding id:" + taskID);
@@ -35,7 +35,7 @@ public class TaskService {
         try {
             List<Task> tasks = taskRepository.getAllTasksForProjects(projectID);
             for (Task task : tasks) {
-                task.setHourEstimate(hoursLeftOnTask(task.getTaskID()));
+                task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), false));
             }
             return tasks;
         } catch (DataAccessException exception) {
@@ -47,7 +47,7 @@ public class TaskService {
         try {
             List<Task> tasks = taskRepository.getAllSubTasks(taskID);
             for (Task task : tasks) {
-                task.setHourEstimate(hoursLeftOnTask(task.getTaskID()));
+                task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), false));
             }
             return tasks;
         } catch (DataAccessException exception) {
@@ -59,7 +59,7 @@ public class TaskService {
         try {
             List<Task> tasks = taskRepository.getAllTasksForAccount(accountID);
             for (Task task : tasks) {
-                task.setHourEstimate(hoursLeftOnTask(task.getTaskID()));
+                task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), false));
             }
             return tasks;
         } catch (DataAccessException exception) {
@@ -118,40 +118,40 @@ public class TaskService {
         return (int) ChronoUnit.DAYS.between(LocalDate.now(), task.getDeadLine().toLocalDate());
     }
 
-    public int hoursLeftOnTask(int taskID) {
+    public int hoursLeftOnTask(int taskID, boolean includeCompleted) {
         Task task = taskRepository.getTaskByID(taskID);
-        if (task.isCompleted()) {
+        if (task.getIsCompleted() && !includeCompleted) {
             return 0;
         }
         List<Task> subTasks = getAllSubTasks(task.getTaskID());
         if (subTasks.isEmpty()) {
             return task.getHourEstimate();
         }
-        return getHoursForSubTasks(subTasks);
+        return getHoursForSubTasks(subTasks, includeCompleted);
     }
 
-    private int getHoursForSubTasks(List<Task> subTasks) {
+    private int getHoursForSubTasks(List<Task> subTasks, boolean includeCompleted) {
         int hours = 0;
         for (Task subTask : subTasks) {
-            if (subTask.isCompleted()) {
+            if (subTask.getIsCompleted() && !includeCompleted) {
             } else if (taskRepository.getAllSubTasks(subTask.getTaskID()).isEmpty()) {
                 hours += subTask.getHourEstimate();
             } else {
-                hours += getHoursForSubTasks(taskRepository.getAllSubTasks(subTask.getTaskID()));
+                hours += getHoursForSubTasks(taskRepository.getAllSubTasks(subTask.getTaskID()), includeCompleted);
             }
         }
         return hours;
     }
 
     public int percentOfProgressDone(int taskID) {
-        if (getTaskByID(taskID).isCompleted()) {
+        if (getTaskByID(taskID).getIsCompleted()) {
             return 100;
         }
         List<Task> subTasks = taskRepository.getAllSubTasks(taskID);
         double completedTasks = 0;
         double notCompletedTasks = 0;
         for (Task subTask : subTasks) {
-            if (subTask.isCompleted()) {
+            if (subTask.getIsCompleted()) {
                 completedTasks += 1;
             } else {
                 notCompletedTasks += 1;
@@ -165,12 +165,12 @@ public class TaskService {
 
     public boolean markAsDone(int taskID) {
         Task task = getTaskByID(taskID);
-        if (!task.isCompleted()) {
-            task.setCompleted(true);
+        if (!task.getIsCompleted()) {
+            task.setIsCompleted(true);
             updateTask(task);
             return true;
         }
-        task.setCompleted(false);
+        task.setIsCompleted(false);
         updateTask(task);
         return false;
     }
