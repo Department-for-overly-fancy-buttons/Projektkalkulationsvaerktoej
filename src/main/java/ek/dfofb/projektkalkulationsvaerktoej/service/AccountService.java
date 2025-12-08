@@ -3,7 +3,6 @@ package ek.dfofb.projektkalkulationsvaerktoej.service;
 import ek.dfofb.projektkalkulationsvaerktoej.exceptions.AccountNotFoundException;
 import ek.dfofb.projektkalkulationsvaerktoej.exceptions.DatabaseOperationException;
 import ek.dfofb.projektkalkulationsvaerktoej.exceptions.DuplicateAccountException;
-import ek.dfofb.projektkalkulationsvaerktoej.exceptions.TaskNotFoundException;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
 import ek.dfofb.projektkalkulationsvaerktoej.repository.interfaces.IAccountRepository;
 import org.springframework.dao.DataAccessException;
@@ -23,7 +22,7 @@ public class AccountService {
     public Account getAccountFromID(int accountID) {
         try {
             return accountRepository.getAccountFromID(accountID);
-        }catch (DataAccessException exception){
+        } catch (DataAccessException exception) {
             throw new AccountNotFoundException("Failed to find account");
         }
     }
@@ -31,7 +30,7 @@ public class AccountService {
     public List<Account> getAllAccounts() {
         try {
             return accountRepository.getAllAccounts();
-        }catch (DataAccessException exception){
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred while attempting to access accounts");
         }
     }
@@ -39,7 +38,7 @@ public class AccountService {
     public List<Account> getAllAccountsWithRoleID(int roleID) {
         try {
             return accountRepository.getAllAccountsWithRoleID(roleID);
-        }catch (DataAccessException exception){
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred while attempting to access accounts with given role");
         }
     }
@@ -47,30 +46,38 @@ public class AccountService {
     public boolean addAccount(Account account) {
         try {
             return accountRepository.addAccount(account);
-        }catch (DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
             throw new DuplicateAccountException("An account with the chosen email (" + account.getEmail() + ") and, or number (" + account.getNumber() + ") already exists");
-        }catch (DataAccessException exception){
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred while attempting to create account");
         }
     }
 
     public Account updateAccount(Account account) {
-        try{
-        return accountRepository.updateAccount(account);
-        }catch (DataIntegrityViolationException exception){
+        try {
+            return accountRepository.updateAccount(account);
+        } catch (DataIntegrityViolationException exception) {
             throw new DuplicateAccountException("An account with the chosen email (" + account.getEmail() + ") and, or number (" + account.getNumber() + ") already exists");
-        }catch (DataAccessException exception){
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred while attempting to update account");
         }
     }
 
     public boolean deleteAccount(int accountID) {
-        try{
+        try {
             return accountRepository.deleteAccount(accountID);
-        }catch (DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
             throw new AccountNotFoundException("An account, with id (" + accountID + ") could not be found");
-        }catch (DataAccessException exception){
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred while attempting to delete account");
+        }
+    }
+
+    public Account logIn(String eMail, String password) {
+        try {
+            return accountRepository.getAccountFromEmailAndPassword(eMail, password);
+        } catch (DataAccessException exception) {
+            throw new AccountNotFoundException("Wrong Email or Password");
         }
     }
 

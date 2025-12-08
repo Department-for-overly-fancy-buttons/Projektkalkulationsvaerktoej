@@ -17,4 +17,6 @@ public interface IAccountRepository {
     Account updateAccount(Account account);
 
     boolean deleteAccount(int accountID);
+
+    Account getAccountFromEmailAndPassword(String eMail, String password);
 }

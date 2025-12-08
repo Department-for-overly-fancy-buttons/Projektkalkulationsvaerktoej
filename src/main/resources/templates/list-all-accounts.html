@@ -2,10 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Projekter</title>
+    <title>Brugere</title>
 </head>
 <body>
-<h1>Projekter</h1>
+<div th:replace="~{fragments/header :: header}"></div>
+<h1>Brugere</h1>
 
 <a th:href="@{/account/create}">Opret ny bruger</a>
 
@@ -25,7 +26,7 @@
         <td th:text="${account.email}"></td>
         <td th:text="${account.number}"></td>
         <td th:text="${#dates.format(account.birthday, 'yyyy-MM-dd')}"></td>
-        <td th:text="'indsæt rollenavn'"></td>
+        <td th:text="${roleNames[account.roleID]}"></td>
     </tr>
     </tbody>
 </table>

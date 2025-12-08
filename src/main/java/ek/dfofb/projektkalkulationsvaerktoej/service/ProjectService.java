@@ -12,6 +12,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+//TODO: Vi kan eventuelt her lave en default startDate /isActive hvis ikke vi allerede har sat det manuelt.
+// Det kan vi eventuelt snakke om i skolen
 
 @Service
 public class ProjectService
