@@ -26,7 +26,7 @@
         <td th:text="${account.email}"></td>
         <td th:text="${account.number}"></td>
         <td th:text="${#dates.format(account.birthday, 'yyyy-MM-dd')}"></td>
-        <td th:text="'indsæt rollenavn'"></td>
+        <td th:text="${roleNames[account.roleID]}"></td>
     </tr>
     </tbody>
 </table>

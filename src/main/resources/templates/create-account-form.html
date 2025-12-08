@@ -41,8 +41,13 @@
     </div>
 
     <div>
-        <label for="roleID">rolle (skal være dropdown)</label>
-        <input id="roleID" type="number" th:field="*{roleID}" required></input>
+        <label for="roleID">Rolle:</label>
+        <select id="roleID" th:field="*{roleID}" required>
+            <option th:each="role : ${roles}"
+                    th:value="${role.roleID}"
+                    th:text="${role.name}">
+            </option>
+        </select>
     </div>
 
     <!--drop down with role menu-->

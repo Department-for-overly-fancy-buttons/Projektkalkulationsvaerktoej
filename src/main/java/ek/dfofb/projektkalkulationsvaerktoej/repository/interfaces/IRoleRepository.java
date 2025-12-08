@@ -14,4 +14,5 @@ public interface IRoleRepository {
 
     Role updateRole(Role role);
 
+    boolean deleteRole(int roleID);
 }
