@@ -2,7 +2,7 @@
     <img id="navbarLogo" th:src="@{/images/Dept_ofb_Logo.png}" alt="Department for overly fancy buttons logo"/>
     <nav>
         <ul id="navigationList">
-        <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}==null" href="/project//view-projects" title="Go to project overview">Projects</a></li>
+        <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}==null" href="/project/view-projects" title="Go to project overview">Projects</a></li>
         <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.canViewAccounts}!=true" href="/account/account-manager" title="Go to account manager">Accounts</a></li>
         <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.canViewRoles}!=true" href="/account/role-manager" title="Go to role manager">Roles</a></li>
             <li class="navigationListItem">
