@@ -1,8 +1,10 @@
 package ek.dfofb.projektkalkulationsvaerktoej.controller;
 
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
+import ek.dfofb.projektkalkulationsvaerktoej.model.Permission;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Role;
 import ek.dfofb.projektkalkulationsvaerktoej.service.AccountService;
+import ek.dfofb.projektkalkulationsvaerktoej.service.AuthorizationService;
 import ek.dfofb.projektkalkulationsvaerktoej.service.RoleService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -22,10 +24,12 @@ public class AccountController {
 
     private final AccountService accountService;
     private final RoleService roleService;
+    private final AuthorizationService authorizationService;
 
-    public AccountController(AccountService accountService, RoleService roleService) {
+    public AccountController(AccountService accountService, RoleService roleService, AuthorizationService authorizationService) {
         this.accountService = accountService;
         this.roleService = roleService;
+        this.authorizationService = authorizationService;
     }
 
     @GetMapping("/create")
@@ -33,6 +37,9 @@ public class AccountController {
         Account account = (Account) httpSession.getAttribute("account");
         if (account == null) {
             return "redirect:login";
+        }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.GRANT_PERMISSIONS)) {
+            return "redirect:/project";
         }
         Account newAccount = new Account();
         List<Role> roles = roleService.getAllRoles();
@@ -42,7 +49,14 @@ public class AccountController {
     }
 
     @PostMapping("/create")
-    public String handleCreateForm(@ModelAttribute Account account) {
+    public String handleCreateForm(@ModelAttribute Account account, HttpSession httpSession) {
+        Account creatorAccount = (Account) httpSession.getAttribute("account");
+        if (creatorAccount == null) {
+            return "redirect:login";
+        }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.GRANT_PERMISSIONS)) {
+            return "redirect:/project";
+        }
         accountService.addAccount(account);
         return "redirect:list";
     }
@@ -84,6 +98,7 @@ public class AccountController {
         Map<Integer, String> roleNames = roles.stream().collect(Collectors.toMap(Role::getRoleID, Role::getName));
 
         model.addAttribute("accounts", accounts);
+        model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
         model.addAttribute("roleNames", roleNames);
 
         return "list-all-accounts";
