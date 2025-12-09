@@ -56,8 +56,9 @@ public class AccountController {
         }
         if (!authorizationService.hasPermission(account.getRoleID(), Permission.GRANT_PERMISSIONS)) {
             return "redirect:/project";
+        } else {
+            accountService.addAccount(account);
         }
-        accountService.addAccount(account);
         return "redirect:list";
     }
 
@@ -74,7 +75,6 @@ public class AccountController {
     @PostMapping("/login")
     public String LogIn(@ModelAttribute Account account, HttpSession session) {
         Account foundAccount = accountService.logIn(account.getEmail(), account.getPassword());
-        //TODO find rollen og sæt den på account eller som sin egen session attribute
         session.setAttribute("account", foundAccount);
         session.setMaxInactiveInterval(1800);
         return "redirect:/project";

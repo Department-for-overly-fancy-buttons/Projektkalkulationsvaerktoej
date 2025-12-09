@@ -62,8 +62,9 @@ public class ProjectController {
         }
         if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_PROJECTS)) {
             return "redirect:/project";
+        } else {
+            projectService.createProject(project);
         }
-        projectService.createProject(project);
         return "redirect:/project/list";
     }
 
@@ -101,6 +102,7 @@ public class ProjectController {
         model.addAttribute("hourEstimateInitial", hoursInitial);
         model.addAttribute("project", project);
         model.addAttribute("tasks", tasks);
+        model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
         return "show-project";
     }
 
