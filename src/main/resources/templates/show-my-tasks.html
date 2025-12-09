@@ -7,7 +7,7 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 <h1>Mine opgaver</h1>
-<table>
+<table th:if="!${tasks.isEmpty()}">
     <thead>
     <tr>
         <th>ID</th>
@@ -38,6 +38,7 @@
     </tr>
     </tbody>
 </table>
+<a th:if="${tasks.isEmpty()}">No active tasks</a>
 <a th:href="@{/project/list}">Tilbage til projektListe</a>
 </div>
 </td>
