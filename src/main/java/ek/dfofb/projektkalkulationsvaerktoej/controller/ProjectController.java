@@ -1,9 +1,9 @@
 package ek.dfofb.projektkalkulationsvaerktoej.controller;
 
-import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
-import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
-import ek.dfofb.projektkalkulationsvaerktoej.model.Task;
+import ek.dfofb.projektkalkulationsvaerktoej.model.*;
+import ek.dfofb.projektkalkulationsvaerktoej.service.AuthorizationService;
 import ek.dfofb.projektkalkulationsvaerktoej.service.ProjectService;
+import ek.dfofb.projektkalkulationsvaerktoej.service.RoleService;
 import ek.dfofb.projektkalkulationsvaerktoej.service.TaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -17,10 +17,15 @@ import java.util.List;
 public class ProjectController {
     private final ProjectService projectService;
     private final TaskService taskService;
+    private final RoleService roleService;
+    private final AuthorizationService authorizationService;
 
-    public ProjectController(ProjectService projectService, TaskService taskService) {
+    public ProjectController(ProjectService projectService, TaskService taskService, RoleService roleService,
+                             AuthorizationService authorizationService) {
         this.projectService = projectService;
         this.taskService = taskService;
+        this.roleService = roleService;
+        this.authorizationService = authorizationService;
     }
 
     @GetMapping("/list")
@@ -30,6 +35,7 @@ public class ProjectController {
             return "redirect:/account/login";
         }
         model.addAttribute("projects", projectService.getAllProjects());
+        model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
         return "list-all-projects";
     }
 
@@ -39,6 +45,9 @@ public class ProjectController {
         if (account == null) {
             return "redirect:/account/login";
         }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_PROJECTS)) {
+            return "redirect:/project";
+        }
         Project project = new Project();
         project.setIsActive(true);
         model.addAttribute("project", project);
@@ -47,8 +56,12 @@ public class ProjectController {
 
     @PostMapping("/create")
     public String handleCreateForm(@ModelAttribute Project project, HttpSession httpSession) {
-        if (httpSession.getAttribute("account") == null) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
             return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_PROJECTS)) {
+            return "redirect:/project";
         }
         projectService.createProject(project);
         return "redirect:/project/list";
