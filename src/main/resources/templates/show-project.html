@@ -37,7 +37,7 @@
         <td th:text="'Tid brugt'"></td>
 
         <td>
-            <a th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger projekt</a>
+            <a th:if="${role.hasPermission(6)}" th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger projekt</a>
         </td>
     </tr>
     </tbody>

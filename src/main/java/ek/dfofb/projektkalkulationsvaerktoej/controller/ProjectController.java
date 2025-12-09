@@ -62,9 +62,8 @@ public class ProjectController {
         }
         if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_PROJECTS)) {
             return "redirect:/project";
-        } else {
-            projectService.createProject(project);
         }
+        projectService.createProject(project);
         return "redirect:/project/list";
     }
 
@@ -115,6 +114,9 @@ public class ProjectController {
         if (httpSession.getAttribute(projectName) == null) {
             return "redirect:/project/list";
         }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.EDIT_PROJECTS)) {
+            return "redirect:/project";
+        }
         int projectID = (int) httpSession.getAttribute(projectName);
         Project project = projectService.getProjectByID(projectID);
         model.addAttribute("project", project);
@@ -124,8 +126,12 @@ public class ProjectController {
 
     @PostMapping("/edit")
     public String updateProject(@ModelAttribute Project project, HttpSession httpSession) {
-        if (httpSession.getAttribute("account") == null) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
             return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.EDIT_PROJECTS)) {
+            return "redirect:/project";
         }
         projectService.updateProject(project);
         String projectName = projectService.getProjectByID(project.getProjectID()).getName();
