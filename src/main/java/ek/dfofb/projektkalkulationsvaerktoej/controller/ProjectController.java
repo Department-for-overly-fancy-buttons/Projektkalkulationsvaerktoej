@@ -86,6 +86,9 @@ public class ProjectController {
         if (httpSession.getAttribute(projectName) == null) {
             return "redirect:/project/list";
         }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.VIEW_PROJECT)) {
+            return "redirect:/project";
+        }
         int projectID = (int) httpSession.getAttribute(projectName);
         Project project = projectService.getProjectByID(projectID);
         List<Task> tasks = taskService.getAllTasksForProjects(projectID);
