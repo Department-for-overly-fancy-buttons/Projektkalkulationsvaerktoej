@@ -46,13 +46,19 @@ public class ProjectController {
     }
 
     @PostMapping("/create")
-    public String handleCreateForm(@ModelAttribute Project project) {
+    public String handleCreateForm(@ModelAttribute Project project, HttpSession httpSession) {
+        if (httpSession.getAttribute("account") == null) {
+            return "redirect:/account/login";
+        }
         projectService.createProject(project);
         return "redirect:/project/list";
     }
 
     @PostMapping("/getID")
     public String saveCurrentProjectID(String projectName, int projectID, HttpSession httpSession) {
+        if (httpSession.getAttribute("account") == null) {
+            return "redirect:/account/login";
+        }
         httpSession.setAttribute(projectName, projectID);
         return "redirect:/project/" + projectName;
     }
@@ -103,6 +109,9 @@ public class ProjectController {
 
     @PostMapping("/edit")
     public String updateProject(@ModelAttribute Project project, HttpSession httpSession) {
+        if (httpSession.getAttribute("account") == null) {
+            return "redirect:/account/login";
+        }
         projectService.updateProject(project);
         String projectName = projectService.getProjectByID(project.getProjectID()).getName();
         return saveCurrentProjectID(projectName, project.getProjectID(), httpSession);

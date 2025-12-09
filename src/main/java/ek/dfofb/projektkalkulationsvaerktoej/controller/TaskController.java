@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("project")
 public class TaskController {
 
-    private ProjectService projectService;
-    private TaskService taskService;
+    private final ProjectService projectService;
+    private final TaskService taskService;
 
     public TaskController(ProjectService projectService, TaskService taskService) {
         this.projectService = projectService;
@@ -23,6 +23,9 @@ public class TaskController {
 
     @PostMapping("/task/getID")
     public String saveCurrentTaskID(String taskName, int taskID, HttpSession httpSession) {
+        if (httpSession.getAttribute("account") == null) {
+            return "redirect:/account/login";
+        }
         int projectID = taskService.getTaskByID(taskID).getProjectID();
         String projectName = projectService.getProjectByID(projectID).getName();
         httpSession.setAttribute(projectName, projectID);
@@ -79,7 +82,10 @@ public class TaskController {
     }
 
     @PostMapping("/create/task")
-    public String addTask(@ModelAttribute Task task) {
+    public String addTask(@ModelAttribute Task task, HttpSession httpSession) {
+        if (httpSession.getAttribute("account") == null) {
+            return "redirect:/account/login";
+        }
         taskService.addTask(task);
         if (task.getParentID() != 0) {
             String projectName = projectService.getProjectByID(task.getProjectID()).getName();
@@ -160,7 +166,7 @@ public class TaskController {
         }
         Task task = taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask"));
         for (Task subTask : taskService.getAllSubTasks(task.getTaskID())) {
-            if (subTask.getIsCompleted() == false) {
+            if (!subTask.getIsCompleted()) {
                 return "redirect:/project/list";
             }
         }
@@ -171,6 +177,9 @@ public class TaskController {
 
     @PostMapping("/task/edit")
     public String updateTask(@ModelAttribute Task task, HttpSession httpSession) {
+        if (httpSession.getAttribute("account") == null) {
+            return "redirect:/account/login";
+        }
         taskService.updateTask(task);
         String taskName = taskService.getTaskByID(task.getTaskID()).getName();
         return saveCurrentTaskID(taskName, task.getTaskID(), httpSession);
@@ -178,6 +187,9 @@ public class TaskController {
 
     @PostMapping("/task/complete")
     public String markTaskAsDone(@ModelAttribute Task task, HttpSession httpSession) {
+        if (httpSession.getAttribute("account") == null) {
+            return "redirect:/account/login";
+        }
         taskService.markAsDone(task.getTaskID());
         String taskName = taskService.getTaskByID(task.getTaskID()).getName();
         return saveCurrentTaskID(taskName, task.getTaskID(), httpSession);
