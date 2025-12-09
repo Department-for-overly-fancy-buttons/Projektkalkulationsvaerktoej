@@ -2,5 +2,6 @@
     <nav>
         <div><a th:if="${#ctx.session.account}!=null" href="/account/log_out" title="log out of account">log out</a></div>
         <div><a th:if="${#ctx.session.account}!=null" href="/project" title="My tasks">Mine opgaver</a></div>
+        <div><a th:if="${#ctx.session.account}!=null" href="/project/list" title="projekter">Alle projekter</a></div>
     </nav>
 </div>
