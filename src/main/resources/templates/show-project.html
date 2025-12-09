@@ -4,11 +4,11 @@
     <meta charset="UTF-8"/>
     <title>Projekt</title>
 </head>
-<body>
+<body th:if="${role.hasPermission(1)}">
 <div th:replace="~{fragments/header :: header}"></div>
 <h1>Projekt</h1>
 
-<a th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret ny Opgave</a>
+<a th:if="${role.hasPermission(2)}" th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret ny Opgave</a>
 
 <table>
     <thead>

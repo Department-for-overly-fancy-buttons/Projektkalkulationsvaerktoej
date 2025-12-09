@@ -1,8 +1,11 @@
 package ek.dfofb.projektkalkulationsvaerktoej.controller;
 
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
+import ek.dfofb.projektkalkulationsvaerktoej.model.Permission;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Task;
+import ek.dfofb.projektkalkulationsvaerktoej.service.AuthorizationService;
 import ek.dfofb.projektkalkulationsvaerktoej.service.ProjectService;
+import ek.dfofb.projektkalkulationsvaerktoej.service.RoleService;
 import ek.dfofb.projektkalkulationsvaerktoej.service.TaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -15,10 +18,15 @@ public class TaskController {
 
     private final ProjectService projectService;
     private final TaskService taskService;
+    private final RoleService roleService;
+    private final AuthorizationService authorizationService;
 
-    public TaskController(ProjectService projectService, TaskService taskService) {
+    public TaskController(ProjectService projectService, TaskService taskService, RoleService roleService,
+                          AuthorizationService authorizationService) {
         this.projectService = projectService;
         this.taskService = taskService;
+        this.roleService = roleService;
+        this.authorizationService = authorizationService;
     }
 
     @PostMapping("/task/getID")
@@ -57,6 +65,9 @@ public class TaskController {
         if (httpSession.getAttribute(projectName) == null) {
             return "redirect:/project/list";
         }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_TASKS)) {
+            return "redirect:/project";
+        }
         Task task = new Task();
         task.setProjectID((Integer) httpSession.getAttribute(projectName));
         model.addAttribute("task", task);
@@ -74,6 +85,9 @@ public class TaskController {
         if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null || !currentTask.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_PROJECTS)) {
+            return "redirect:/project";
+        }
         Task task = new Task();
         task.setProjectID((Integer) httpSession.getAttribute(projectName));
         task.setParentID((Integer) httpSession.getAttribute("currentTask"));
@@ -83,8 +97,12 @@ public class TaskController {
 
     @PostMapping("/create/task")
     public String addTask(@ModelAttribute Task task, HttpSession httpSession) {
-        if (httpSession.getAttribute("account") == null) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
             return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_PROJECTS)) {
+            return "redirect:/project";
         }
         taskService.addTask(task);
         if (task.getParentID() != 0) {
@@ -107,10 +125,14 @@ public class TaskController {
         if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null || !name.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.VIEW_PROJECT)) {
+            return "redirect:/project";
+        }
         model.addAttribute("task", taskService.getTaskByID(taskID));
         model.addAttribute("tasks", taskService.getAllSubTasks(taskID));
         model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID, false));
         model.addAttribute("projectName", projectName);
+        model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
         return "show-task";
     }
 
@@ -119,6 +141,9 @@ public class TaskController {
         Account account = (Account) httpSession.getAttribute("account");
         if (account == null) {
             return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.VIEW_PROJECT)) {
+            return "redirect:/project";
         }
         int taskID = (Integer) httpSession.getAttribute("currentTask");
         int mainTaskID = taskService.getTaskByID(taskID).getParentID();
@@ -135,6 +160,7 @@ public class TaskController {
         model.addAttribute("mainTaskID", mainTaskID);
         model.addAttribute("mainTask", mainTaskName);
         model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID, false));
+        model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
         return "show-task";
     }
 
@@ -144,6 +170,9 @@ public class TaskController {
         Account account = (Account) httpSession.getAttribute("account");
         if (account == null) {
             return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.EDIT_TASKS)) {
+            return "redirect:/project";
         }
         if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null ||
                 !taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask")).getName().equalsIgnoreCase(taskName)) {
@@ -177,8 +206,12 @@ public class TaskController {
 
     @PostMapping("/task/edit")
     public String updateTask(@ModelAttribute Task task, HttpSession httpSession) {
-        if (httpSession.getAttribute("account") == null) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
             return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.EDIT_TASKS)) {
+            return "redirect:/project";
         }
         taskService.updateTask(task);
         String taskName = taskService.getTaskByID(task.getTaskID()).getName();

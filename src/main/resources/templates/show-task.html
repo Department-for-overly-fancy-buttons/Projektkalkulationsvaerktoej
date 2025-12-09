@@ -9,7 +9,7 @@
 <h1 th:text="${task.name}"></h1>
 
 <!--skal sende til create subtask-->
-<td th:switch="${task.parentID}">
+<td th:if="${role.hasPermission(2)}" th:switch="${task.parentID}">
     <div th:case="'0'"><a
             th:href="@{/project/{projectName}/{taskName}/create/task (projectName = ${projectName}, taskName = ${task.name})}">Opret
         ny opgave</a>
@@ -41,7 +41,7 @@
         <td th:text="${#dates.format(task.startDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
         <td th:text="${hourEstimate}"></td>
-        <td>
+        <td th:if="${role.hasPermission(3)}">
             <a th:href="@{/project/{projectName}/{taskName}/edit (projectName=${projectName},taskName=${task.name})}">Rediger
                 opgave</a>
         </td>
