@@ -80,14 +80,15 @@ public class TaskController {
         if (account == null) {
             return "redirect:/account/login";
         }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_PROJECTS)) {
+            return "redirect:/project";
+        }
         int taskID = (Integer) httpSession.getAttribute("currentTask");
         String currentTask = taskService.getTaskByID(taskID).getName();
         if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null || !currentTask.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
-        if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_PROJECTS)) {
-            return "redirect:/project";
-        }
+
         Task task = new Task();
         task.setProjectID((Integer) httpSession.getAttribute(projectName));
         task.setParentID((Integer) httpSession.getAttribute("currentTask"));
@@ -120,17 +121,17 @@ public class TaskController {
         if (account == null) {
             return "redirect:/account/login";
         }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.VIEW_PROJECT)) {
+            return "redirect:/project";
+        }
         int taskID = (Integer) httpSession.getAttribute("currentTask");
         String name = taskService.getTaskByID(taskID).getName();
         if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null || !name.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
-        if (!authorizationService.hasPermission(account.getRoleID(), Permission.VIEW_PROJECT)) {
-            return "redirect:/project";
-        }
+
         model.addAttribute("task", taskService.getTaskByID(taskID));
         model.addAttribute("tasks", taskService.getAllSubTasks(taskID));
-        model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID, false));
         model.addAttribute("projectName", projectName);
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
         return "show-task";
@@ -159,7 +160,6 @@ public class TaskController {
         model.addAttribute("subTaskName", currentTask);
         model.addAttribute("mainTaskID", mainTaskID);
         model.addAttribute("mainTask", mainTaskName);
-        model.addAttribute("hourEstimate", taskService.hoursLeftOnTask(taskID, false));
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
         return "show-task";
     }
