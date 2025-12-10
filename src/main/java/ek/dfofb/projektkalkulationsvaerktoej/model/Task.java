@@ -13,8 +13,25 @@ public class Task {
     private Date deadLine;
     private int projectID;
     private int ParentID;
+    private int hoursRemaining;
+    private int hoursSpentOnTask;
     private Set<Task> tasks;
     private Set<Account> assignedWorkers;
+
+    public Task(int taskID, String name, String description, int hourEstimate,
+                boolean isCompleted, Date startDate, Date deadLine, int projectID,
+                int parentID, int hoursSpentOnTask) {
+        this.taskID = taskID;
+        this.name = name;
+        this.description = description;
+        this.isCompleted = isCompleted;
+        this.hourEstimate = hourEstimate;
+        this.startDate = startDate;
+        this.deadLine = deadLine;
+        this.projectID = projectID;
+        this.ParentID = parentID;
+        this.hoursSpentOnTask = hoursSpentOnTask;
+    }
 
     public Task(int taskID, String name, String description, int hourEstimate,
                 boolean isCompleted, Date startDate, Date deadLine, int projectID,
@@ -27,7 +44,7 @@ public class Task {
         this.startDate = startDate;
         this.deadLine = deadLine;
         this.projectID = projectID;
-        ParentID = parentID;
+        this.ParentID = parentID;
     }
 
     public Task() {
@@ -35,6 +52,22 @@ public class Task {
 
     public int getTaskID() {
         return taskID;
+    }
+
+    public int getHoursRemaining() {
+        return hoursRemaining;
+    }
+
+    public void setHoursRemaining(int hoursRemaining) {
+        this.hoursRemaining = hoursRemaining;
+    }
+
+    public int getHoursSpentOnTask() {
+        return hoursSpentOnTask;
+    }
+
+    public void setHoursSpentOnTask(int hoursSpentOnTask) {
+        this.hoursSpentOnTask = hoursSpentOnTask;
     }
 
     public void setTaskID(int taskID) {
@@ -57,11 +90,11 @@ public class Task {
         this.description = description;
     }
 
-    public boolean isCompleted() {
+    public boolean getIsCompleted() {
         return isCompleted;
     }
 
-    public void setCompleted(boolean completed) {
+    public void setIsCompleted(boolean completed) {
         isCompleted = completed;
     }
 

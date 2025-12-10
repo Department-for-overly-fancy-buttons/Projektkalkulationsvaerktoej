@@ -8,7 +8,7 @@
 <div th:replace="~{fragments/header :: header}"></div>
 <h1>Brugere</h1>
 
-<a th:href="@{/account/create}">Opret ny bruger</a>
+<a th:if="${role.hasPermission(8)}" th:href="@{/account/create}">Opret ny bruger</a>
 
 <table>
     <thead>

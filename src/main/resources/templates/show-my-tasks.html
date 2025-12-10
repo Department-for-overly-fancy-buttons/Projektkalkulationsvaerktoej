@@ -7,7 +7,7 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 <h1>Mine opgaver</h1>
-<table>
+<table th:if="!${tasks.isEmpty()}">
     <thead>
     <tr>
         <th>ID</th>
@@ -24,7 +24,7 @@
         <td th:text="${taskList.taskID}"></td>
         <td th:text="${taskList.name}"></td>
         <td th:text="${taskList.description}"></td>
-        <td th:text="${taskList.isCompleted()}"></td>
+        <td th:text="${taskList.isCompleted}"></td>
         <td th:text="${#dates.format(taskList.startDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${#dates.format(taskList.deadLine, 'yyyy-MM-dd')}"></td>
         <td th:text="${taskList.hourEstimate}"></td>
@@ -38,6 +38,7 @@
     </tr>
     </tbody>
 </table>
+<a th:if="${tasks.isEmpty()}">No active tasks</a>
 <a th:href="@{/project/list}">Tilbage til projektListe</a>
 </div>
 </td>
