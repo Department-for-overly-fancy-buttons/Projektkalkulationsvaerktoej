@@ -33,6 +33,20 @@ public class Task {
         this.hoursSpentOnTask = hoursSpentOnTask;
     }
 
+    public Task(int taskID, String name, String description, int hourEstimate,
+                boolean isCompleted, Date startDate, Date deadLine, int projectID,
+                int parentID) {
+        this.taskID = taskID;
+        this.name = name;
+        this.description = description;
+        this.isCompleted = isCompleted;
+        this.hourEstimate = hourEstimate;
+        this.startDate = startDate;
+        this.deadLine = deadLine;
+        this.projectID = projectID;
+        this.ParentID = parentID;
+    }
+
     public Task() {
     }
 
