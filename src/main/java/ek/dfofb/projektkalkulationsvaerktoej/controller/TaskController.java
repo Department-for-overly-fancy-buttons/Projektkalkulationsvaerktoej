@@ -102,7 +102,7 @@ public class TaskController {
         if (account == null) {
             return "redirect:/account/login";
         }
-        if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_PROJECTS)) {
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_PROJECTS) || task.getIsCompleted() == true) {
             return "redirect:/project";
         }
         taskService.addTask(task);
