@@ -24,7 +24,8 @@ public class TaskService {
     public Task getTaskByID(int taskID) {
         try {
             Task task = taskRepository.getTaskByID(taskID);
-            task.setHourEstimate(hoursLeftOnTask(taskID, false));
+            task.setHourEstimate(hoursLeftOnTask(taskID, true));
+            task.setHoursRemaining(hoursLeftOnTask(taskID,false));
             return task;
         } catch (DataAccessException exception) {
             throw new TaskNotFoundException("Failed to find a task, with the corresponding id:" + taskID);
@@ -35,7 +36,8 @@ public class TaskService {
         try {
             List<Task> tasks = taskRepository.getAllTasksForProjects(projectID);
             for (Task task : tasks) {
-                task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), false));
+                task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), true));
+                task.setHoursRemaining(hoursLeftOnTask(task.getTaskID(),false));
             }
             return tasks;
         } catch (DataAccessException exception) {
@@ -47,7 +49,8 @@ public class TaskService {
         try {
             List<Task> tasks = taskRepository.getAllSubTasks(taskID);
             for (Task task : tasks) {
-                task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), false));
+                task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), true));
+                task.setHoursRemaining(hoursLeftOnTask(task.getTaskID(),false));
             }
             return tasks;
         } catch (DataAccessException exception) {
@@ -59,7 +62,8 @@ public class TaskService {
         try {
             List<Task> tasks = taskRepository.getAllTasksForAccount(accountID);
             for (Task task : tasks) {
-                task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), false));
+                task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), true));
+                task.setHoursRemaining(hoursLeftOnTask(task.getTaskID(),false));
             }
             return tasks;
         } catch (DataAccessException exception) {
