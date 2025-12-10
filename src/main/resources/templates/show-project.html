@@ -21,6 +21,7 @@
         <th>Deadline</th>
         <th>Tidsestimat(timer)</th>
         <th>Tidsestimat(timer) tilbage</th>
+        <th th:if="${hourEstimateInitial} != 0">Progress</th>
         <th>Tid brugt</th>
     </tr>
     </thead>
@@ -34,6 +35,14 @@
         <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
         <td th:text="${hourEstimateInitial}"></td>
         <td th:text="${hourEstimateRemaining}"></td>
+        <td th:if="${hourEstimateInitial} != 0">
+            <a th:text="${hourEstimateInitial}-${hourEstimateRemaining} + '/' + ${hourEstimateInitial}"></a>
+            <br>
+            <label for="hourProgress"></label>
+            <progress id="hourProgress"
+                      th:value="(${hourEstimateInitial}-${hourEstimateRemaining})/${hourEstimateInitial}"></progress>
+
+        </td>
         <td th:text="'Tid brugt'"></td>
 
         <td>
