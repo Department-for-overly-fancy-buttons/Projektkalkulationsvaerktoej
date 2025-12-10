@@ -32,8 +32,8 @@
         <td th:text="${project.name}"></td>
         <td th:text="${project.description}"></td>
         <td th:text="${project.isActive}"></td>
-        <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(project.startDate, 'dd-MM-yyyy')}"></td>
+        <td th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></td>
         <td th:text="${hourEstimateInitial}"></td>
         <td th:text="${hourEstimateRemaining}"></td>
         <td th:if="${hourEstimateInitial} != 0">
@@ -73,8 +73,8 @@
         <td th:text="${task.name}"></td>
         <td th:text="${task.description}"></td>
         <td th:text="${task.isCompleted}"></td>
-        <td th:text="${#dates.format(task.startDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(task.startDate, 'dd-MM-yyyy')}"></td>
+        <td th:text="${#dates.format(task.deadLine, 'dd-MM-yyyy')}"></td>
         <td th:text="${task.hourEstimate}"></td>
         <td th:text="${task.hoursRemaining}"></td>
         <td th:if="${task.hourEstimate} == 0">Please set hourEstimate</td>
