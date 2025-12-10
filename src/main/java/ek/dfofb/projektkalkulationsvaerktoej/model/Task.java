@@ -13,6 +13,7 @@ public class Task {
     private Date deadLine;
     private int projectID;
     private int ParentID;
+    private int hoursRemaining;
     private Set<Task> tasks;
     private Set<Account> assignedWorkers;
 
@@ -35,6 +36,14 @@ public class Task {
 
     public int getTaskID() {
         return taskID;
+    }
+
+    public int getHoursRemaining() {
+        return hoursRemaining;
+    }
+
+    public void setHoursRemaining(int hoursRemaining) {
+        this.hoursRemaining = hoursRemaining;
     }
 
     public void setTaskID(int taskID) {
