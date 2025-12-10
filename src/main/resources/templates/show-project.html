@@ -8,7 +8,8 @@
 <div th:replace="~{fragments/header :: header}"></div>
 <h1>Projekt</h1>
 
-<a th:if="${role.hasPermission(2)}" th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret nyt delprojekt</a>
+<a th:if="${role.hasPermission(2)}" th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret
+    nyt delprojekt</a>
 
 <table>
     <thead>
@@ -42,9 +43,10 @@
             <progress id="hourProgressProject"
                       th:value="(${hourEstimateInitial}-${hourEstimateRemaining})/${hourEstimateInitial}"></progress>
         </td>
-        <td th:text="'Tid brugt'"></td>
+        <td th:text="${hoursSpent}"></td>
         <td>
-            <a th:if="${role.hasPermission(6)}" th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger projekt</a>
+            <a th:if="${role.hasPermission(6)}" th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger
+                projekt</a>
         </td>
     </tr>
     </tbody>
@@ -83,7 +85,7 @@
             <progress id="hourProgressTask"
                       th:value="(${task.hourEstimate}-${task.hoursRemaining})/${task.hourEstimate}"></progress>
         </td>
-        <td th:text="'Tid brugt'"></td>
+        <td th:text="${task.hoursSpentOnTask}"></td>
         <td>
             <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
                 <button type="submit">Info</button>

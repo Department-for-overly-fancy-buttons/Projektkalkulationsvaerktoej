@@ -10,6 +10,13 @@
 
 <form action="#" th:action="@{/project/task/complete}" th:object="${task}" method="post">
 
+    <div th:if="${task.isCompleted == false}">
+        <label for="hoursSpentOnTask">Time spent on task (hours):</label>
+        <input id="hoursSpentOnTask" type="number" th:field="*{hoursSpentOnTask}"/>
+    </div>
+
+    <a th:if="${task.isCompleted == true}">Reopening will delete the previously set spent amount of hours</a>
+
     <div>
         <input id="taskID" type="hidden" th:field="*{taskID}"/>
     </div>

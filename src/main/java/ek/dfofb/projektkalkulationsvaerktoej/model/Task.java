@@ -14,12 +14,13 @@ public class Task {
     private int projectID;
     private int ParentID;
     private int hoursRemaining;
+    private int hoursSpentOnTask;
     private Set<Task> tasks;
     private Set<Account> assignedWorkers;
 
     public Task(int taskID, String name, String description, int hourEstimate,
                 boolean isCompleted, Date startDate, Date deadLine, int projectID,
-                int parentID) {
+                int parentID, int hoursSpentOnTask) {
         this.taskID = taskID;
         this.name = name;
         this.description = description;
@@ -28,7 +29,8 @@ public class Task {
         this.startDate = startDate;
         this.deadLine = deadLine;
         this.projectID = projectID;
-        ParentID = parentID;
+        this.ParentID = parentID;
+        this.hoursSpentOnTask = hoursSpentOnTask;
     }
 
     public Task() {
@@ -44,6 +46,14 @@ public class Task {
 
     public void setHoursRemaining(int hoursRemaining) {
         this.hoursRemaining = hoursRemaining;
+    }
+
+    public int getHoursSpentOnTask() {
+        return hoursSpentOnTask;
+    }
+
+    public void setHoursSpentOnTask(int hoursSpentOnTask) {
+        this.hoursSpentOnTask = hoursSpentOnTask;
     }
 
     public void setTaskID(int taskID) {

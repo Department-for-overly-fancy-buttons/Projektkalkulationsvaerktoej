@@ -23,6 +23,8 @@ public interface ITaskRepository {
 
     Task updateTask(Task task);
 
+    Task completeTask(Task task);
+
     boolean deleteTask(int taskID);
 
 }

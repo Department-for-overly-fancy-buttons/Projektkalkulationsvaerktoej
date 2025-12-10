@@ -52,14 +52,18 @@
             <progress id="hourProgressTask"
                       th:value="(${task.hourEstimate}-${task.hoursRemaining})/${task.hourEstimate}"></progress>
         </td>
-        <td th:text="'Tid brugt'"></td>
+        <td th:text="${task.hoursSpentOnTask}"></td>
         <td th:if="${role.hasPermission(3)}">
             <a th:href="@{/project/{projectName}/{taskName}/edit (projectName=${projectName},taskName=${task.name})}">Rediger
                 opgave</a>
         </td>
-        <td th:if="${tasks.isEmpty()} or ${task.hourEstimate} == 0">
-            <a th:href="@{/project/{projectName}/{taskName}/complete (projectName=${projectName},taskName=${task.name})}">Færdiggør
-                opgave</a>
+        <td th:if="${tasks.isEmpty()} or ${task.hoursRemaining} == 0">
+            <a th:if="${task.isCompleted} == false"
+               th:href="@{/project/{projectName}/{taskName}/complete (projectName=${projectName},taskName=${task.name})}">
+                Complete task</a>
+            <a th:if="${task.isCompleted} == true"
+               th:href="@{/project/{projectName}/{taskName}/complete (projectName=${projectName},taskName=${task.name})}">
+                Reopen task</a>
         </td>
     </tr>
     </tbody>
@@ -99,7 +103,7 @@
             <progress id="hourProgressSubTask"
                       th:value="(${taskList.hourEstimate}-${taskList.hoursRemaining})/${taskList.hourEstimate}"></progress>
         </td>
-        <td th:text="'Tid brugt'"></td>
+        <td th:text="${taskList.hoursSpentOnTask}"></td>
         <td>
             <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
                 <button type="submit">Info</button>

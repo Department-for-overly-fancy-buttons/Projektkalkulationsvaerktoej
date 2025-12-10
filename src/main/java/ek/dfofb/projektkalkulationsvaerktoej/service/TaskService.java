@@ -167,15 +167,17 @@ public class TaskService {
         return (int) (completedTasks / (completedTasks + notCompletedTasks) * 100);
     }
 
-    public boolean markAsDone(int taskID) {
+    public boolean markAsDone(int taskID, int hoursSpent) {
         Task task = getTaskByID(taskID);
         if (!task.getIsCompleted()) {
             task.setIsCompleted(true);
-            updateTask(task);
+            task.setHoursSpentOnTask(hoursSpent);
+            taskRepository.completeTask(task);
             return true;
         }
         task.setIsCompleted(false);
-        updateTask(task);
+        task.setHoursSpentOnTask(0);
+        taskRepository.completeTask(task);
         return false;
     }
 

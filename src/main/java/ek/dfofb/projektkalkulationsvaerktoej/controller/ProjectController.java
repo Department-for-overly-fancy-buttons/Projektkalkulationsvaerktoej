@@ -96,15 +96,18 @@ public class ProjectController {
         //Skal nok rykkes til servicelaget
         int hoursInitial = 0;
         int hoursRemaining = 0;
+        int hoursSpent = 0;
         for (Task task : tasks) {
             hoursRemaining += taskService.hoursLeftOnTask(task.getTaskID(), false);
             hoursInitial += taskService.hoursLeftOnTask(task.getTaskID(), true);
+            hoursSpent += task.getHoursSpentOnTask();
         }
         model.addAttribute("hourEstimateRemaining", hoursRemaining);
         model.addAttribute("hourEstimateInitial", hoursInitial);
         model.addAttribute("project", project);
         model.addAttribute("tasks", tasks);
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
+        model.addAttribute("hoursSpent",hoursSpent);
         return "show-project";
     }
 

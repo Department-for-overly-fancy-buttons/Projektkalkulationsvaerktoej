@@ -76,6 +76,13 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
+    public Task completeTask(Task task) throws DataAccessException {
+        String sql = "UPDATE tasks SET Completed=?,HoursSpent=? WHERE TaskID = ?";
+        jdbcTemplate.update(sql, task.getIsCompleted(), task.getHoursSpentOnTask(), task.getTaskID());
+        return task;
+    }
+
+    @Override
     public boolean deleteTask(int taskID) throws DataAccessException {
         String sql = "DELETE FROM tasks where TaskID = ?";
         int deletedRows = jdbcTemplate.update(sql, taskID);

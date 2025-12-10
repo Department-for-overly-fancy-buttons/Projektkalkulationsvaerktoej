@@ -223,7 +223,7 @@ public class TaskController {
         if (httpSession.getAttribute("account") == null) {
             return "redirect:/account/login";
         }
-        taskService.markAsDone(task.getTaskID());
+        taskService.markAsDone(task.getTaskID(),task.getHoursSpentOnTask());
         String taskName = taskService.getTaskByID(task.getTaskID()).getName();
         return saveCurrentTaskID(taskName, task.getTaskID(), httpSession);
     }
