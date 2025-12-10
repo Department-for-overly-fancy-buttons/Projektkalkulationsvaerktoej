@@ -30,8 +30,8 @@ class TaskServiceTest {
     @Test
     void hoursLeftOnTask() {
 
-    assertThat(taskService.hoursLeftOnTask(2)).isEqualTo(200);
-    assertThat(taskService.hoursLeftOnTask(1)).isEqualTo(0);
+    assertThat(taskService.hoursLeftOnTask(2,false)).isEqualTo(200);
+    assertThat(taskService.hoursLeftOnTask(1,false)).isEqualTo(0);
 
     }
 
@@ -43,10 +43,10 @@ class TaskServiceTest {
 
     @Test
     void markAsDone() {
-        taskService.markAsDone(1);
-        assertThat(taskService.getTaskByID(1).isCompleted()).isEqualTo(false);
-        taskService.markAsDone(1);
-        assertThat(taskService.getTaskByID(1).isCompleted()).isEqualTo(true);
+        taskService.markAsDone(1,100);
+        assertThat(taskService.getTaskByID(1).getIsCompleted()).isEqualTo(false);
+        taskService.markAsDone(1,110);
+        assertThat(taskService.getTaskByID(1).getIsCompleted()).isEqualTo(true);
 
     }
 }
