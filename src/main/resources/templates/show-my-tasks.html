@@ -6,6 +6,28 @@
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
+
+<h1>Mine projekter</h1>
+<table th:if="!${projects.isEmpty()}">
+    <tbody>
+    <tr th:each="project : ${projects}">
+        <td th:text="${project.projectID}"></td>
+        <td th:text="${project.name}"></td>
+        <td th:text="${project.description}"></td>
+        <td th:text="${project.isActive}"></td>
+        <td th:text="${#dates.format(project.startDate, 'dd-MM-yyyy')}"></td>
+        <td th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></td>
+        <td>
+            <form method="post" th:action="@{/project/getID}" th:object="${project}">
+                <button type="submit">Info</button>
+                <input type="hidden" name="projectID" th:value="${project.projectID}"/>
+                <input type="hidden" name="projectName" th:value="${project.name}">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 <h1>Mine opgaver</h1>
 <table th:if="!${tasks.isEmpty()}">
     <thead>
@@ -40,7 +62,5 @@
 </table>
 <a th:if="${tasks.isEmpty()}">No active tasks</a>
 <a th:href="@{/project/list}">Tilbage til projektListe</a>
-</div>
-</td>
 </body>
 </html>
