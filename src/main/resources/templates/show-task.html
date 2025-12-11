@@ -134,6 +134,20 @@
     </tr>
     </tbody>
 </table>
+<div th:if="${role.hasPermission(5)}">
+    <form action="#" th:action="@{/project/task/assign}" th:object="${account}" method="post">
+        <div>
+            <label for="assignAccount">Assign:</label>
+            <select id="assignAccount" th:field="*{accountID}" required>
+                <option th:each="assignAccount : ${accounts}"
+                        th:value="${assignAccount.accountID}"
+                        th:text="${assignAccount.name} +' ' + ${assignAccount.email}">
+                </option>
+            </select>
+        </div>
+        <button type="submit">Assign</button>
+    </form>
+</div>
 
 <td th:switch="${task.parentID}">
     <div th:case="'0'"><a

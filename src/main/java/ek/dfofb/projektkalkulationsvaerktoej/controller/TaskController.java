@@ -2,15 +2,15 @@ package ek.dfofb.projektkalkulationsvaerktoej.controller;
 
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Permission;
+import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Task;
-import ek.dfofb.projektkalkulationsvaerktoej.service.AuthorizationService;
-import ek.dfofb.projektkalkulationsvaerktoej.service.ProjectService;
-import ek.dfofb.projektkalkulationsvaerktoej.service.RoleService;
-import ek.dfofb.projektkalkulationsvaerktoej.service.TaskService;
+import ek.dfofb.projektkalkulationsvaerktoej.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("project")
@@ -19,13 +19,15 @@ public class TaskController {
     private final ProjectService projectService;
     private final TaskService taskService;
     private final RoleService roleService;
+    private final AccountService accountService;
     private final AuthorizationService authorizationService;
 
     public TaskController(ProjectService projectService, TaskService taskService, RoleService roleService,
-                          AuthorizationService authorizationService) {
+                          AuthorizationService authorizationService, AccountService accountService) {
         this.projectService = projectService;
         this.taskService = taskService;
         this.roleService = roleService;
+        this.accountService = accountService;
         this.authorizationService = authorizationService;
     }
 
@@ -123,7 +125,18 @@ public class TaskController {
         model.addAttribute("tasks", taskService.getAllSubTasks(taskID));
         model.addAttribute("projectName", projectName);
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
+        List<Account> accountsAssignedToTask = taskService.getAllAccountsAssignedToTask(taskID);
+        List<Account> accounts = accountService.getAllAccounts();
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accountsAssignedToTask.contains(accounts.get(i))) {
+                accounts.remove(accounts.get(i));
+                i--;
+            }
+        }
+        model.addAttribute("projectMembers", accountsAssignedToTask);
         model.addAttribute("assignedToTask", taskService.getAllAccountsAssignedToTask(taskID));
+        model.addAttribute("accounts", accounts);
+        model.addAttribute("account", new Account());
         return "show-task";
     }
 
@@ -151,7 +164,18 @@ public class TaskController {
         model.addAttribute("mainTaskID", mainTaskID);
         model.addAttribute("mainTask", mainTaskName);
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
+        List<Account> accountsAssignedToTask = taskService.getAllAccountsAssignedToTask(taskID);
+        List<Account> accounts = accountService.getAllAccounts();
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accountsAssignedToTask.contains(accounts.get(i))) {
+                accounts.remove(accounts.get(i));
+                i--;
+            }
+        }
+        model.addAttribute("projectMembers", accountsAssignedToTask);
         model.addAttribute("assignedToTask", taskService.getAllAccountsAssignedToTask(taskID));
+        model.addAttribute("accounts", accounts);
+        model.addAttribute("account", new Account());
         return "show-task";
     }
 
@@ -214,9 +238,23 @@ public class TaskController {
         if (httpSession.getAttribute("account") == null) {
             return "redirect:/account/login";
         }
-        taskService.markAsDone(task.getTaskID(),task.getHoursSpentOnTask());
+        taskService.markAsDone(task.getTaskID(), task.getHoursSpentOnTask());
         String taskName = taskService.getTaskByID(task.getTaskID()).getName();
         return saveCurrentTaskID(taskName, task.getTaskID(), httpSession);
+    }
+
+    @PostMapping("/task/assign")
+    public String assignAccountToProject(@ModelAttribute Account account, HttpSession httpSession, Model model) {
+        Account myAccount = (Account) httpSession.getAttribute("account");
+        if (myAccount == null) {
+            return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(myAccount.getRoleID(), Permission.ADD_TASKS)) {
+            return "redirect:/project";
+        }
+        Task task = taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask"));
+        taskService.assignAccountToTask(account.getAccountID(), task.getTaskID());
+        return saveCurrentTaskID(task.getName(), task.getTaskID(), httpSession);
     }
 
 }

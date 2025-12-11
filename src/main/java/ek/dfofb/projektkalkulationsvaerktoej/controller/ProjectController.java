@@ -121,7 +121,6 @@ public class ProjectController {
         model.addAttribute("hoursSpent", hoursSpent);
         //todo move to service?
         List<Account> accountsAssignedToProject = projectService.getAllAccountsAssignedToProject(projectID);
-        model.addAttribute("projectMembers", accountsAssignedToProject);
         List<Account> accounts = accountService.getAllAccounts();
         for (int i = 0; i < accounts.size(); i++) {
             if (accountsAssignedToProject.contains(accounts.get(i))) {
@@ -129,6 +128,7 @@ public class ProjectController {
                 i--;
             }
         }
+        model.addAttribute("projectMembers", accountsAssignedToProject);
         model.addAttribute("accounts", accounts);
         model.addAttribute("account", new Account());
         return "show-project";
@@ -173,7 +173,7 @@ public class ProjectController {
         if (myAccount == null) {
             return "redirect:/account/login";
         }
-        if (!authorizationService.hasPermission(myAccount.getRoleID(), Permission.EDIT_PROJECTS)) {
+        if (!authorizationService.hasPermission(myAccount.getRoleID(), Permission.ADD_PROJECTS)) {
             return "redirect:/project";
         }
         Project project = projectService.getProjectByID((Integer) httpSession.getAttribute("currentProject"));
