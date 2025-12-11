@@ -15,6 +15,11 @@
 
 :root {
     --headerFontSize: 1.50rem;
+    --button-background-color: #FF325A;
+    --background-color: white;
+    --box-background-color: #E7EEF1;
+    --alt-background-color: #dedede;
+    --highlighted-color: #59869d;
 }
 
 * {
@@ -48,13 +53,13 @@ nav {
 
 #loginButton {
     color: white;
-    background-color: deeppink;
+    background-color: var(--button-background-color);
     white-space: nowrap;
 }
 
 #logoutButton {
     color: white;
-    background-color: deeppink;
+    background-color: var(--button-background-color);
     white-space: nowrap;
 }
 
@@ -69,13 +74,13 @@ nav {
 
 .navigationListItem {
     float: right;
-    background-color: blue;
-    border-left: 3px solid aquamarine;
+    background-color: inherit;
+    border-left: 3px solid black;
 }
 
 .navigationListItem .navigationLink {
     display: block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 0 1rem;
     text-decoration: none;
@@ -101,7 +106,7 @@ nav {
     border: 0;
     margin: 0;
     padding: 0;
-    background-color: aqua;
+    background-color: var(--background-color);
     display: grid;
     grid-template-columns: 60% 40% ;
     position: sticky;
@@ -124,15 +129,22 @@ nav {
 .projectItem {
     width: 13rem;
     height: 5rem;
-    background-color: darkorange;
+    background-color: var(--highlighted-color);
     border-radius: 5%;
     margin: 0.5% 2%;
-    padding: 0.5rem;
     overflow: hidden;
 }
 
 .projectItemText {
     margin: 0.25rem 0;
+}
+
+.button {
+    color: white;
+    background-color: var(--button-background-color);
+    margin: 1rem 0;
+    padding: 0.5em;
+    text-decoration: none;
 }
 
 #progressbarBorder {
@@ -150,7 +162,7 @@ nav {
 #overviewLayout {
     margin: 1%;
     padding: 1%;
-    background-color: brown;
+    background-color: inherit;
     display: flex;
     flex-direction: column;
 }
@@ -160,8 +172,22 @@ nav {
     padding: 0 4rem;
 }
 
-.Descriptor {
+#openProjectButton {
+    background-color: inherit;
+    border: inherit;
+}
 
+.descriptionBox {
+    background-color: var(--box-background-color);
+    border: 7px chocolate;
+    padding: 1rem;
+}
+
+#assignmentDescriptionBox {
+    background-color: var(--alt-background-color);
+    border: none;
+    padding: 0.5rem;
+    margin: 1rem 0;
 }
 
 /* End of project-overview style */

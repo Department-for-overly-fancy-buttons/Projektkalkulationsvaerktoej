@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,7 +31,15 @@ public class ProjectController {
             return "redirect:/account/login";
         }
         model.addAttribute("projects", projectService.getAllProjects());
-        return "list-all-projects";
+        ArrayList<Integer> test = new ArrayList<>();
+        test.add(80);
+        test.add(20);
+        test.add(100);
+        test.add(100);
+        test.add(100);
+        model.addAttribute("percentOfProgressDone", test);
+//        return "list-all-projects";
+          return "project-overview";
     }
 
     @GetMapping("/create")
@@ -79,6 +88,11 @@ public class ProjectController {
         model.addAttribute("hourEstimate", hours);
         model.addAttribute("project", project);
         model.addAttribute("tasks", tasks);
+
+        ArrayList<Integer> test = new ArrayList<>();
+        test.add(10);
+        test.add(66);
+        model.addAttribute("percentOfProgressDone", test);
         return "show-project";
     }
 

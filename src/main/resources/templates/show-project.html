@@ -3,72 +3,45 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Projekt</title>
+    <link rel="styleSheet" th:href="@{/style.css}"/>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
-<h1>Projekt</h1>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div id="overviewLayout">
+        <div class="descriptionBox">
+            <h1 th:text="${project.name}"></h1>
+            <h3 th:text="${#dates.format(project.startDate, 'yyyy-MM-dd') + '  ->  ' + #dates.format(project.deadline, 'yyyy-MM-dd') + '        ' + hourEstimate}"></h3>
+            <div id="assignmentDescriptionBox">
+                <p th:text="${project.description}"></p>
+            </div>
+            <a class="button" th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger projekt</a>
+        </div>
 
-<a th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret ny Opgave</a>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Navn</th>
-        <th>Beskrivelse</th>
-        <th>Aktiv</th>
-        <th>Startdato</th>
-        <th>Deadline</th>
-        <th>Tidsestimat (timer)</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td th:text="${project.projectID}"></td>
-        <td th:text="${project.name}"></td>
-        <td th:text="${project.description}"></td>
-        <td th:text="${project.isActive}"></td>
-        <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
-        <td th:text="${hourEstimate}"></td>
-        <td>
-            <a th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger projekt</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <a class="button" th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret ny Opgave</a>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Navn</th>
-        <th>Beskrivelse</th>
-        <th>Fuldført</th>
-        <th>Startdato</th>
-        <th>Deadline</th>
-        <th>Tidsestimat (timer)</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="task : ${tasks}">
-        <td th:text="${task.taskID}"></td>
-        <td th:text="${task.name}"></td>
-        <td th:text="${task.description}"></td>
-        <td th:text="${task.isCompleted()}"></td>
-        <td th:text="${#dates.format(task.startDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
-        <td th:text="${task.hourEstimate}"></td>
-        <td>
-            <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
-                <button type="submit">Info</button>
-                <input type="hidden" name="taskID" th:value="${task.taskID}"/>
-                <input type="hidden" name="taskName" th:value="${task.name}">
+        <div class="overview">
+            <form method="post" th:action="@{/project/task/getID}" th:object="${task}" class="projectItem" th:each="task : ${tasks}">
+                <button id="openProjectButton" type="submit">
+                    <div>
+                        <p class="projectItemText" th:text="${task.name}"></p>
+                        <p class="projectItemText" th:text="${#dates.format(task.startDate, 'yyyy-MM-dd') + ' -> ' + #dates.format(task.deadLine, 'yyyy-MM-dd')}"></p>
+                        <div id="progressbarBorder">
+                            <div id="progressbarProgress" th:style="'width:' + (${percentOfProgressDone.removeFirst()}) + '%'">
+                            </div>
+                        </div>
+
+
+                        <input type="hidden" name="taskID" th:value="${task.taskID}"/>
+                        <input type="hidden" name="taskName" th:value="${task.name}">
+                    </div>
+                </button>
             </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a th:href="@{/project/list}">Tilbage til projektliste</a>
+            <div class="projectItem">
+                <input id="createProjectButton" type="image"  th:attr="onclick=|location.href='/project/${project.name}/create/task'|" th:src="@{/images/Dept=ofb_Logo.png}" alt="Create new task">
+            </div>
+        </div>
+    <a class="button" th:href="@{/project/list}">Tilbage til projektliste</a>
+    </div>
 </body>
 </html>
