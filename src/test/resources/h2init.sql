@@ -1,6 +1,6 @@
 DROP ALL OBJECTS;
 
-CREATE TABLE Permissions(
+CREATE TABLE Permissions (
                              PermissionID    INT NOT NULL AUTO_INCREMENT,
                              Name VARCHAR(255) UNIQUE NOT NULL,
                              Description VARCHAR(255),
@@ -38,9 +38,9 @@ CREATE TABLE Projects (
 CREATE TABLE Accounts (
                           AccountID INT NOT NULL AUTO_INCREMENT,
                           Name VARCHAR(255) NOT NULL,
-                          Email VARCHAR(255),
-                          Birthday DATE NOT NULL default ('02-02-02'),
-                          Number VARCHAR(24) NOT NULL default('12345678'),
+                          Email VARCHAR(255) unique not null,
+                          Birthday DATE,
+                          Number VARCHAR(24) ,
                           WeeklyHours INT NOT NULL,
                           Password VARCHAR(255) NOT NULL,
                           RoleID INT NOT NULL,
@@ -66,11 +66,12 @@ CREATE TABLE Tasks (
                        Description VARCHAR(255),
                        HourEstimate INT,
                        Completed BOOLEAN NOT NULL,
-                       StartDate DATE,
                        Deadline DATE,
+                       StartDate DATE,
                        ProjectID INT NOT NULL,
                        ParentID INT,
-                       UNIQUE(Name, ProjectID),
+                       HoursSpent int,
+                       UNIQUE(Name, ProjectID, ParentID),
                        PRIMARY KEY (TaskID),
                        FOREIGN KEY (ProjectID) REFERENCES Projects (ProjectID)
                            ON DELETE CASCADE

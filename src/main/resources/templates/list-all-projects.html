@@ -8,7 +8,7 @@
 <div th:replace="~{fragments/header :: header}"></div>
 <h1>Projekter</h1>
 
-<a th:href="@{/project/create}">Opret nyt projekt</a>
+<a th:if="${role.hasPermission(5)}" th:href="@{/project/create}">Opret nyt projekt</a>
 
 <table>
     <thead>
