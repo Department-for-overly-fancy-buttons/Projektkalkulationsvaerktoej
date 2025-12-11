@@ -51,6 +51,13 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
+    public boolean assignAccountToProject(int accountID, int projectID) throws DataAccessException {
+        String sql = "INSERT INTO ProjectMembers (AccountID,ProjectID) VALUES(?,?)";
+        int rowsInserted = jdbcTemplate.update(sql, accountID, projectID);
+        return rowsInserted == 1;
+    }
+
+    @Override
     public boolean addProject(Project project) throws DataAccessException
     {
         String sql = "INSERT INTO Projects (Name, Description, IsActive, StartDate, Deadline) " +

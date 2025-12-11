@@ -2,7 +2,9 @@ package ek.dfofb.projektkalkulationsvaerktoej.service;
 
 import ek.dfofb.projektkalkulationsvaerktoej.exceptions.DatabaseOperationException;
 import ek.dfofb.projektkalkulationsvaerktoej.exceptions.DuplicateProjectException;
+import ek.dfofb.projektkalkulationsvaerktoej.exceptions.DuplicateTasklistEntryException;
 import ek.dfofb.projektkalkulationsvaerktoej.exceptions.ProjectNotFoundException;
+import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Task;
 import ek.dfofb.projektkalkulationsvaerktoej.repository.ProjectRepository;
@@ -16,31 +18,27 @@ import java.util.List;
 // Det kan vi eventuelt snakke om i skolen
 
 @Service
-public class ProjectService
-{
+public class ProjectService {
 
     //TODO: Hvordan håndtere vi startdate efter deadline eller et project i fortiden
 
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
 
-    public ProjectService(ProjectRepository projectRepository, TaskRepository taskRepository)
-    {
+    public ProjectService(ProjectRepository projectRepository, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
 
-    public List<Project> getAllProjects()
-    {
+    public List<Project> getAllProjects() {
         try {
             return projectRepository.getAllProjects();
-        }catch (DataAccessException exception){
+        } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred while attempting to access projects");
         }
     }
 
-    public Project getProjectByID(int id)
-    {
+    public Project getProjectByID(int id) {
         try {
             Project project = projectRepository.getProjectByID(id);
             int sum;
@@ -61,11 +59,10 @@ public class ProjectService
         }
     }
 
-    public boolean createProject(Project project)
-    {
+    public boolean createProject(Project project) {
         try {
             return projectRepository.addProject(project);
-        }catch (DataIntegrityViolationException exception) {
+        } catch (DataIntegrityViolationException exception) {
             throw new DuplicateProjectException("A project of the chosen name (" + project.getName() + ") already exists");
         } catch (DataAccessException exception) {
             throw new DatabaseOperationException("A fatal error has occurred while attempting to create project");
@@ -74,8 +71,7 @@ public class ProjectService
         // Det kan vi eventuelt snakke om i skolen
     }
 
-    public Project updateProject(Project project)
-    {
+    public Project updateProject(Project project) {
         try {
             return projectRepository.updateProject(project);
         } catch (DataIntegrityViolationException exception) {
@@ -84,4 +80,29 @@ public class ProjectService
             throw new DatabaseOperationException("A fatal error has occurred while attempting to update project");
         }
     }
+
+    public List<Project> getAllProjectsForAccount(int accountID) throws DataAccessException {
+        try {
+            return projectRepository.getAllProjectsForAccount(accountID);
+        } catch (DataAccessException exception) {
+            throw new DatabaseOperationException("A fatal error has occurred while attempting to update project");
+        }
+    }
+
+    public boolean assignAccountToProject(int accountID, int projectID) throws DataAccessException {
+        try {
+            return projectRepository.assignAccountToProject(accountID, projectID);
+        } catch (DataIntegrityViolationException exception) {
+            throw new DuplicateTasklistEntryException("an account with id (" + accountID + ") is already assigned a project with id (" + projectID + ")");
+        }
+    }
+
+    public List<Account> getAllAccountsAssignedToProject(int projectID) {
+        try {
+            return projectRepository.getAllAssignedToProject(projectID);
+        } catch (DataAccessException exception) {
+            throw new DatabaseOperationException("A fatal error has occurred, while attempting to access accounts assigned to project, with id:" + projectID);
+        }
+    }
+
 }

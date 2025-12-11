@@ -32,8 +32,8 @@
         <td th:text="${project.name}"></td>
         <td th:text="${project.description}"></td>
         <td th:text="${project.isActive}"></td>
-        <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(project.startDate, 'dd-MM-yyyy')}"></td>
+        <td th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></td>
         <td th:text="${hourEstimateInitial}"></td>
         <td th:text="${hourEstimateRemaining}"></td>
         <td th:if="${hourEstimateInitial} != 0">
@@ -52,6 +52,7 @@
     </tbody>
 </table>
 
+<h2>Sub projects</h2>
 <table>
     <thead>
     <tr>
@@ -73,8 +74,8 @@
         <td th:text="${task.name}"></td>
         <td th:text="${task.description}"></td>
         <td th:text="${task.isCompleted}"></td>
-        <td th:text="${#dates.format(task.startDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(task.startDate, 'dd-MM-yyyy')}"></td>
+        <td th:text="${#dates.format(task.deadLine, 'dd-MM-yyyy')}"></td>
         <td th:text="${task.hourEstimate}"></td>
         <td th:text="${task.hoursRemaining}"></td>
         <td th:if="${task.hourEstimate} == 0">Please set hourEstimate</td>
@@ -96,6 +97,37 @@
     </tr>
     </tbody>
 </table>
+
+<h2>Project members</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Navn</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${projectMembers}">
+        <td th:text="${account.name}"></td>
+        <td th:text="${account.email}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:if="${role.hasPermission(2)}">
+    <form action="#" th:action="@{/project/assign}" th:object="${account}" method="post">
+        <div>
+            <label for="assignAccount">Assign:</label>
+            <select id="assignAccount" th:field="*{accountID}" required>
+                <option th:each="assignAccount : ${accounts}"
+                        th:value="${assignAccount.accountID}"
+                        th:text="${assignAccount.name} +' ' + ${assignAccount.email}">
+                </option>
+            </select>
+        </div>
+        <button type="submit">Assign</button>
+    </form>
+</div>
 <a th:href="@{/project/list}">Tilbage til projektliste</a>
 </body>
 </html>
