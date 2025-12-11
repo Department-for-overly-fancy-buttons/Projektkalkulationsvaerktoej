@@ -114,6 +114,27 @@
     </tr>
     </tbody>
 </table>
+
+<div th:switch="${task.parentID}">
+    <h2 th:case="0">Assigned to subproject</h2>
+    <h2 th:case="*">Assigned to task</h2>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Navn</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${assignedToTask}">
+        <td th:text="${account.name}"></td>
+        <td th:text="${account.email}"></td>
+    </tr>
+    </tbody>
+</table>
+
 <td th:switch="${task.parentID}">
     <div th:case="'0'"><a
             th:href="@{/project/{projectName}(projectName=${projectName})}">Tilbage til projekt</a>

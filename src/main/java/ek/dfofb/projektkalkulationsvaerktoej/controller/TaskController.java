@@ -45,17 +45,6 @@ public class TaskController {
         return "redirect:/project/" + projectName + "/" + taskService.getTaskByID(parentID).getName() + "/" + taskName;
     }
 
-    @GetMapping()
-    public String myTasks(Model model, HttpSession httpSession) {
-        Account account = (Account) httpSession.getAttribute("account");
-        if (account == null) {
-            return "redirect:/account/login";
-        }
-        model.addAttribute("tasks", taskService.getAllTasksForAccount(account.getAccountID()));
-        model.addAttribute("task", new Task());
-        return "show-my-tasks";
-    }
-
     @GetMapping("/{projectName}/create/task")
     public String createTask(Model model, @PathVariable String projectName, HttpSession httpSession) {
         Account account = (Account) httpSession.getAttribute("account");
@@ -134,6 +123,7 @@ public class TaskController {
         model.addAttribute("tasks", taskService.getAllSubTasks(taskID));
         model.addAttribute("projectName", projectName);
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
+        model.addAttribute("assignedToTask", taskService.getAllAccountsAssignedToTask(taskID));
         return "show-task";
     }
 
@@ -161,6 +151,7 @@ public class TaskController {
         model.addAttribute("mainTaskID", mainTaskID);
         model.addAttribute("mainTask", mainTaskName);
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
+        model.addAttribute("assignedToTask", taskService.getAllAccountsAssignedToTask(taskID));
         return "show-task";
     }
 
