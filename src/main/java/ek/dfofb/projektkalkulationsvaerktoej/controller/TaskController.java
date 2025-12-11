@@ -51,14 +51,14 @@ public class TaskController {
         if (account == null) {
             return "redirect:/account/login";
         }
-        if (httpSession.getAttribute(projectName) == null) {
+        if (httpSession.getAttribute("currentProject") == null) {
             return "redirect:/project/list";
         }
         if (!authorizationService.hasPermission(account.getRoleID(), Permission.ADD_TASKS)) {
             return "redirect:/project";
         }
         Task task = new Task();
-        task.setProjectID((Integer) httpSession.getAttribute(projectName));
+        task.setProjectID((Integer) httpSession.getAttribute("currentProject"));
         model.addAttribute("task", task);
         return "create-task-form";
     }
@@ -74,12 +74,12 @@ public class TaskController {
         }
         int taskID = (Integer) httpSession.getAttribute("currentTask");
         String currentTask = taskService.getTaskByID(taskID).getName();
-        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null || !currentTask.equalsIgnoreCase(taskName)) {
+        if (httpSession.getAttribute("currentProject") == null || httpSession.getAttribute("currentTask") == null || !currentTask.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
 
         Task task = new Task();
-        task.setProjectID((Integer) httpSession.getAttribute(projectName));
+        task.setProjectID((Integer) httpSession.getAttribute("currentProject"));
         task.setParentID((Integer) httpSession.getAttribute("currentTask"));
         model.addAttribute("task", task);
         return "create-sub-task-form";
@@ -115,7 +115,7 @@ public class TaskController {
         }
         int taskID = (Integer) httpSession.getAttribute("currentTask");
         String name = taskService.getTaskByID(taskID).getName();
-        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null || !name.equalsIgnoreCase(taskName)) {
+        if (httpSession.getAttribute("currentProject") == null || httpSession.getAttribute("currentTask") == null || !name.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
 
@@ -140,7 +140,7 @@ public class TaskController {
         int mainTaskID = taskService.getTaskByID(taskID).getParentID();
         String currentTask = taskService.getTaskByID(taskID).getName();
         String mainTaskName = taskService.getTaskByID(mainTaskID).getName();
-        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null
+        if (httpSession.getAttribute("currentProject") == null || httpSession.getAttribute("currentTask") == null
                 || !currentTask.equalsIgnoreCase(subTaskName) || !mainTaskName.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
@@ -165,7 +165,7 @@ public class TaskController {
         if (!authorizationService.hasPermission(account.getRoleID(), Permission.EDIT_TASKS)) {
             return "redirect:/project";
         }
-        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null ||
+        if (httpSession.getAttribute("currentProject") == null || httpSession.getAttribute("currentTask") == null ||
                 !taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask")).getName().equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
@@ -180,7 +180,7 @@ public class TaskController {
         if (account == null) {
             return "redirect:/account/login";
         }
-        if (httpSession.getAttribute(projectName) == null || httpSession.getAttribute("currentTask") == null ||
+        if (httpSession.getAttribute("currentProject") == null || httpSession.getAttribute("currentTask") == null ||
                 !taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask")).getName().equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
