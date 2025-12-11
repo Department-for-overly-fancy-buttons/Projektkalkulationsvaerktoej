@@ -52,6 +52,7 @@
     </tbody>
 </table>
 
+<h2>Sub projects</h2>
 <table>
     <thead>
     <tr>
@@ -96,6 +97,23 @@
     </tr>
     </tbody>
 </table>
+
+<h2>Project members</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Navn</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${projectMembers}">
+        <td th:text="${account.name}"></td>
+        <td th:text="${account.email}"></td>
+    </tr>
+    </tbody>
+</table>
+
 <a th:href="@{/project/list}">Tilbage til projektliste</a>
 </body>
 </html>

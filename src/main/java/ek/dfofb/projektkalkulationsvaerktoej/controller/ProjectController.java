@@ -28,6 +28,18 @@ public class ProjectController {
         this.authorizationService = authorizationService;
     }
 
+    @GetMapping()
+    public String myTasks(Model model, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
+        model.addAttribute("tasks", taskService.getAllTasksForAccount(account.getAccountID()));
+        model.addAttribute("task", new Task());
+        model.addAttribute("projects", projectService.getAllProjectsForAccount(account.getAccountID()));
+        return "show-my-tasks";
+    }
+
     @GetMapping("/list")
     public String listProjects(Model model, HttpSession httpSession) {
         Account account = (Account) httpSession.getAttribute("account");
@@ -108,6 +120,7 @@ public class ProjectController {
         model.addAttribute("tasks", tasks);
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
         model.addAttribute("hoursSpent",hoursSpent);
+        model.addAttribute("projectMembers",projectService.getAllAccountsAssignedToProject(projectID));
         return "show-project";
     }
 

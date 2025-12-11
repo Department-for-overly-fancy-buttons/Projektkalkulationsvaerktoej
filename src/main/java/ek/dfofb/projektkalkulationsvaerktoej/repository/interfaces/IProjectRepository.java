@@ -15,6 +15,8 @@ public interface IProjectRepository {
 
     List<Account> getAllAssignedToProject(int projectID);
 
+    boolean assignAccountToProject(int accountID, int projectID);
+
     boolean addProject(Project project);
 
     Project updateProject(Project project);
