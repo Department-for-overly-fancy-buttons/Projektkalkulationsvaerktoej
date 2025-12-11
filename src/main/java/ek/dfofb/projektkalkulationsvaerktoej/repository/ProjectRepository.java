@@ -52,7 +52,7 @@ public class ProjectRepository implements IProjectRepository {
 
     @Override
     public boolean assignAccountToProject(int accountID, int projectID) throws DataAccessException {
-        String sql = "INSERT INTO ProjectMembers (AccountID,TaskID) VALUES(?,?)";
+        String sql = "INSERT INTO ProjectMembers (AccountID,ProjectID) VALUES(?,?)";
         int rowsInserted = jdbcTemplate.update(sql, accountID, projectID);
         return rowsInserted == 1;
     }

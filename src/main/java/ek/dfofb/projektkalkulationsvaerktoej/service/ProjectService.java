@@ -91,7 +91,7 @@ public class ProjectService {
 
     public boolean assignAccountToProject(int accountID, int projectID) throws DataAccessException {
         try {
-            return taskRepository.assignAccountToTask(accountID, projectID);
+            return projectRepository.assignAccountToProject(accountID, projectID);
         } catch (DataIntegrityViolationException exception) {
             throw new DuplicateTasklistEntryException("an account with id (" + accountID + ") is already assigned a project with id (" + projectID + ")");
         }
