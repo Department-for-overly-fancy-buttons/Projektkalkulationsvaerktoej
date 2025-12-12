@@ -1,10 +1,7 @@
 package ek.dfofb.projektkalkulationsvaerktoej.controller;
 
 import ek.dfofb.projektkalkulationsvaerktoej.model.*;
-import ek.dfofb.projektkalkulationsvaerktoej.service.AuthorizationService;
-import ek.dfofb.projektkalkulationsvaerktoej.service.ProjectService;
-import ek.dfofb.projektkalkulationsvaerktoej.service.RoleService;
-import ek.dfofb.projektkalkulationsvaerktoej.service.TaskService;
+import ek.dfofb.projektkalkulationsvaerktoej.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +16,28 @@ public class ProjectController {
     private final ProjectService projectService;
     private final TaskService taskService;
     private final RoleService roleService;
+    private final AccountService accountService;
     private final AuthorizationService authorizationService;
 
     public ProjectController(ProjectService projectService, TaskService taskService, RoleService roleService,
-                             AuthorizationService authorizationService) {
+                             AuthorizationService authorizationService, AccountService accountService) {
         this.projectService = projectService;
         this.taskService = taskService;
         this.roleService = roleService;
+        this.accountService = accountService;
         this.authorizationService = authorizationService;
+    }
+
+    @GetMapping()
+    public String myTasks(Model model, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
+        model.addAttribute("tasks", taskService.getAllTasksForAccount(account.getAccountID()));
+        model.addAttribute("task", new Task());
+        model.addAttribute("projects", projectService.getAllProjectsForAccount(account.getAccountID()));
+        return "show-my-tasks";
     }
 
     @GetMapping("/list")
@@ -83,7 +94,7 @@ public class ProjectController {
         if (httpSession.getAttribute("account") == null) {
             return "redirect:/account/login";
         }
-        httpSession.setAttribute(projectName, projectID);
+        httpSession.setAttribute("currentProject", projectID);
         return "redirect:/project/" + projectName;
     }
 
@@ -94,13 +105,13 @@ public class ProjectController {
         if (account == null) {
             return "redirect:/account/login";
         }
-        if (httpSession.getAttribute(projectName) == null) {
+        if (httpSession.getAttribute("currentProject") == null) {
             return "redirect:/project/list";
         }
         if (!authorizationService.hasPermission(account.getRoleID(), Permission.VIEW_PROJECT)) {
             return "redirect:/project";
         }
-        int projectID = (int) httpSession.getAttribute(projectName);
+        int projectID = (int) httpSession.getAttribute("currentProject");
         Project project = projectService.getProjectByID(projectID);
         List<Task> tasks = taskService.getAllTasksForProjects(projectID);
 
@@ -118,7 +129,19 @@ public class ProjectController {
         model.addAttribute("project", project);
         model.addAttribute("tasks", tasks);
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
-        model.addAttribute("hoursSpent",hoursSpent);
+        model.addAttribute("hoursSpent", hoursSpent);
+        //todo move to service?
+        List<Account> accountsAssignedToProject = projectService.getAllAccountsAssignedToProject(projectID);
+        List<Account> accounts = accountService.getAllAccounts();
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accountsAssignedToProject.contains(accounts.get(i))) {
+                accounts.remove(accounts.get(i));
+                i--;
+            }
+        }
+        model.addAttribute("projectMembers", accountsAssignedToProject);
+        model.addAttribute("accounts", accounts);
+        model.addAttribute("account", new Account());
 
         //Below is for tetsing progressbar
         ArrayList<Integer> test = new ArrayList<>();
@@ -135,13 +158,13 @@ public class ProjectController {
         if (account == null) {
             return "redirect:/account/login";
         }
-        if (httpSession.getAttribute(projectName) == null) {
+        if (httpSession.getAttribute("currentProject") == null) {
             return "redirect:/project/list";
         }
         if (!authorizationService.hasPermission(account.getRoleID(), Permission.EDIT_PROJECTS)) {
             return "redirect:/project";
         }
-        int projectID = (int) httpSession.getAttribute(projectName);
+        int projectID = (int) httpSession.getAttribute("currentProject");
         Project project = projectService.getProjectByID(projectID);
         model.addAttribute("project", project);
         return "edit-project-form";
@@ -161,4 +184,19 @@ public class ProjectController {
         String projectName = projectService.getProjectByID(project.getProjectID()).getName();
         return saveCurrentProjectID(projectName, project.getProjectID(), httpSession);
     }
+
+    @PostMapping("/assign")
+    public String assignAccountToProject(@ModelAttribute Account account, HttpSession httpSession, Model model) {
+        Account myAccount = (Account) httpSession.getAttribute("account");
+        if (myAccount == null) {
+            return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(myAccount.getRoleID(), Permission.ADD_PROJECTS)) {
+            return "redirect:/project";
+        }
+        Project project = projectService.getProjectByID((Integer) httpSession.getAttribute("currentProject"));
+        projectService.assignAccountToProject(account.getAccountID(), project.getProjectID());
+        return showProject(model, project.getName(), httpSession);
+    }
+
 }

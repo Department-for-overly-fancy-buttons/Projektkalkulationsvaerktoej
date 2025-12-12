@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>Opgave</title>
@@ -9,7 +9,7 @@
 <h1 th:text="${task.name}"></h1>
 
 <!--skal sende til create subtask-->
-<td th:if="${role.hasPermission(2)} and ${task.isCompleted} == false" th:switch="${task.parentID}">
+<div th:if="${role.hasPermission(2)} and ${task.isCompleted} == false" th:switch="${task.parentID}">
     <div th:case="'0'"><a
             th:href="@{/project/{projectName}/{taskName}/create/task (projectName = ${projectName}, taskName = ${task.name})}">Opret
         ny opgave</a>
@@ -18,7 +18,7 @@
         <a th:href="@{/project/{projectName}/{taskName}/create/task (projectName = ${projectName}, taskName = ${task.name})}">Opret
             ny underopgave</a>
     </div>
-</td>
+</div>
 
 <table>
     <thead>
@@ -41,8 +41,8 @@
         <td th:text="${task.name}"></td>
         <td th:text="${task.description}"></td>
         <td th:text="${task.isCompleted}"></td>
-        <td th:text="${#dates.format(task.startDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${#dates.format(task.deadLine, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(task.startDate, 'dd-MM-yyyy')}"></td>
+        <td th:text="${#dates.format(task.deadLine, 'dd-MM-yyyy')}"></td>
         <td th:text="${task.hourEstimate}"></td>
         <td th:text="${task.hoursRemaining}"></td>
         <td th:if="${task.hourEstimate} != 0">
@@ -91,8 +91,8 @@
         <td th:text="${taskList.name}"></td>
         <td th:text="${taskList.description}"></td>
         <td th:text="${taskList.isCompleted}"></td>
-        <td th:text="${#dates.format(taskList.startDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${#dates.format(taskList.deadLine, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(taskList.startDate, 'dd-MM-yyyy')}"></td>
+        <td th:text="${#dates.format(taskList.deadLine, 'dd-MM-yyyy')}"></td>
         <td th:text="${taskList.hourEstimate}"></td>
         <td th:text="${taskList.hoursRemaining}"></td>
         <td th:if="${taskList.hourEstimate} == 0">Please set hourEstimate</td>
@@ -114,7 +114,42 @@
     </tr>
     </tbody>
 </table>
-<td th:switch="${task.parentID}">
+
+<div th:switch="${task.parentID}">
+    <h2 th:case="0">Assigned to subproject</h2>
+    <h2 th:case="*">Assigned to task</h2>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Navn</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${assignedToTask}">
+        <td th:text="${account.name}"></td>
+        <td th:text="${account.email}"></td>
+    </tr>
+    </tbody>
+</table>
+<div th:if="${role.hasPermission(5)}">
+    <form action="#" th:action="@{/project/task/assign}" th:object="${account}" method="post">
+        <div>
+            <label for="assignAccount">Assign:</label>
+            <select id="assignAccount" th:field="*{accountID}" required>
+                <option th:each="assignAccount : ${accounts}"
+                        th:value="${assignAccount.accountID}"
+                        th:text="${assignAccount.name} +' ' + ${assignAccount.email}">
+                </option>
+            </select>
+        </div>
+        <button type="submit">Assign</button>
+    </form>
+</div>
+
+<div th:switch="${task.parentID}">
     <div th:case="'0'"><a
             th:href="@{/project/{projectName}(projectName=${projectName})}">Tilbage til projekt</a>
     </div>
@@ -125,6 +160,6 @@
             <input type="hidden" name="taskName" th:value="${mainTask}">
         </form>
     </div>
-</td>
+</div>
 </body>
 </html>

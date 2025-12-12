@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>Projekt</title>
@@ -25,7 +25,7 @@
             <a th:if="${role.hasPermission(6)}" class="button" th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger projekt</a>
         </div>
 
-
+<h2>Sub projects</h2>
     <a th:if="${role.hasPermission(2)}" class="button" th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret
         nyt delprojekt</a>
 
@@ -58,7 +58,39 @@
                 <input id="createProjectButton" type="image"  th:attr="onclick=|location.href='/project/${project.name}/create/task'|" th:src="@{/images/Dept=ofb_Logo.png}" alt="Create new task">
             </div>
         </div>
-    <a class="button" th:href="@{/project/list}">Tilbage til projektliste</a>
+        <a class="button" th:href="@{/project/list}">Tilbage til projektliste</a>
     </div>
+
+<h2>Project members</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Navn</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${projectMembers}">
+        <td th:text="${account.name}"></td>
+        <td th:text="${account.email}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:if="${role.hasPermission(2)}">
+    <form action="#" th:action="@{/project/assign}" th:object="${account}" method="post">
+        <div>
+            <label for="assignAccount">Assign:</label>
+            <select id="assignAccount" th:field="*{accountID}" required>
+                <option th:each="assignAccount : ${accounts}"
+                        th:value="${assignAccount.accountID}"
+                        th:text="${assignAccount.name} +' ' + ${assignAccount.email}">
+                </option>
+            </select>
+        </div>
+        <button type="submit">Assign</button>
+    </form>
+</div>
+<a th:href="@{/project/list}">Tilbage til projektliste</a>
 </body>
 </html>

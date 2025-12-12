@@ -62,8 +62,8 @@ public class AccountRepository implements IAccountRepository {
     }
 
     @Override
-    public Account getAccountFromEmailAndPassword(String eMail, String password) throws DataAccessException {
+    public Account getAccountFromEmailAndPassword(String email, String password) throws DataAccessException {
         String sql = "SELECT * FROM Accounts where Email = ? AND Password = ?";
-        return jdbcTemplate.queryForObject(sql, new AccountRowMapper(), eMail, password);
+        return jdbcTemplate.queryForObject(sql, new AccountRowMapper(), email, password);
     }
 }

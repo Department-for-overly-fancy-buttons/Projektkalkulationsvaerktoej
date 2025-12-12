@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>Projekter</title>
@@ -27,8 +27,8 @@
         <td th:text="${project.name}"></td>
         <td th:text="${project.description}"></td>
         <td th:text="${project.isActive}"></td>
-        <td th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${#dates.format(project.deadline, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(project.startDate, 'dd-MM-yyyy')}"></td>
+        <td th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></td>
         <td>
             <form method="post" th:action="@{/project/getID}" th:object="${project}">
                 <button type="submit">Info</button>

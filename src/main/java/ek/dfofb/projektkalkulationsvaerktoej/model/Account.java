@@ -88,4 +88,11 @@ public class Account {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return accountID == account.accountID;
+    }
 }
