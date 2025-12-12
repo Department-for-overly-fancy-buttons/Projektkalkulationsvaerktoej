@@ -49,7 +49,7 @@ public class RoleRepository implements IRoleRepository
     @Override
     public List<Role> getAllRoles()
     {
-        String sql = "SELECT RoleID, Name, Description FROM Roles";
+        String sql = "SELECT RoleID, Name, Description FROM Roles ORDER BY Name";
 
         return jdbcTemplate.query(sql, (rs, rowNum) ->
         {

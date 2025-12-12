@@ -9,6 +9,16 @@
 
 <h1>Mine projekter</h1>
 <table th:if="!${projects.isEmpty()}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>Active</th>
+        <th>Startdato</th>
+        <th>Deadline</th>
+    </tr>
+    </thead>
     <tbody>
     <tr th:each="project : ${projects}">
         <td th:text="${project.projectID}"></td>
