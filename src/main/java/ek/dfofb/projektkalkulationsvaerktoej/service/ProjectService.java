@@ -7,8 +7,8 @@ import ek.dfofb.projektkalkulationsvaerktoej.exceptions.ProjectNotFoundException
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Task;
-import ek.dfofb.projektkalkulationsvaerktoej.repository.ProjectRepository;
-import ek.dfofb.projektkalkulationsvaerktoej.repository.TaskRepository;
+import ek.dfofb.projektkalkulationsvaerktoej.repository.interfaces.IProjectRepository;
+import ek.dfofb.projektkalkulationsvaerktoej.repository.interfaces.ITaskRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -22,10 +22,10 @@ public class ProjectService {
 
     //TODO: Hvordan håndtere vi startdate efter deadline eller et project i fortiden
 
-    private final ProjectRepository projectRepository;
-    private final TaskRepository taskRepository;
+    private final IProjectRepository projectRepository;
+    private final ITaskRepository taskRepository;
 
-    public ProjectService(ProjectRepository projectRepository, TaskRepository taskRepository) {
+    public ProjectService(IProjectRepository projectRepository, ITaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
