@@ -19,6 +19,8 @@ public interface ITaskRepository {
 
     boolean assignAccountToTask(int accountID,int taskID);
 
+    boolean removeAccountFromTask(int accountID,int taskID);
+
     boolean addTask(Task task);
 
     Task updateTask(Task task);
