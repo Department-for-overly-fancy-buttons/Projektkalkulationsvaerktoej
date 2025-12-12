@@ -16,7 +16,7 @@
             <button id="openProjectButton" type="submit">
                 <div>
                     <p class="projectItemText" th:text="${project.name}"></p>
-                    <p class="projectItemText" th:text="${#dates.format(project.deadline, 'yyyy-mm-dd')}"></p>
+                    <p class="projectItemText" th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></p>
                     <div id="progressbarBorder">
                         <div id="progressbarProgress" th:style="'width:' + (${percentOfProgressDone.removeFirst()}) + '%'">
                         </div>

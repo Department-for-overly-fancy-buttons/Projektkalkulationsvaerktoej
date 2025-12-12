@@ -10,7 +10,7 @@
     <div id="overviewLayout">
         <div class="descriptionBox">
             <h1 th:text="${project.name}"></h1>
-            <h3 th:text="${#dates.format(project.startDate, 'yyyy-MM-dd') + '  ->  ' + #dates.format(project.deadline, 'yyyy-MM-dd') + '        ' + hourEstimateRemaining + ' Hours remaining'}"></h3>
+            <h3 th:text="${#dates.format(project.startDate, 'dd-MM-yyyy') + '  ->  ' + #dates.format(project.deadline, 'dd-MM-yyyy') + '        ' + hourEstimateRemaining + ' Hours remaining'}"></h3>
             <div th:if="${hourEstimateInitial} != 0">
                 <a th:text="${hourEstimateInitial}-${hourEstimateRemaining} + '/' + ${hourEstimateInitial}"></a>
                 <br>
@@ -22,12 +22,14 @@
             <div id="assignmentDescriptionBox">
                 <p th:text="${project.description}"></p>
             </div>
-            <a th:if="${role.hasPermission(6)}" class="button" th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger projekt</a>
+                <a th:if="${role.hasPermission(6)}" class="button" th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger projekt</a>
         </div>
 
 <h2>Sub projects</h2>
+        <div>
     <a th:if="${role.hasPermission(2)}" class="button" th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret
         nyt delprojekt</a>
+        </div>
 
         <div class="overview">
             <form method="post" th:action="@{/project/task/getID}" th:object="${task}" class="projectItem" th:each="task : ${tasks}">
@@ -36,7 +38,7 @@
                 <button id="openProjectButton" type="submit">
                     <div>
                         <p class="projectItemText" th:text="${task.name}"></p>
-                        <p class="projectItemText" th:text="${#dates.format(task.startDate, 'yyyy-MM-dd') + ' -> ' + #dates.format(task.deadLine, 'yyyy-MM-dd')}"></p>
+                        <p class="projectItemText" th:text="${#dates.format(task.startDate, 'dd-MM-yyyy') + ' -> ' + #dates.format(task.deadLine, 'dd-MM-yyyy')}"></p>
                         <div>
                             <label for="hourProgressTask">Completed_hours / estimated_total_work_hours</label>
                             <a th:text="${task.hourEstimate}-${task.hoursRemaining} + '/' + ${task.hourEstimate}"></a>
@@ -58,7 +60,9 @@
                 <input id="createProjectButton" type="image"  th:attr="onclick=|location.href='/project/${project.name}/create/task'|" th:src="@{/images/Dept=ofb_Logo.png}" alt="Create new task">
             </div>
         </div>
-        <a class="button" th:href="@{/project/list}">Tilbage til projektliste</a>
+        <div>
+            <a class="button" th:href="@{/project/list}">Tilbage til projektliste</a>
+        </div>
     </div>
 
 <h2>Project members</h2>

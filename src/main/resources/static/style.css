@@ -166,6 +166,7 @@ nav {
     background-color: inherit;
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
 #createProjectButton {
