@@ -1,7 +1,6 @@
 package ek.dfofb.projektkalkulationsvaerktoej.model;
 
 import java.sql.Date;
-import java.util.Objects;
 
 public class Account {
     private int accountID;

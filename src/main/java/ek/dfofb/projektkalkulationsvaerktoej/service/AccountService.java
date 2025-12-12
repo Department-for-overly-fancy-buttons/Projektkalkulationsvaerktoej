@@ -73,9 +73,9 @@ public class AccountService {
         }
     }
 
-    public Account logIn(String eMail, String password) {
+    public Account logIn(String email, String password) {
         try {
-            return accountRepository.getAccountFromEmailAndPassword(eMail, password);
+            return accountRepository.getAccountFromEmailAndPassword(email, password);
         } catch (DataAccessException exception) {
             throw new AccountNotFoundException("Wrong Email or Password");
         }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>Opgave</title>
@@ -9,7 +9,7 @@
 <h1 th:text="${task.name}"></h1>
 
 <!--skal sende til create subtask-->
-<td th:if="${role.hasPermission(2)} and ${task.isCompleted} == false" th:switch="${task.parentID}">
+<div th:if="${role.hasPermission(2)} and ${task.isCompleted} == false" th:switch="${task.parentID}">
     <div th:case="'0'"><a
             th:href="@{/project/{projectName}/{taskName}/create/task (projectName = ${projectName}, taskName = ${task.name})}">Opret
         ny opgave</a>
@@ -18,7 +18,7 @@
         <a th:href="@{/project/{projectName}/{taskName}/create/task (projectName = ${projectName}, taskName = ${task.name})}">Opret
             ny underopgave</a>
     </div>
-</td>
+</div>
 
 <table>
     <thead>
@@ -149,7 +149,7 @@
     </form>
 </div>
 
-<td th:switch="${task.parentID}">
+<div th:switch="${task.parentID}">
     <div th:case="'0'"><a
             th:href="@{/project/{projectName}(projectName=${projectName})}">Tilbage til projekt</a>
     </div>
@@ -160,6 +160,6 @@
             <input type="hidden" name="taskName" th:value="${mainTask}">
         </form>
     </div>
-</td>
+</div>
 </body>
 </html>

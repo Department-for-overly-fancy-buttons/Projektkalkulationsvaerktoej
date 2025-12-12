@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>Opret bruger</title>
@@ -16,7 +16,7 @@
 
     <div>
         <label for="email">Email:</label>
-        <input id="email" type="email" th:field="*{email}" required></input>
+        <input id="email" type="email" th:field="*{email}" required/>
     </div>
 
     <div>
@@ -26,18 +26,18 @@
 
     <div>
         <label for="description">Phone number:</label>
-        <input id="description" th:field="*{number}" required></input>
+        <input id="description" th:field="*{number}" required/>
     </div>
 
 
     <div>
         <label for="workHours">Arbejdstimer per uge:</label>
-        <input id="workHours" type="number" th:field="*{weeklyHours}" required></input>
+        <input id="workHours" type="number" th:field="*{weeklyHours}" required/>
     </div>
 
     <div>
         <label for="password">Kodeord:</label>
-        <input id="password" type="password" th:field="*{password}" required></input>
+        <input id="password" type="password" th:field="*{password}" required/>
     </div>
 
     <div>

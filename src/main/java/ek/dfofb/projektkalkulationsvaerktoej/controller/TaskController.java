@@ -2,7 +2,6 @@ package ek.dfofb.projektkalkulationsvaerktoej.controller;
 
 import ek.dfofb.projektkalkulationsvaerktoej.model.Account;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Permission;
-import ek.dfofb.projektkalkulationsvaerktoej.model.Project;
 import ek.dfofb.projektkalkulationsvaerktoej.model.Task;
 import ek.dfofb.projektkalkulationsvaerktoej.service.*;
 import jakarta.servlet.http.HttpSession;
@@ -244,7 +243,7 @@ public class TaskController {
     }
 
     @PostMapping("/task/assign")
-    public String assignAccountToProject(@ModelAttribute Account account, HttpSession httpSession, Model model) {
+    public String assignAccountToProject(@ModelAttribute Account account, HttpSession httpSession) {
         Account myAccount = (Account) httpSession.getAttribute("account");
         if (myAccount == null) {
             return "redirect:/account/login";
