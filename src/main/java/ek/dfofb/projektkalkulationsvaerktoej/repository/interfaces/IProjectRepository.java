@@ -17,6 +17,8 @@ public interface IProjectRepository {
 
     boolean assignAccountToProject(int accountID, int projectID);
 
+    boolean removeAccountFromProject(int accountID,int projectID);
+
     boolean addProject(Project project);
 
     Project updateProject(Project project);

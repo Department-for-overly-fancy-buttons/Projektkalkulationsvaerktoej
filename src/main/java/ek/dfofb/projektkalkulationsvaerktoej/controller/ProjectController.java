@@ -181,6 +181,20 @@ public class ProjectController {
         return showProject(model, project.getName(), httpSession);
     }
 
+    @PostMapping("/remove/assigned/account")
+    public String removeAccountFromProject(@ModelAttribute Account account, HttpSession httpSession, Model model) {
+        Account myAccount = (Account) httpSession.getAttribute("account");
+        if (myAccount == null) {
+            return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(myAccount.getRoleID(), Permission.ADD_PROJECTS)) {
+            return "redirect:/project";
+        }
+        Project project = projectService.getProjectByID((Integer) httpSession.getAttribute("currentProject"));
+        projectService.removeAccountFromProject(account.getAccountID(), project.getProjectID());
+        return showProject(model, project.getName(), httpSession);
+    }
+
     @PostMapping("/delete")
     public String deleteProject(@ModelAttribute Project project, HttpSession httpSession) {
         Account account = (Account) httpSession.getAttribute("account");

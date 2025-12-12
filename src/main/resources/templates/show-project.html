@@ -107,14 +107,14 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="account : ${projectMembers}">
-        <td th:text="${account.name}"></td>
-        <td th:text="${account.email}"></td>
+    <tr th:each="assignedAccounts : ${projectMembers}">
+        <td th:text="${assignedAccounts.name}"></td>
+        <td th:text="${assignedAccounts.email}"></td>
     </tr>
     </tbody>
 </table>
 
-<div th:if="${role.hasPermission(2)}">
+<div th:if="${role.hasPermission(5)}">
     <form action="#" th:action="@{/project/assign}" th:object="${account}" method="post">
         <div>
             <label for="assignAccount">Assign:</label>
@@ -128,6 +128,22 @@
         <button type="submit">Assign</button>
     </form>
 </div>
+
+<div th:if="${role.hasPermission(5)}">
+<form action="#" th:action="@{/project/remove/assigned/account}" th:object="${account}" method="post">
+    <div>
+        <label for="removeAccount">Remove:</label>
+        <select id="removeAccount" th:field="*{accountID}" required>
+            <option th:each="assignedAccounts : ${projectMembers}"
+                    th:value="${assignedAccounts.accountID}"
+                    th:text="${assignedAccounts.name} +' ' + ${assignedAccounts.email}">
+            </option>
+        </select>
+    </div>
+    <button type="submit">Remove</button>
+</form>
+</div>
+
 <a th:href="@{/project/list}">Tilbage til projektliste</a>
 </body>
 </html>

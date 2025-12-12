@@ -58,6 +58,13 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
+    public boolean removeAccountFromProject(int accountID, int projectID) throws DataAccessException {
+        String sql = "DELETE FROM ProjectMembers where AccountID = ? and ProjectID = ?";
+        int deletedRows = jdbcTemplate.update(sql, accountID, projectID);
+        return deletedRows != 0;
+    }
+
+    @Override
     public boolean addProject(Project project) throws DataAccessException
     {
         String sql = "INSERT INTO Projects (Name, Description, IsActive, StartDate, Deadline) " +
