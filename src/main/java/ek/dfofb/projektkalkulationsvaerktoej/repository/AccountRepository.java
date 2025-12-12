@@ -24,13 +24,13 @@ public class AccountRepository implements IAccountRepository {
 
     @Override
     public List<Account> getAllAccounts() throws DataAccessException {
-        String sql = "SELECT * FROM Accounts";
+        String sql = "SELECT * FROM Accounts ORDER BY Name";
         return jdbcTemplate.query(sql, new AccountRowMapper());
     }
 
     @Override
     public List<Account> getAllAccountsWithRoleID(int roleID) {
-        String sql = "SELECT * FROM Accounts WHERE RoleID = ?";
+        String sql = "SELECT * FROM Accounts WHERE RoleID = ? ORDER BY Name";
         return jdbcTemplate.query(sql, new AccountRowMapper(), roleID);
     }
 

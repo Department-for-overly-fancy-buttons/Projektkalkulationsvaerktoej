@@ -25,27 +25,29 @@ public class TaskRepository implements ITaskRepository {
 
     @Override
     public List<Task> getAllTasksForProjects(int projectID) throws DataAccessException {
-        String sql = "SELECT * FROM Tasks where ProjectID = ? AND ParentID = 0";
+        String sql = "SELECT * FROM Tasks where ProjectID = ? AND ParentID = 0 ORDER BY Completed,Deadline,HourEstimate,Name";
         return jdbcTemplate.query(sql, new TaskRowMapper(), projectID);
     }
 
     @Override
     public List<Task> getAllSubTasks(int taskID) throws DataAccessException {
-        String sql = "SELECT * FROM Tasks where ParentID = ?";
+        String sql = "SELECT * FROM Tasks where ParentID = ? ORDER BY Completed,Deadline,HourEstimate,Name";
         return jdbcTemplate.query(sql, new TaskRowMapper(), taskID);
     }
 
     @Override
     public List<Task> getAllTasksForAccount(int accountID) throws DataAccessException {
         String sql = "select * from tasks join TaskList " +
-                "on tasks.TaskID=TaskList.TaskID where TaskList.AccountID = ?";
+                "on tasks.TaskID=TaskList.TaskID where TaskList.AccountID = ? " +
+                "ORDER BY tasks.Completed,tasks.Deadline,tasks.HourEstimate,tasks.Name";
         return jdbcTemplate.query(sql, new TaskRowMapper(), accountID);
     }
 
     @Override
     public List<Account> getAllAccountsAssignedToTask(int taskID) throws DataAccessException {
         String sql = "select * from Accounts join TaskList " +
-                "on Accounts.AccountID=TaskList.AccountID where TaskList.TaskID = ?";
+                "on Accounts.AccountID=TaskList.AccountID where TaskList.TaskID = ? " +
+                "ORDER BY Accounts.name";
         return jdbcTemplate.query(sql, new AccountRowMapper(), taskID);
     }
 

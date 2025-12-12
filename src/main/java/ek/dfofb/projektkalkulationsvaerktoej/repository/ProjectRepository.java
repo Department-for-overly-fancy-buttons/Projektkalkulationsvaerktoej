@@ -28,7 +28,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public List<Project> getAllProjects() throws DataAccessException
     {
-        String sql = "SELECT * FROM Projects";
+        String sql = "SELECT * FROM Projects ORDER BY IsActive desc, Deadline, Name";
         return jdbcTemplate.query(sql, new ProjectRowMapper());
     }
 
@@ -37,7 +37,7 @@ public class ProjectRepository implements IProjectRepository {
     {
         String sql = "SELECT p.* FROM Projects p " +
                 "JOIN ProjectMembers pm ON p.ProjectID = pm.ProjectID " +
-                "WHERE pm.AccountID = ?";
+                "WHERE pm.AccountID = ? ORDER BY p.IsActive desc, p.Deadline, p.Name";
         return jdbcTemplate.query(sql, new ProjectRowMapper(), accountID);
     }
 
@@ -46,7 +46,7 @@ public class ProjectRepository implements IProjectRepository {
     {
         String sql = "SELECT a.* FROM Accounts a " +
                 "JOIN ProjectMembers pm ON a.AccountID = pm.AccountID " +
-                "WHERE pm.ProjectID = ?";
+                "WHERE pm.ProjectID = ? ORDER BY a.Name";
         return jdbcTemplate.query(sql, new AccountRowMapper(), projectID);
     }
 
