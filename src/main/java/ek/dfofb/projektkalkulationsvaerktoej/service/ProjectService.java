@@ -81,7 +81,7 @@ public class ProjectService {
         }
     }
 
-    public List<Project> getAllProjectsForAccount(int accountID) throws DataAccessException {
+    public List<Project> getAllProjectsForAccount(int accountID) {
         try {
             return projectRepository.getAllProjectsForAccount(accountID);
         } catch (DataAccessException exception) {
@@ -89,11 +89,19 @@ public class ProjectService {
         }
     }
 
-    public boolean assignAccountToProject(int accountID, int projectID) throws DataAccessException {
+    public boolean assignAccountToProject(int accountID, int projectID) {
         try {
             return projectRepository.assignAccountToProject(accountID, projectID);
         } catch (DataIntegrityViolationException exception) {
             throw new DuplicateTasklistEntryException("an account with id (" + accountID + ") is already assigned a project with id (" + projectID + ")");
+        }
+    }
+
+    public boolean removeAccountFromProject(int accountID, int projectID){
+        try {
+            return projectRepository.removeAccountFromProject(accountID,projectID);
+        } catch (DataIntegrityViolationException exception) {
+            throw new DuplicateTasklistEntryException("an account with id (" + accountID + ") is not assigned a project with id (" + projectID + ")");
         }
     }
 

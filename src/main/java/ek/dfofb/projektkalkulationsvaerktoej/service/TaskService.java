@@ -25,7 +25,7 @@ public class TaskService {
         try {
             Task task = taskRepository.getTaskByID(taskID);
             task.setHourEstimate(hoursLeftOnTask(taskID, true));
-            task.setHoursRemaining(hoursLeftOnTask(taskID,false));
+            task.setHoursRemaining(hoursLeftOnTask(taskID, false));
             return task;
         } catch (DataAccessException exception) {
             throw new TaskNotFoundException("Failed to find a task, with the corresponding id:" + taskID);
@@ -37,7 +37,7 @@ public class TaskService {
             List<Task> tasks = taskRepository.getAllTasksForProjects(projectID);
             for (Task task : tasks) {
                 task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), true));
-                task.setHoursRemaining(hoursLeftOnTask(task.getTaskID(),false));
+                task.setHoursRemaining(hoursLeftOnTask(task.getTaskID(), false));
             }
             return tasks;
         } catch (DataAccessException exception) {
@@ -50,7 +50,7 @@ public class TaskService {
             List<Task> tasks = taskRepository.getAllSubTasks(taskID);
             for (Task task : tasks) {
                 task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), true));
-                task.setHoursRemaining(hoursLeftOnTask(task.getTaskID(),false));
+                task.setHoursRemaining(hoursLeftOnTask(task.getTaskID(), false));
             }
             return tasks;
         } catch (DataAccessException exception) {
@@ -63,7 +63,7 @@ public class TaskService {
             List<Task> tasks = taskRepository.getAllTasksForAccount(accountID);
             for (Task task : tasks) {
                 task.setHourEstimate(hoursLeftOnTask(task.getTaskID(), true));
-                task.setHoursRemaining(hoursLeftOnTask(task.getTaskID(),false));
+                task.setHoursRemaining(hoursLeftOnTask(task.getTaskID(), false));
             }
             return tasks;
         } catch (DataAccessException exception) {
@@ -87,6 +87,15 @@ public class TaskService {
         }
     }
 
+    public boolean removeAccountFromTask(int accountID, int taskID) {
+        try {
+            return taskRepository.removeAccountFromTask(accountID, taskID);
+        } catch (DataIntegrityViolationException exception) {
+            throw new DuplicateTasklistEntryException("an account with id (" + accountID + ") is not assigned a task with id (" + taskID + ")");
+        }
+    }
+
+
     public boolean addTask(Task task) {
         try {
             return taskRepository.addTask(task);
@@ -107,7 +116,7 @@ public class TaskService {
         }
     }
 
-    public boolean deleteTask(int taskID) throws DataAccessException {
+    public boolean deleteTask(int taskID) {
         try {
             return taskRepository.deleteTask(taskID);
         } catch (DataIntegrityViolationException exception) {

@@ -57,6 +57,13 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
+    public boolean removeAccountFromTask(int accountID, int taskID) throws DataAccessException {
+        String sql = "DELETE FROM taskList WHERE AccountID = ? and TaskID = ?";
+        int deletedRows = jdbcTemplate.update(sql, accountID, taskID);
+        return deletedRows != 0;
+    }
+
+    @Override
     public boolean addTask(Task task) throws DataAccessException {
         String sql = "INSERT INTO Tasks (Name, Description, HourEstimate, Completed," +
                 "  Deadline, StartDate, ProjectID, ParentID) VALUES (?,?,?,?,?,?,?,?)";

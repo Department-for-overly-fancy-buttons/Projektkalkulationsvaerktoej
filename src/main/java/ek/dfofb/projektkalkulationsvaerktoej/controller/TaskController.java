@@ -37,7 +37,7 @@ public class TaskController {
         }
         int projectID = taskService.getTaskByID(taskID).getProjectID();
         String projectName = projectService.getProjectByID(projectID).getName();
-        httpSession.setAttribute(projectName, projectID);
+        httpSession.setAttribute("currentProject", projectID);
         httpSession.setAttribute("currentTask", taskID);
         int parentID = taskService.getTaskByID(taskID).getParentID();
         if (parentID == 0) {
@@ -253,6 +253,20 @@ public class TaskController {
         }
         Task task = taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask"));
         taskService.assignAccountToTask(account.getAccountID(), task.getTaskID());
+        return saveCurrentTaskID(task.getName(), task.getTaskID(), httpSession);
+    }
+
+    @PostMapping("/task/remove/assigned/account")
+    public String removeAccountFromProject(@ModelAttribute Account account, HttpSession httpSession) {
+        Account myAccount = (Account) httpSession.getAttribute("account");
+        if (myAccount == null) {
+            return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(myAccount.getRoleID(), Permission.ADD_PROJECTS)) {
+            return "redirect:/project";
+        }
+        Task task = taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask"));
+        taskService.removeAccountFromTask(account.getAccountID(), task.getTaskID());
         return saveCurrentTaskID(task.getName(), task.getTaskID(), httpSession);
     }
 
