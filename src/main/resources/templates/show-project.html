@@ -129,7 +129,7 @@
     </form>
 </div>
 
-<div th:if="${role.hasPermission(5)}">
+<div th:if="${role.hasPermission(5)} and ${projectMembers.isEmpty()} == false">
 <form action="#" th:action="@{/project/remove/assigned/account}" th:object="${account}" method="post">
     <div>
         <label for="removeAccount">Remove:</label>
