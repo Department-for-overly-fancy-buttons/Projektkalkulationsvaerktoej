@@ -21,4 +21,6 @@ public interface IProjectRepository {
 
     Project updateProject(Project project);
 
+    boolean deleteProject(int projectID);
+
 }

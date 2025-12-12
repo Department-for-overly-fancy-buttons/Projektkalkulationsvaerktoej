@@ -105,4 +105,13 @@ public class ProjectService {
         }
     }
 
+    public boolean deleteProject(int ProjectID){
+        try {
+            return projectRepository.deleteProject(ProjectID);
+        }
+        catch (DataAccessException exception){
+            throw new DatabaseOperationException("Could not remove project");
+        }
+    }
+
 }
