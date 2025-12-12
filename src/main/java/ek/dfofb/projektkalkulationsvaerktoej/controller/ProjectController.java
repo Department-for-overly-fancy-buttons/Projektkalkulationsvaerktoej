@@ -181,4 +181,17 @@ public class ProjectController {
         return showProject(model, project.getName(), httpSession);
     }
 
+    @PostMapping("/delete")
+    public String deleteProject(@ModelAttribute Project project, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.DELETE_PROJECTS)) {
+            return "redirect:/project";
+        }
+        projectService.deleteProject(project.getProjectID());
+        return "redirect:list";
+    }
+
 }

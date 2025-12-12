@@ -256,4 +256,20 @@ public class TaskController {
         return saveCurrentTaskID(task.getName(), task.getTaskID(), httpSession);
     }
 
+    @PostMapping("/task/delete")
+    public String deleteTask(@ModelAttribute Task task, HttpSession httpSession) {
+        Account myAccount = (Account) httpSession.getAttribute("account");
+        if (myAccount == null) {
+            return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(myAccount.getRoleID(), Permission.DELETE_TASKS)) {
+            return "redirect:/project";
+        }
+        if (taskService.getAllAccountsAssignedToTask(task.getTaskID()).contains(myAccount) &&
+        taskService.getAllSubTasks(task.getTaskID()).isEmpty()) {
+            taskService.deleteTask(task.getTaskID());
+        }
+        return "redirect:/project";
+    }
+
 }

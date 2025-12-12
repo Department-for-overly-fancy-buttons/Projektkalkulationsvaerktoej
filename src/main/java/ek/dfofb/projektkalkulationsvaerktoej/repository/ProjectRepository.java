@@ -91,4 +91,11 @@ public class ProjectRepository implements IProjectRepository {
                 );
         return project;
     }
+
+    @Override
+    public boolean deleteProject(int projectID) throws DataAccessException{
+        String sql = "DELETE FROM Projects where ProjectID = ?";
+        int deletedRows = jdbcTemplate.update(sql, projectID);
+        return deletedRows != 0;
+    }
 }
