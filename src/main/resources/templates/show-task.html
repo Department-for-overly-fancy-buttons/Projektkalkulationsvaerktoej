@@ -134,7 +134,7 @@
     </tr>
     </tbody>
 </table>
-<div th:if="${role.hasPermission(5)}">
+<div th:if="${role.hasPermission(2)}">
     <form action="#" th:action="@{/project/task/assign}" th:object="${account}" method="post">
         <div>
             <label for="assignAccount">Assign:</label>
@@ -146,6 +146,21 @@
             </select>
         </div>
         <button type="submit">Assign</button>
+    </form>
+</div>
+
+<div th:if="${role.hasPermission(2)} and ${assignedToTask.isEmpty()} == false">
+    <form action="#" th:action="@{/project/task/remove/assigned/account}" th:object="${account}" method="post">
+        <div>
+            <label for="removeAssignedAccount">Remove:</label>
+            <select id="removeAssignedAccount" th:field="*{accountID}" required>
+                <option th:each="assignedAccount : ${assignedToTask}"
+                        th:value="${assignedAccount.accountID}"
+                        th:text="${assignedAccount.name} +' ' + ${assignedAccount.email}">
+                </option>
+            </select>
+        </div>
+        <button type="submit">Remove</button>
     </form>
 </div>
 
