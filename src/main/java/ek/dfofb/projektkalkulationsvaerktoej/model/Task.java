@@ -1,7 +1,6 @@
 package ek.dfofb.projektkalkulationsvaerktoej.model;
 
 import java.sql.Date;
-import java.util.Set;
 
 public class Task {
     private int taskID;
