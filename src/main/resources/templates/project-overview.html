@@ -11,6 +11,8 @@
 <div id="overviewLayout">
     <div class="overview">
         <form method="post" th:action="@{/project/getID}" th:object="${project}" class="projectItem" th:each="project : ${projects}">
+            <input type="hidden" name="projectID" th:value="${project.projectID}"/>
+            <input type="hidden" name="projectName" th:value="${project.name}">
             <button id="openProjectButton" type="submit">
                 <div>
                     <p class="projectItemText" th:text="${project.name}"></p>
@@ -20,9 +22,6 @@
                         </div>
                     </div>
 
-
-                        <input type="hidden" name="projectID" th:value="${project.projectID}"/>
-                        <input type="hidden" name="projectName" th:value="${project.name}">
                 </div>
             </button>
         </form>
