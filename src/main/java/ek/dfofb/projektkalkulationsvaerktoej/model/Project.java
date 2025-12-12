@@ -11,8 +11,6 @@ public class Project {
     private int hourEstimate; // Jeg tænker vi ønsker at beregne denne ud fra tasks, så venter lige til den er færdig
     private Date startDate;
     private Date deadline;
-    private Set<Account> assignedWorkers;
-    private Set<Task> tasks;
 
     public Project() {
 
@@ -77,22 +75,6 @@ public class Project {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
-    }
-
-    public Set<Account> getAssignedWorkers() {
-        return assignedWorkers;
-    }
-
-    public void setAssignedWorkers(Set<Account> assignedWorkers) {
-        this.assignedWorkers = assignedWorkers;
-    }
-
-    public Set<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(Set<Task> tasks) {
-        this.tasks = tasks;
     }
 
     public void setHourEstimate(int hourEstimate) {

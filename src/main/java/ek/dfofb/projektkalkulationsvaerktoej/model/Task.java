@@ -15,8 +15,6 @@ public class Task {
     private int ParentID;
     private int hoursRemaining;
     private int hoursSpentOnTask;
-    private Set<Task> tasks;
-    private Set<Account> assignedWorkers;
 
     public Task(int taskID, String name, String description, int hourEstimate,
                 boolean isCompleted, Date startDate, Date deadLine, int projectID,
@@ -136,22 +134,6 @@ public class Task {
 
     public void setParentID(int parentID) {
         ParentID = parentID;
-    }
-
-    public Set<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(Set<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    public Set<Account> getAssignedWorkers() {
-        return assignedWorkers;
-    }
-
-    public void setAssignedWorkers(Set<Account> assignedWorkers) {
-        this.assignedWorkers = assignedWorkers;
     }
 
 }
