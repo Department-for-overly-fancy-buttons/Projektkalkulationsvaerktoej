@@ -235,8 +235,12 @@ public class TaskController {
 
     @PostMapping("/task/complete")
     public String markTaskAsDone(@ModelAttribute Task task, HttpSession httpSession) {
-        if (httpSession.getAttribute("account") == null) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
             return "redirect:/account/login";
+        }
+        if (!taskService.getAllAccountsAssignedToTask((Integer) httpSession.getAttribute("currentTask")).contains(account)) {
+            return "redirect:/project";
         }
         taskService.markAsDone(task.getTaskID(), task.getHoursSpentOnTask());
         String taskName = taskService.getTaskByID(task.getTaskID()).getName();
@@ -271,6 +275,24 @@ public class TaskController {
         return saveCurrentTaskID(task.getName(), task.getTaskID(), httpSession);
     }
 
+    @GetMapping("/{projectName}/{taskName}/delete")
+    public String showDeleteForm(Model model, @PathVariable String projectName, @PathVariable String taskName, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.DELETE_TASKS)) {
+            return "redirect:/project";
+        }
+        if (httpSession.getAttribute("currentProject") == null || httpSession.getAttribute("currentTask") == null ||
+                !taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask")).getName().equalsIgnoreCase(taskName)) {
+            return "redirect:/project/list";
+        }
+        Task task = taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask"));
+        model.addAttribute("task", task);
+        return "delete-task-form";
+    }
+
     @PostMapping("/task/delete")
     public String deleteTask(@ModelAttribute Task task, HttpSession httpSession) {
         Account myAccount = (Account) httpSession.getAttribute("account");
@@ -282,9 +304,15 @@ public class TaskController {
         }
         if (taskService.getAllAccountsAssignedToTask(task.getTaskID()).contains(myAccount) &&
                 taskService.getAllSubTasks(task.getTaskID()).isEmpty()) {
-            taskService.deleteTask(task.getTaskID());
         }
-        return "redirect:/project";
+
+        if (taskService.getTaskByID(task.getTaskID()).getName().equalsIgnoreCase(task.getName())) {
+            taskService.deleteTask(task.getTaskID());
+            return "redirect:/project";
+        }
+        return "redirect:/project/" +
+                projectService.getProjectByID((Integer) httpSession.getAttribute("currentProject")).getName()
+                + "/" + taskService.getTaskByID(task.getTaskID()).getName() + "/delete";
     }
 
 }

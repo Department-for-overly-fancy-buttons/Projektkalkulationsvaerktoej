@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Opret opgave</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<h1 th:text="'Delete ' + ${task.name}"></h1>
+
+<form action="#" th:action="@{/project/task/delete}" th:object="${task}" method="post">
+    <div>
+        <label for="name">Enter name to delete:</label>
+        <input id="name" type="password" th:field="*{name}" required/>
+    </div>
+
+    <div>
+        <input id="taskID" type="hidden" th:field="*{taskID}"/>
+    </div>
+
+    <div>
+        <input id="projectIDForTask" type="hidden" th:field="*{projectID}"/>
+    </div>
+
+    <div>
+        <input id="parentIDForTask" type="hidden" th:field="*{parentID}"/>
+    </div>
+
+    <button type="submit">Delete task</button>
+</form>
+
+<form method="post" th:action="@{/project/task/getID}" th:object="${task}">
+    <button type="submit">Back</button>
+    <input type="hidden" name="taskID" th:value="${task.taskID}"/>
+    <input type="hidden" name="taskName" th:value="${task.name}">
+</form>
+</body>
+</html>
