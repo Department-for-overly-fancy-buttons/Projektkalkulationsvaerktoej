@@ -204,7 +204,8 @@ public class TaskController {
             return "redirect:/account/login";
         }
         if (httpSession.getAttribute("currentProject") == null || httpSession.getAttribute("currentTask") == null ||
-                !taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask")).getName().equalsIgnoreCase(taskName)) {
+                !taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask")).getName().equalsIgnoreCase(taskName) ||
+                !taskService.getAllAccountsAssignedToTask((Integer) httpSession.getAttribute("currentTask")).contains(account)) {
             return "redirect:/project/list";
         }
         Task task = taskService.getTaskByID((Integer) httpSession.getAttribute("currentTask"));
@@ -280,7 +281,7 @@ public class TaskController {
             return "redirect:/project";
         }
         if (taskService.getAllAccountsAssignedToTask(task.getTaskID()).contains(myAccount) &&
-        taskService.getAllSubTasks(task.getTaskID()).isEmpty()) {
+                taskService.getAllSubTasks(task.getTaskID()).isEmpty()) {
             taskService.deleteTask(task.getTaskID());
         }
         return "redirect:/project";
