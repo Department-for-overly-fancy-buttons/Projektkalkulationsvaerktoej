@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
-<h1>Delete projekt</h1>
+<h1 th:text="'Delete ' + ${project.name}"></h1>
 
 <form action="#" th:action="@{/project/delete}" th:object="${project}" method="post">
     <div>
