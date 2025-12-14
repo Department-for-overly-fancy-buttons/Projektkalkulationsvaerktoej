@@ -23,7 +23,8 @@
             <p th:text="${project.description}"></p>
         </div>
         <a th:if="${role.hasPermission(6)}" class="button"
-           th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Edit project</a>
+           th:href="@{/project/{projectName}/edit (projectName=${projectName})}">
+            Edit project</a>
         <a th:if="${role.hasPermission(7)}" class="button"
            th:href="@{/project/{projectName}/delete (projectName=${projectName})}">Delete project</a>
     </div>
@@ -61,61 +62,61 @@
                     </div>
                 </div>
             </button>
-                        <div class="projectItem">
-                            <input id="createProjectButton" type="image"
-                                   th:attr="onclick=|location.href='/project/${project.name}/create/task'|"
-                                   th:src="@{/images/Dept=ofb_Logo.png}" alt="Create new task">
-                        </div>
+            <div class="projectItem">
+                <input id="createProjectButton" type="image"
+                       th:attr="onclick=|location.href='/project/${project.name}/create/task'|"
+                       th:src="@{/images/Dept=ofb_Logo.png}" alt="Create new task">
+            </div>
         </form>
-</div>
+    </div>
 
-<h2>Project members</h2>
-<table>
-    <thead>
-    <tr>
-        <th>Navn</th>
-        <th>Email</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="assignedAccounts : ${projectMembers}">
-        <td th:text="${assignedAccounts.name}"></td>
-        <td th:text="${assignedAccounts.email}"></td>
-    </tr>
-    </tbody>
-</table>
+    <h2>Project members</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="assignedAccounts : ${projectMembers}">
+            <td th:text="${assignedAccounts.name}"></td>
+            <td th:text="${assignedAccounts.email}"></td>
+        </tr>
+        </tbody>
+    </table>
 
-<div th:if="${role.hasPermission(5)}">
-    <form action="#" th:action="@{/project/assign}" th:object="${account}" method="post">
-        <div>
-            <label for="assignAccount">Assign:</label>
-            <select id="assignAccount" th:field="*{accountID}" required>
-                <option th:each="assignAccount : ${accounts}"
-                        th:value="${assignAccount.accountID}"
-                        th:text="${assignAccount.name} +' ' + ${assignAccount.email}">
-                </option>
-            </select>
-        </div>
-        <button type="submit">Assign</button>
-    </form>
-</div>
+    <div th:if="${role.hasPermission(5)}">
+        <form action="#" th:action="@{/project/assign}" th:object="${account}" method="post">
+            <div>
+                <label for="assignAccount">Assign:</label>
+                <select id="assignAccount" th:field="*{accountID}" required>
+                    <option th:each="assignAccount : ${accounts}"
+                            th:value="${assignAccount.accountID}"
+                            th:text="${assignAccount.name} +' ' + ${assignAccount.email}">
+                    </option>
+                </select>
+            </div>
+            <button type="submit">Assign</button>
+        </form>
+    </div>
 
-<div th:if="${role.hasPermission(5)} and ${projectMembers.isEmpty()} == false">
-    <form action="#" th:action="@{/project/remove/assigned/account}" th:object="${account}" method="post">
-        <div>
-            <label for="removeAccount">Remove:</label>
-            <select id="removeAccount" th:field="*{accountID}" required>
-                <option th:each="assignedAccounts : ${projectMembers}"
-                        th:value="${assignedAccounts.accountID}"
-                        th:text="${assignedAccounts.name} +' ' + ${assignedAccounts.email}">
-                </option>
-            </select>
-        </div>
-        <button type="submit">Remove</button>
-    </form>
-</div>
+    <div th:if="${role.hasPermission(5)} and ${projectMembers.isEmpty()} == false">
+        <form action="#" th:action="@{/project/remove/assigned/account}" th:object="${account}" method="post">
+            <div>
+                <label for="removeAccount">Remove:</label>
+                <select id="removeAccount" th:field="*{accountID}" required>
+                    <option th:each="assignedAccounts : ${projectMembers}"
+                            th:value="${assignedAccounts.accountID}"
+                            th:text="${assignedAccounts.name} +' ' + ${assignedAccounts.email}">
+                    </option>
+                </select>
+            </div>
+            <button type="submit">Remove</button>
+        </form>
+    </div>
 
-<a th:href="@{/project/list}">Tilbage til projektliste</a>
+    <a th:href="@{/project/list}">Back to project list</a>
 </div>
 </body>
 </html>
