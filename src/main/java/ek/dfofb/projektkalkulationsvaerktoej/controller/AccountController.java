@@ -33,7 +33,7 @@ public class AccountController {
     public String showCreateForm(Model model, HttpSession httpSession) {
         Account account = (Account) httpSession.getAttribute("account");
         if (account == null) {
-            return "redirect:login";
+            return "redirect:/account/login";
         }
         if (!authorizationService.hasPermission(account.getRoleID(), Permission.GRANT_PERMISSIONS)) {
             return "redirect:/project";
@@ -49,21 +49,21 @@ public class AccountController {
     public String handleCreateForm(@ModelAttribute Account account, HttpSession httpSession) {
         Account creatorAccount = (Account) httpSession.getAttribute("account");
         if (creatorAccount == null) {
-            return "redirect:login";
+            return "redirect:/account/login";
         }
         if (!authorizationService.hasPermission(creatorAccount.getRoleID(), Permission.GRANT_PERMISSIONS)) {
             return "redirect:/project";
         } else {
             accountService.addAccount(account);
         }
-        return "redirect:list";
+        return "redirect:/account/list";
     }
 
     @GetMapping("/edit")
     public String showEditAccountForm(int accountID, Model model, HttpSession httpSession) {
         Account creatorAccount = (Account) httpSession.getAttribute("account");
         if (creatorAccount == null) {
-            return "redirect:login";
+            return "redirect:/account/login";
         }
         if (!authorizationService.hasPermission(creatorAccount.getRoleID(), Permission.GRANT_PERMISSIONS)) {
             return "redirect:/project";
@@ -77,13 +77,13 @@ public class AccountController {
     public String updateAccount(@ModelAttribute Account account, HttpSession httpSession) {
         Account creatorAccount = (Account) httpSession.getAttribute("account");
         if (creatorAccount == null) {
-            return "redirect:login";
+            return "redirect:/account/login";
         }
         if (!authorizationService.hasPermission(creatorAccount.getRoleID(), Permission.GRANT_PERMISSIONS)) {
             return "redirect:/project";
         }
         accountService.updateAccount(account);
-        return "redirect:list";
+        return "redirect:/account/list";
     }
 
     @GetMapping("/change/password")
@@ -132,14 +132,14 @@ public class AccountController {
     @GetMapping("log_out")
     public String logOut(HttpSession session) {
         session.removeAttribute("account");
-        return "redirect:login";
+        return "redirect:/account/login";
     }
 
     @GetMapping("/list")
     public String listAccounts(Model model, HttpSession httpSession) {
         Account account = (Account) httpSession.getAttribute("account");
         if (account == null) {
-            return "redirect:login";
+            return "redirect:/account/login";
         }
         List<Account> accounts = accountService.getAllAccounts();
         List<Role> roles = roleService.getAllRoles();
