@@ -27,6 +27,12 @@
         <td th:text="${account.number}"></td>
         <td th:text="${#dates.format(account.birthday, 'dd-MM-yyyy')}"></td>
         <td th:text="${roleNames[account.roleID]}"></td>
+        <td th:if="${role.hasPermission(8)}">
+            <form th:action="@{/account/edit}" th:object="${account}" method="get">
+                    <input type="hidden" name="accountID" th:value="${account.accountID}"/>
+                <button type="submit">Edit</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

@@ -6,9 +6,9 @@
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
-<h1>Opret ny bruger</h1>
+<h1 th:text="'update info for '+ ${account.email}"></h1>
 
-<form th:action="@{/account/create}" th:object="${account}" method="post">
+<form th:action="@{/account/update}" th:object="${account}" method="post">
     <div>
         <label for="nameAccount">Navn:</label>
         <input id="nameAccount" type="text" th:field="*{name}" required/>
@@ -37,7 +37,7 @@
 
     <div>
         <label for="password">Kodeord:</label>
-        <input id="password" type="password" th:field="*{password}" required/>
+        <input id="password" type="text" th:field="*{password}" required/>
     </div>
 
     <div>
@@ -50,9 +50,13 @@
         </select>
     </div>
 
+    <div>
+        <input id="accountID" type="hidden" th:field="*{accountID}"/>
+    </div>
+
     <!--drop down with role menu-->
 
-    <button type="submit">Opret bruger</button>
+    <button type="submit">Update</button>
 </form>
 
 <a th:href="@{/account/list}">Tilbage til liste over brugere</a>

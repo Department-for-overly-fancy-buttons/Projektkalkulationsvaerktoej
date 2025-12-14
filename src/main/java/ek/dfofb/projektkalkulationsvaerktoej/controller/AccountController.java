@@ -9,10 +9,7 @@ import ek.dfofb.projektkalkulationsvaerktoej.service.RoleService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -54,11 +51,38 @@ public class AccountController {
         if (creatorAccount == null) {
             return "redirect:login";
         }
-        if (!authorizationService.hasPermission(account.getRoleID(), Permission.GRANT_PERMISSIONS)) {
+        if (!authorizationService.hasPermission(creatorAccount.getRoleID(), Permission.GRANT_PERMISSIONS)) {
             return "redirect:/project";
         } else {
             accountService.addAccount(account);
         }
+        return "redirect:list";
+    }
+
+    @GetMapping("/edit")
+    public String showEditAccountForm(int accountID,Model model, HttpSession httpSession) {
+        Account creatorAccount = (Account) httpSession.getAttribute("account");
+        if (creatorAccount == null) {
+            return "redirect:login";
+        }
+        if (!authorizationService.hasPermission(creatorAccount.getRoleID(), Permission.GRANT_PERMISSIONS)) {
+            return "redirect:/project";
+        }
+        model.addAttribute("account", accountService.getAccountFromID(accountID));
+        model.addAttribute("roles", roleService.getAllRoles());
+        return "edit-account-form";
+    }
+
+    @PostMapping("/update")
+    public String updateAccount(@ModelAttribute Account account, HttpSession httpSession){
+        Account creatorAccount = (Account) httpSession.getAttribute("account");
+        if (creatorAccount == null) {
+            return "redirect:login";
+        }
+        if (!authorizationService.hasPermission(creatorAccount.getRoleID(), Permission.GRANT_PERMISSIONS)) {
+            return "redirect:/project";
+        }
+        accountService.updateAccount(account);
         return "redirect:list";
     }
 
