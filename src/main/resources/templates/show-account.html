@@ -2,13 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>Brugere</title>
+    <title>My account</title>
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
-<h1>Brugere</h1>
-
-<a th:if="${role.hasPermission(8)}" th:href="@{/account/create}">Opret ny bruger</a>
+<h1>My account</h1>
 
 <table>
     <thead>
@@ -21,20 +19,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="account : ${accounts}">
+    <tr>
         <td th:text="${account.name}"></td>
         <td th:text="${account.email}"></td>
         <td th:text="${account.number}"></td>
         <td th:text="${#dates.format(account.birthday, 'dd-MM-yyyy')}"></td>
-        <td th:text="${roleNames[account.roleID]}"></td>
-        <td th:if="${role.hasPermission(8)}">
-            <form th:action="@{/account/edit}" th:object="${account}" method="get">
-                    <input type="hidden" name="accountID" th:value="${account.accountID}"/>
-                <button type="submit">Edit</button>
-            </form>
+        <td th:text="${role.name}"></td>
+        <td>
+            <a href="/account/change/password">Change password</a>
         </td>
     </tr>
     </tbody>
 </table>
+
+<a th:href="@{/project}">Back to tasks</a>
 </body>
 </html>

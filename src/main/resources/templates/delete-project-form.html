@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Opdater projekt</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<h1 th:text="'Delete ' + ${project.name}"></h1>
+
+<form action="#" th:action="@{/project/delete}" th:object="${project}" method="post">
+    <div>
+        <label for="name">Enter project name to delete:</label>
+        <input id="name" type="password" th:field="*{name}" required/>
+    </div>
+
+    <div>
+        <input id="projectID" type="hidden" th:field="*{projectID}"/>
+    </div>
+
+    <button type="submit">Delete project</button>
+</form>
+
+<a th:href="@{/project/{projectName}(projectName=${projectName})}">Tilbage til projekt</a>
+
+</body>
+</html>

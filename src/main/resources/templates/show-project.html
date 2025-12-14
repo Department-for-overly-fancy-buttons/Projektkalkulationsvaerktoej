@@ -45,15 +45,20 @@
         </td>
         <td th:text="${hoursSpent}"></td>
         <td>
-            <a th:if="${role.hasPermission(6)}" th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Rediger
-                projekt</a>
+            <a th:if="${role.hasPermission(6)}" th:href="@{/project/{projectName}/edit (projectName=${projectName})}">Edit
+                project</a>
+        </td>
+        <td>
+            <a th:if="${role.hasPermission(7)}" th:href="@{/project/{projectName}/delete (projectName=${projectName})}">Delete
+                project</a>
         </td>
     </tr>
     </tbody>
 </table>
 
 <h2>Sub projects</h2>
-<table>
+<h3 th:if="${tasks.isEmpty()}">No subprojects added</h3>
+<table th:if="!${tasks.isEmpty()}">
     <thead>
     <tr>
         <th>ID</th>

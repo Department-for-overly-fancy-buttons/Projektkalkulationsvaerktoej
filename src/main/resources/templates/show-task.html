@@ -65,6 +65,10 @@
                th:href="@{/project/{projectName}/{taskName}/complete (projectName=${projectName},taskName=${task.name})}">
                 Reopen task</a>
         </td>
+        <td th:if="${role.hasPermission(4)} and ${task.isCompleted} == false and ${tasks.isEmpty()}">
+            <a th:href="@{/project/{projectName}/{taskName}/delete (projectName=${projectName},taskName=${task.name})}">Delete
+                task</a>
+        </td>
     </tr>
     </tbody>
 </table>

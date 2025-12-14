@@ -46,11 +46,11 @@ public class AccountRepository implements IAccountRepository {
 
     @Override
     public Account updateAccount(Account account) throws DataAccessException {
-        String sql = "UPDATE Accounts SET(Name = ?, Email = ?, Birthday = ?, " +
-                "Number = ?, WeeklyHours = ?, Password = ?, RoleID = ?";
+        String sql = "UPDATE Accounts SET Name = ?, Email = ?, Birthday = ?, " +
+                "Number = ?, WeeklyHours = ?, Password = ?, RoleID = ? WHERE accountID = ?";
         jdbcTemplate.update(sql, account.getName(),
                 account.getEmail(), account.getBirthday(), account.getNumber(),
-                account.getWeeklyHours(), account.getPassword(), account.getRoleID());
+                account.getWeeklyHours(), account.getPassword(), account.getRoleID(), account.getAccountID());
         return account;
     }
 
