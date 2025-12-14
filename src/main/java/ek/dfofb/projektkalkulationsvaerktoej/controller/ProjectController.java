@@ -195,6 +195,24 @@ public class ProjectController {
         return showProject(model, project.getName(), httpSession);
     }
 
+    @GetMapping("/{projectName}/delete")
+    public String showDeleteForm(Model model, @PathVariable String projectName, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
+        if (httpSession.getAttribute("currentProject") == null) {
+            return "redirect:/project/list";
+        }
+        if (!authorizationService.hasPermission(account.getRoleID(), Permission.DELETE_PROJECTS)) {
+            return "redirect:/project";
+        }
+        int projectID = (int) httpSession.getAttribute("currentProject");
+        Project project = projectService.getProjectByID(projectID);
+        model.addAttribute("project", project);
+        return "delete-project-form";
+    }
+
     @PostMapping("/delete")
     public String deleteProject(@ModelAttribute Project project, HttpSession httpSession) {
         Account account = (Account) httpSession.getAttribute("account");
@@ -204,8 +222,11 @@ public class ProjectController {
         if (!authorizationService.hasPermission(account.getRoleID(), Permission.DELETE_PROJECTS)) {
             return "redirect:/project";
         }
-        projectService.deleteProject(project.getProjectID());
-        return "redirect:list";
+        if (projectService.getProjectByID(project.getProjectID()).getName().equalsIgnoreCase(project.getName())) {
+            projectService.deleteProject(project.getProjectID());
+            return "redirect:/project/list";
+        }
+        return "redirect:/project/" + projectService.getProjectByID(project.getProjectID()).getName() + "/delete";
     }
 
 }
