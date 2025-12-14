@@ -60,7 +60,7 @@ public class AccountController {
     }
 
     @GetMapping("/edit")
-    public String showEditAccountForm(int accountID,Model model, HttpSession httpSession) {
+    public String showEditAccountForm(int accountID, Model model, HttpSession httpSession) {
         Account creatorAccount = (Account) httpSession.getAttribute("account");
         if (creatorAccount == null) {
             return "redirect:login";
@@ -74,7 +74,7 @@ public class AccountController {
     }
 
     @PostMapping("/update")
-    public String updateAccount(@ModelAttribute Account account, HttpSession httpSession){
+    public String updateAccount(@ModelAttribute Account account, HttpSession httpSession) {
         Account creatorAccount = (Account) httpSession.getAttribute("account");
         if (creatorAccount == null) {
             return "redirect:login";
@@ -84,6 +84,31 @@ public class AccountController {
         }
         accountService.updateAccount(account);
         return "redirect:list";
+    }
+
+    @GetMapping("/change/password")
+    public String showChangePasswordForm(Model model, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
+        model.addAttribute("account", account);
+        return "change-password-form";
+    }
+
+    @PostMapping("/change/password")
+    public String changePassword(@ModelAttribute Account account, HttpSession httpSession) {
+        Account myAccount = (Account) httpSession.getAttribute("account");
+        if (myAccount == null) {
+            return "redirect:/account/login";
+        }
+        if (myAccount.getAccountID() != account.getAccountID()) {
+            return "redirect:/project";
+        }
+        Account newPassword = accountService.getAccountFromID(account.getAccountID());
+        newPassword.setPassword(account.getPassword());
+        accountService.updateAccount(newPassword);
+        return "redirect:/account/myAccount";
     }
 
     @GetMapping("/login")
@@ -126,6 +151,17 @@ public class AccountController {
         model.addAttribute("roleNames", roleNames);
 
         return "list-all-accounts";
+    }
+
+    @GetMapping("/myAccount")
+    public String showAccount(Model model, HttpSession httpSession) {
+        Account account = (Account) httpSession.getAttribute("account");
+        if (account == null) {
+            return "redirect:/account/login";
+        }
+        model.addAttribute("role",roleService.getRoleFromID(account.getRoleID()));
+        model.addAttribute("account", account);
+        return "show-account";
     }
 
 

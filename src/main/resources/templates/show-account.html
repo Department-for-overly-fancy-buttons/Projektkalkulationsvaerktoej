@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>My account</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<h1>My account</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Navn</th>
+        <th>Email</th>
+        <th>TelefonNummer</th>
+        <th>Fødselsdato</th>
+        <th>Rolle</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${account.name}"></td>
+        <td th:text="${account.email}"></td>
+        <td th:text="${account.number}"></td>
+        <td th:text="${#dates.format(account.birthday, 'dd-MM-yyyy')}"></td>
+        <td th:text="${role.name}"></td>
+        <td>
+            <a href="/account/change/password">Change password</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/project}">Back to tasks</a>
+</body>
+</html>
