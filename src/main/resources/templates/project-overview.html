@@ -8,6 +8,7 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 
+<h1>Projects</h1>
 <div id="overviewLayout">
     <div class="overview">
         <form method="post" th:action="@{/project/getID}" th:object="${project}" class="projectItem" th:each="project : ${projects}">

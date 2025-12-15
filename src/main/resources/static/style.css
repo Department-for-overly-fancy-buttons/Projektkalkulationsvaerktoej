@@ -160,7 +160,7 @@ nav {
     background-color: blue;
 }
 
-#overviewLayout {
+#overviewLayout, #overviewLayout2 {
     margin: 1%;
     padding: 1%;
     background-color: inherit;
@@ -174,7 +174,7 @@ nav {
     padding: 0 4rem;
 }
 
-#openProjectButton {
+#openProjectButton, #openTaskButton {
     background-color: inherit;
     border: inherit;
 }
