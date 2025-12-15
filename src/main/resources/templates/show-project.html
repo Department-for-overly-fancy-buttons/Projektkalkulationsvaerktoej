@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div id="progressInfoBox">
-                <p th:text="${('Project is estimated to take at total of ' + hourEstimateInitial + ' hours of work. ' + hoursSpent + ' hours of work has been completed. ' + (hourEstimateInitial - hoursSpent) + ' hours of work is estimated to remain.')}"></p>
+                <p th:text="${('Project is estimated to take at total of ' + hourEstimateInitial + ' hours of work. ' + hourEstimateRemaining + ' hours of work is estimated to remain.')}"></p>
                 <div id="dateInfoBox">
                     <p th:text="'Start date: ' + ${#dates.format(project.startDate, 'dd-MM-yyyy')}"></p>
                     <p th:text="'Deadline: ' + ${#dates.format(project.deadline, 'dd-MM-yyyy')}"></p>
