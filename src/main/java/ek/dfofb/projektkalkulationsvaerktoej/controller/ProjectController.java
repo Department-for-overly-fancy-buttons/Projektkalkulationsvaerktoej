@@ -154,6 +154,12 @@ public class ProjectController {
         model.addAttribute("projectMembers", accountsAssignedToProject);
         model.addAttribute("accounts", accounts);
         model.addAttribute("account", new Account());
+
+        List<Integer> percentOfProgressDoneList = new ArrayList<>();
+        for(Task task : tasks) {
+            percentOfProgressDoneList.add(taskService.percentOfProgressDone(task.getTaskID()));
+        }
+        model.addAttribute("percentOfProgressDone", percentOfProgressDoneList);
         return "show-project";
     }
 
