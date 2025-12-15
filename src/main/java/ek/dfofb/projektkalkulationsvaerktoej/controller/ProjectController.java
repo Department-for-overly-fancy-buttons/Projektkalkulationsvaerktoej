@@ -46,17 +46,17 @@ public class ProjectController {
         if (account == null) {
             return "redirect:/account/login";
         }
-        model.addAttribute("projects", projectService.getAllProjects());
+        List<Project> projectList = projectService.getAllProjects();
+        model.addAttribute("projects", projectList);
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
 
         //Below is for testing progressbar
-        ArrayList<Integer> test = new ArrayList<>();
-        test.add(80);
-        test.add(20);
-        test.add(100);
-        test.add(100);
-        test.add(100);
-        model.addAttribute("percentOfProgressDone", test);
+        List<Integer> percentOfProgressDoneList = new ArrayList<>();
+        for(Project project : projectList) {
+            percentOfProgressDoneList.add(projectService.percentOfProgressDone(project.getProjectID()));
+        }
+
+        model.addAttribute("percentOfProgressDone", percentOfProgressDoneList);
         //        return "list-all-projects";
         return "project-overview";
     }
@@ -144,10 +144,20 @@ public class ProjectController {
         model.addAttribute("account", new Account());
 
         //Below is for tetsing progressbar
-        ArrayList<Integer> test = new ArrayList<>();
-        test.add(10);
-        test.add(66);
-        model.addAttribute("percentOfProgressDone", test);
+        List<Integer> percentOfProgressDoneList = new ArrayList<>();
+        for(Task task : tasks) {
+            percentOfProgressDoneList.add(taskService.percentOfProgressDone(task.getTaskID()));
+        }
+//        int taskInitial = 0;
+//        int tasksRemaining = 0;
+//        int tasksSpent = 0;
+//        for (Task task : tasks) {
+//            tasksRemaining += taskService.
+//            tasksInitial += tasks.size();
+//            tasksSpent += task.getHoursSpentOnTask();
+//        }
+
+        model.addAttribute("percentOfProgressDone", percentOfProgressDoneList);
 
         return "show-project";
     }

@@ -122,4 +122,24 @@ public class ProjectService {
         }
     }
 
+    public int percentOfProgressDone(int projectID) {
+        if (!getProjectByID(projectID).getIsActive()) {
+            return 100;
+        }
+        List<Task> subProjects = taskRepository.getAllTasksForProjects(projectID);
+        double completedTasks = 0;
+        double notCompletedTasks = 0;
+        for (Task subProject : subProjects) {
+            if (subProject.getIsCompleted()) {
+                completedTasks += 1;
+            } else {
+                notCompletedTasks += 1;
+            }
+        }
+        if (completedTasks == 0) {
+            return 0;
+        }
+        return (int) (completedTasks / (completedTasks + notCompletedTasks) * 100);
+    }
+
 }
