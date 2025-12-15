@@ -61,6 +61,12 @@ public class ProjectController {
             project.setHoursRemaining(hoursRemaining);
             project.setHoursSpentOnProject(hoursSpent);
         }
+        List<Integer> percentOfProgressDoneList = new ArrayList<>();
+        for(Project project : projects) {
+            percentOfProgressDoneList.add(projectService.percentOfProgressDone(project.getProjectID()));
+        }
+
+        model.addAttribute("percentOfProgressDone", percentOfProgressDoneList);
         //        return "list-all-projects";
         model.addAttribute("projects", projects);
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));

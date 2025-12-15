@@ -11,13 +11,13 @@
 <h1>Projects</h1>
 <div id="overviewLayout">
     <div class="overview">
-        <form method="post" th:action="@{/project/getID}" th:object="${project}" class="projectItem" th:each="project : ${projects}">
+        <form method="post" th:action="@{/project/getID}" th:object="${project}" class="overviewItem" th:each="project : ${projects}">
             <input type="hidden" name="projectID" th:value="${project.projectID}"/>
             <input type="hidden" name="projectName" th:value="${project.name}">
             <button id="openProjectButton" type="submit">
                 <div>
-                    <p class="projectItemText" th:text="${project.name}"></p>
-                    <p class="projectItemText" th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></p>
+                    <p class="overviewItem" th:text="${project.name}"></p>
+                    <p class="overviewItem" th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></p>
                     <div th:if="${project.hourEstimate} != 0">
                         <label for="hourProgressTask"></label>
                         <progress id="hourProgressTask"
@@ -26,7 +26,7 @@
                 </div>
             </button>
         </form>
-        <div class="projectItem">
+        <div class="overviewItem">
             <input id="createProjectButton" type="image" onclick="location.href='/project/create'" th:src="@{/images/Dept=ofb_Logo.png}" alt="Create new project">
         </div>
     </div>

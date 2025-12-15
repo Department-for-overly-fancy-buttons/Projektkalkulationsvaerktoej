@@ -7,7 +7,7 @@
                 <a class="navigationLink" id="logoutButton" th:if="${#ctx.session.account}!=null" href="/account/log_out" title="Sign out of account">Sign out</a>
             </li>
             <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/project" title="My tasks">My tasks</a></li>
-            <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/project/list" title="projekter">Projects</a></li>
+            <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/project/list" title="projects">Projects</a></li>
             <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/account/myAccount" title="myAccount">My account</a></li>
             <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/account/list" title="allAccounts">All accounts</a></li>
 
