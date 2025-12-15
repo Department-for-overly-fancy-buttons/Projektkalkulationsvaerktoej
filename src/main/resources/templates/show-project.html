@@ -54,11 +54,11 @@
                 </div>
             </div>
             <div id="progressInfoBox">
-                <p th:text="${('Project is estimated to take at total of ' + hourEstimateInitial + ' hours of work. ' + hourEstimateRemaining + ' hours of work is estimated to remain.')}"></p>
                 <div id="dateInfoBox">
                     <p th:text="'Start date: ' + ${#dates.format(project.startDate, 'dd-MM-yyyy')}"></p>
                     <p th:text="'Deadline: ' + ${#dates.format(project.deadline, 'dd-MM-yyyy')}"></p>
                     <p th:text="'hours remaning: ' + ${hourEstimateRemaining}"></p>
+                    <p th:text="'hours spent: ' + ${hoursSpent}"></p>
                     <div th:if="${hourEstimateInitial} != 0">
                         <a th:text="${hourEstimateInitial}-${hourEstimateRemaining} + '/' + ${hourEstimateInitial}"></a>
                         <br>
@@ -108,10 +108,10 @@
                     </div>
                 </button>
             </form>
-            <div class="projectItem" th:if="${role.hasPermission(2)}">
+            <div class="overviewItem" th:if="${role.hasPermission(2)}">
                 <input id="createProjectButton" type="image"
                        th:attr="onclick=|location.href='/project/${project.name}/create/task'|"
-                       th:src="@{/images/Dept=ofb_Logo.png}" alt="Create new subproject">
+                       th:src="@{/images/Add-icon.png}" alt="Create new subproject">
             </div>
         </div>
         </div>
