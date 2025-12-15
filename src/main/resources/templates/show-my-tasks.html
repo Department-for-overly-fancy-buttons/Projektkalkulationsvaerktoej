@@ -19,10 +19,10 @@
                 <div>
                     <p class="projectItemText" th:text="${project.name}"></p>
                     <p class="projectItemText" th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></p>
-                    <div id="progressbarBorder">
-                        <div id="progressbarProgress"
-                             th:style="'width:' + 50 + '%'">
-                        </div>
+                    <div th:if="${project.hourEstimate} != 0">
+                        <label for="hourProgressTask"></label>
+                        <progress id="hourProgressProject"
+                                  th:value="(${project.hourEstimate}-${project.hoursRemaining})/${project.hourEstimate}"></progress>
                     </div>
                 </div>
             </button>
