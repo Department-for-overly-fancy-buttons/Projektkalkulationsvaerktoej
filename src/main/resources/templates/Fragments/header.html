@@ -1,12 +1,12 @@
 <div th:fragment="header" id="header">
-    <img id="navbarLogo" th:src="@{/images/Dept_ofb_Logo.png}" alt="Department for overly fancy buttons logo"/>
     <nav>
         <ul id="navigationList">
-        <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/project/view-projects" title="Go to project overview">Projects</a></li>
-        <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/account/account-manager" title="Go to account manager">Accounts</a></li>
+            <li id="navigationListLogo"><img id="navbarLogo" th:src="@{/images/Dept_ofb_Logo.png}" alt="Department for overly fancy buttons logo"/></li>
+        <li id="navigationListStart" class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/project/list" title="Go to project overview">Projects</a></li>
+        <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/account/list" title="Go to account manager">Accounts</a></li>
             <li class="navigationListItem">
                 <a class="navigationLink" id="loginButton" th:if="${#ctx.session.account}==null" href="/account/login" title="Sign into account">Sign in</a>
-                <a class="navigationLink" id="logoutButton" th:if="${#ctx.session.account}!=null" href="/account/logout" title="Sign out of account">Sign out</a>
+                <a class="navigationLink" id="logoutButton" th:if="${#ctx.session.account}!=null" href="/account/log_out" title="Sign out of account">Sign out</a>
             </li>
         </ul>
     </nav>
