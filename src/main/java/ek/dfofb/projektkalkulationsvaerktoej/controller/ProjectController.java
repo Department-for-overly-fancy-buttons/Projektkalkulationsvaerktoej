@@ -46,18 +46,24 @@ public class ProjectController {
         if (account == null) {
             return "redirect:/account/login";
         }
-        model.addAttribute("projects", projectService.getAllProjects());
-        model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
-
+        List<Project> projects = projectService.getAllProjects();
         //Below is for testing progressbar
-        ArrayList<Integer> test = new ArrayList<>();
-        test.add(80);
-        test.add(20);
-        test.add(100);
-        test.add(100);
-        test.add(100);
-        model.addAttribute("percentOfProgressDone", test);
+        for (Project project : projects) {
+            int hoursInitial = 0;
+            int hoursRemaining = 0;
+            int hoursSpent = 0;
+            for (Task task : taskService.getAllTasksForProjects(project.getProjectID())) {
+                hoursRemaining += taskService.hoursLeftOnTask(task.getTaskID(), false);
+                hoursInitial += taskService.hoursLeftOnTask(task.getTaskID(), true);
+                hoursSpent += task.getHoursSpentOnTask();
+            }
+            project.setHourEstimate(hoursInitial);
+            project.setHoursRemaining(hoursRemaining);
+            project.setHoursSpentOnProject(hoursSpent);
+        }
         //        return "list-all-projects";
+        model.addAttribute("projects", projects);
+        model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
         return "project-overview";
     }
 

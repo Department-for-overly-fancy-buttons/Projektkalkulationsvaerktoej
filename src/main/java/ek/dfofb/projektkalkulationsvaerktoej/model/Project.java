@@ -10,6 +10,8 @@ public class Project {
     private int hourEstimate; // Jeg tænker vi ønsker at beregne denne ud fra tasks, så venter lige til den er færdig
     private Date startDate;
     private Date deadline;
+    private int hoursRemaining;
+    private int hoursSpentOnProject;
 
     public Project() {
 
@@ -80,5 +82,19 @@ public class Project {
         this.hourEstimate = hourEstimate;
     }
 
+    public int getHoursRemaining() {
+        return hoursRemaining;
+    }
 
+    public void setHoursRemaining(int hoursRemaining) {
+        this.hoursRemaining = hoursRemaining;
+    }
+
+    public int getHoursSpentOnProject() {
+        return hoursSpentOnProject;
+    }
+
+    public void setHoursSpentOnProject(int hoursSpentOnProject) {
+        this.hoursSpentOnProject = hoursSpentOnProject;
+    }
 }
