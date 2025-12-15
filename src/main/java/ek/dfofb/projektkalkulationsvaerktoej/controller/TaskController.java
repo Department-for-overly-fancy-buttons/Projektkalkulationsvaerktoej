@@ -75,7 +75,8 @@ public class TaskController {
         }
         int taskID = (Integer) httpSession.getAttribute("currentTask");
         String currentTask = taskService.getTaskByID(taskID).getName();
-        if (httpSession.getAttribute("currentProject") == null || httpSession.getAttribute("currentTask") == null || !currentTask.equalsIgnoreCase(taskName)) {
+        if (httpSession.getAttribute("currentProject") == null || httpSession.getAttribute("currentTask") == null ||
+                !currentTask.equalsIgnoreCase(taskName)) {
             return "redirect:/project/list";
         }
 

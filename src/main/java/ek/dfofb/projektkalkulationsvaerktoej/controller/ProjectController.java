@@ -142,13 +142,6 @@ public class ProjectController {
         model.addAttribute("projectMembers", accountsAssignedToProject);
         model.addAttribute("accounts", accounts);
         model.addAttribute("account", new Account());
-
-        //Below is for tetsing progressbar
-        ArrayList<Integer> test = new ArrayList<>();
-        test.add(10);
-        test.add(66);
-        model.addAttribute("percentOfProgressDone", test);
-
         return "show-project";
     }
 
