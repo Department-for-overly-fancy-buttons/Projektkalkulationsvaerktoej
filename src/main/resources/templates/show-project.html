@@ -70,16 +70,16 @@
             </div>
             </div>
             <a th:if="${role.hasPermission(6)}" class="button"
-               th:href="@{/project/{projectName}/edit (projectName=${projectName})}">
+               th:href="@{/project/{projectName}/edit (projectName=${project.Name})}">
                 Edit project</a>
             <a th:if="${role.hasPermission(7)}" class="button"
-               th:href="@{/project/{projectName}/delete (projectName=${projectName})}">Delete project</a>
+               th:href="@{/project/{projectName}/delete (projectName=${project.Name})}">Delete project</a>
 
         </div>
 <div id="overviewStyle">
 <h3>Sub projects</h3>
         <div>
-    <a th:if="${role.hasPermission(2)}" class="button" th:href="@{/project/{projectName}/create/task (projectName = ${projectName})}">Opret
+    <a th:if="${role.hasPermission(2)}" class="button" th:href="@{/project/{projectName}/create/task (projectName = ${project.Name})}">Opret
         nyt delprojekt</a>
         </div>
 
