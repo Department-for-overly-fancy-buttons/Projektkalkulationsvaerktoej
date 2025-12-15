@@ -132,6 +132,8 @@ public class AccountController {
     @GetMapping("log_out")
     public String logOut(HttpSession session) {
         session.removeAttribute("account");
+        session.removeAttribute("currentProject");
+        session.removeAttribute("currentTask");
         return "redirect:/account/login";
     }
 
