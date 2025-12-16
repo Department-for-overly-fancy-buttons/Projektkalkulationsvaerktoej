@@ -3,14 +3,14 @@ DROP ALL OBJECTS;
 CREATE TABLE Permissions (
                              PermissionID    INT NOT NULL AUTO_INCREMENT,
                              Name VARCHAR(255) UNIQUE NOT NULL,
-                             Description VARCHAR(255),
+                             Description VARCHAR(2555),
                              PRIMARY KEY (PermissionID)
 );
 
 CREATE TABLE Roles (
                        RoleID    INT NOT NULL AUTO_INCREMENT,
                        Name VARCHAR(255) UNIQUE NOT NULL,
-                       Description VARCHAR(255),
+                       Description VARCHAR(2555),
                        PRIMARY KEY (RoleID)
 );
 
@@ -28,10 +28,10 @@ CREATE TABLE RolePermissions (
 CREATE TABLE Projects (
                           ProjectID INT NOT NULL AUTO_INCREMENT,
                           Name VARCHAR(255) UNIQUE NOT NULL,
-                          Description VARCHAR(255),
+                          Description VARCHAR(2555),
                           IsActive BOOLEAN NOT NULL,
-                          StartDate DATE NOT NULL,
-                          Deadline DATE NOT NULL,
+                          StartDate DATE,
+                          Deadline DATE,
                           PRIMARY KEY (ProjectID)
 );
 
@@ -39,8 +39,8 @@ CREATE TABLE Accounts (
                           AccountID INT NOT NULL AUTO_INCREMENT,
                           Name VARCHAR(255) NOT NULL,
                           Email VARCHAR(255) unique not null,
-                          Birthday DATE,
-                          Number VARCHAR(24) ,
+                          Birthday DATE NOT NULL,
+                          Number VARCHAR(24) NOT NULL,
                           WeeklyHours INT NOT NULL,
                           Password VARCHAR(255) NOT NULL,
                           RoleID INT NOT NULL,
@@ -63,14 +63,14 @@ CREATE TABLE ProjectMembers (
 CREATE TABLE Tasks (
                        TaskID INT NOT NULL AUTO_INCREMENT,
                        Name VARCHAR(255) NOT NULL,
-                       Description VARCHAR(255),
+                       Description VARCHAR(2555),
                        HourEstimate INT,
                        Completed BOOLEAN NOT NULL,
                        Deadline DATE,
                        StartDate DATE,
                        ProjectID INT NOT NULL,
                        ParentID INT,
-                       HoursSpent int,
+                       HoursSpent INT,
                        UNIQUE(Name, ProjectID, ParentID),
                        PRIMARY KEY (TaskID),
                        FOREIGN KEY (ProjectID) REFERENCES Projects (ProjectID)
@@ -93,10 +93,10 @@ INSERT INTO Roles (Name, Description)
 VALUES('Scrum master', 'Gives the user the rights to modify tasks within a project');
 INSERT INTO RolePermissions
 VAlUES (1,1);
-INSERT INTO Accounts (Name, Email, WeeklyHours, Password, RoleID)
-VALUES ('Markus Addington', 'addington@icloud.com', 42, 'asdj3(Fsah2', 1);
-INSERT INTO Accounts (Name, Email, WeeklyHours, Password, RoleID)
-VALUES ('Markus Substractington', 'substractington@icloud.com', 42, 'asdj3(Fsah2', 1);
+INSERT INTO Accounts (Name, Email,Birthday,Number, WeeklyHours, Password, RoleID)
+VALUES ('Markus Addington', 'addington@icloud.com','1925-12-24', '+4592348348', 42, 'asdj3(Fsah2', 1);
+INSERT INTO Accounts (Name, Email,Birthday,Number, WeeklyHours, Password, RoleID)
+VALUES ('Markus Substractington', 'substractington@icloud.com','1925-12-24', '+4592348348', 42, 'asdj3(Fsah2', 1);
 INSERT INTO Projects (Name, Description, isActive, StartDate, Deadline)
 VALUES ('Ecommerce platform for _Adaptive Problemsolvers_', '_Adaptive Probelmsolvers_ are in need of a brand new platform to run ecommerce. They have re...', true, '2025-12-06', '2026-03-12');
 INSERT INTO Tasks (Name, Description,HourEstimate, Completed, StartDate, Deadline, ProjectID, ParentID)
