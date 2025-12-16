@@ -48,7 +48,7 @@ public class AuthorizationServiceTest
 
         when(roleService.getRoleFromID(99)).thenReturn(null);
 
-        assertFalse(authorizationService.hasPermission(account, Permission.VIEW_PROJECT));
+        assertFalse(authorizationService.hasPermission(account.getRoleID(), Permission.VIEW_PROJECT));
     }
 
     @Test
