@@ -16,8 +16,8 @@
             <input type="hidden" name="projectName" th:value="${project.name}">
             <button id="openProjectButton" type="submit">
                 <div>
-                    <p class="overviewItem" th:text="${project.name}"></p>
-                    <p class="overviewItem" th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></p>
+                    <p class="overviewItemText" th:text="${project.name}"></p>
+                    <p class="overviewItemText" th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></p>
                     <div th:if="${project.hourEstimate} != 0">
                         <label for="hourProgressTask"></label>
                         <progress id="hourProgressTask"

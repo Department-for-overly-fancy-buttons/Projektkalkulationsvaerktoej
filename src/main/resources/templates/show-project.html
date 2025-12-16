@@ -10,7 +10,7 @@
     <div id="overviewLayout">
         <div class="descriptionBox">
             <h1 th:text="${project.name}"></h1>
-            <h3 th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></h3>
+            <h3 th:text="${'Deadline: ' + #dates.format(project.deadline, 'dd-MM-yyyy')}"></h3>
             <div id="assignmentDescriptionBox">
                 <p th:text="${project.description}"></p>
             </div>
@@ -57,8 +57,8 @@
                 <div id="dateInfoBox">
                     <p th:text="'Start date: ' + ${#dates.format(project.startDate, 'dd-MM-yyyy')}"></p>
                     <p th:text="'Deadline: ' + ${#dates.format(project.deadline, 'dd-MM-yyyy')}"></p>
-                    <p th:text="'hours remaning: ' + ${hourEstimateRemaining}"></p>
-                    <p th:text="'hours spent: ' + ${hoursSpent}"></p>
+                    <p th:text="'Hours remaning: ' + ${hourEstimateRemaining}"></p>
+                    <p th:text="'Hours spent: ' + ${hoursSpent}"></p>
                     <div th:if="${hourEstimateInitial} != 0">
                         <a th:text="${hourEstimateInitial}-${hourEstimateRemaining} + '/' + ${hourEstimateInitial}"></a>
                         <br>

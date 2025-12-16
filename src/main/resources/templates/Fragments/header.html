@@ -1,16 +1,15 @@
 <div th:fragment="header" id="header">
-    <img id="navbarLogo" th:src="@{/images/Dept_ofb_Logo.png}" alt="Department for overly fancy buttons logo"/>
     <nav>
         <ul id="navigationList">
+            <li><img id="navbarLogo" th:src="@{/images/Dept_ofb_Logo.png}" alt="Department for overly fancy buttons logo"/></li>
+            <li class="navigationListItem" id="navigationListStart"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/project" title="My tasks">My tasks</a></li>
+            <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/project/list" title="projects">Projects</a></li>
+            <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/account/myAccount" title="myAccount">My account</a></li>
+            <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/account/list" title="allAccounts">All accounts</a></li>
             <li class="navigationListItem">
                 <a class="navigationLink" id="loginButton" th:if="${#ctx.session.account}==null" href="/account/login" title="Sign into account">Sign in</a>
                 <a class="navigationLink" id="logoutButton" th:if="${#ctx.session.account}!=null" href="/account/log_out" title="Sign out of account">Sign out</a>
             </li>
-            <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/project" title="My tasks">My tasks</a></li>
-            <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/project/list" title="projects">Projects</a></li>
-            <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/account/myAccount" title="myAccount">My account</a></li>
-            <li class="navigationListItem"><a class="navigationLink" th:if="${#ctx.session.account}!=null" href="/account/list" title="allAccounts">All accounts</a></li>
-
         </ul>
     </nav>
 </div>
