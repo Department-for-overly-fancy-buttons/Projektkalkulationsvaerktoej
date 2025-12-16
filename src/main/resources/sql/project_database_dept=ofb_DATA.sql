@@ -67,20 +67,20 @@ VAlUES (4,1),
        (5,2),
        (5,3);
 
-INSERT INTO Accounts (Name, Email, WeeklyHours, Password, RoleID)
-VALUES ("Markus Addington", "addington@icloud.com", 42, "asdj3(Fsah2", 4),
-       ("Tannie Offinlux", "rose89312@gmail.com", 37, "12347", 2),
-       ("Hjalte Jernhåndsen", "JernFE@jernhaendsen.dk", 12, "KDSA+!nas", 4),
-       ("Sine Gejlsverk", "fritz111221@icloud.com", 37, "aasd!42FG*adwFV,<>", 1),
-       ("Chalotte Chilkolding", "kolding48@gmail.com", 38, "CC123", 4),
-       ("Henrik Sjulsted", "FreeChesseNation@hotmail.com", 15, "aD)9faf1cz", 1),
-       ("Silas AllStart", "BurntPizza@gmail.com", 37, "di124.43>fa", 4),
-       ("DavID kooningssen", "Kooningssen@icloud.com", 37, "OC.a,,a.ff*as", 4),
-       ("Dennis tuldgårdstræde", "vigtigAdresse2000009@gmail.com", 42, "AKKD)#JD", 4),
-       ("Yrsa ydrasillius", "ydrasilyrsa@gmail.com", 32, "as,.hNomPN", 5),
-       ("ignus ultinias", "SaxophoneLancing@icloud.com", 37, "421G", 5),
-       ("Sussane baeveglser", "baeveglser126@gmail.com", 12, "mAn2.-1a.", 3),
-       ("Niels Jonathansen", "HallIO89@icloud.com", 42, "KHsd8)dspf0.", 3);
+INSERT INTO Accounts (Name, Email,Birthday,Number, WeeklyHours, Password, RoleID)
+VALUES ("Markus Addington", "addington@icloud.com",DATE("1925-12-24"), +4592348348,42, "asdj3(Fsah2", 4),
+       ("Tannie Offinlux", "rose89312@gmail.com",DATE("1999-12-31"),+4542348343, 37, "12347", 2),
+       ("Hjalte Jernhåndsen", "JernFE@jernhaendsen.dk",DATE("2000-01-01"),+4572348443, 12, "KDSA+!nas", 4),
+       ("Sine Gejlsverk", "fritz111221@icloud.com",DATE("1948-19-22"),+4502348342, 37, "aasd!42FG*adwFV,<>", 1),
+       ("Chalotte Chilkolding", "kolding48@gmail.com",DATE("1977-08-18"),+4511348343, 38, "CC123", 4),
+       ("Henrik Sjulsted", "FreeChesseNation@hotmail.com",DATE("1983-09-24"),+4534348343, 15, "aD)9faf1cz", 1),
+       ("Silas AllStart", "BurntPizza@gmail.com",DATE("1955-11-12"),+4502048340, 37, "di124.43>fa", 4),
+       ("DavID kooningssen", "Kooningssen@icloud.com",DATE("1999-03-24"),+4593857328, 37, "OC.a,,a.ff*as", 4),
+       ("Dennis tuldgårdstræde", "vigtigAdresse2000009@gmail.com",DATE("1984-06-29"),+4543857322, 42, "AKKD)#JD", 4),
+       ("Yrsa ydrasillius", "ydrasilyrsa@gmail.com",DATE("2006-12-12"),+4513357327, 32, "as,.hNomPN", 5),
+       ("ignus ultinias", "SaxophoneLancing@icloud.com",DATE("2007-02-02"),+4502847362, 37, "421G", 5),
+       ("Sussane baeveglser", "baeveglser126@gmail.com",DATE("1944-01-22"),+4594848372, 12, "mAn2.-1a.", 3),
+       ("Niels Jonathansen", "HallIO89@icloud.com",DATE("1992-03-25"),+4593939393, 42, "KHsd8)dspf0.", 3);
 
 INSERT INTO Projects (Name, Description, isActive, StartDate, Deadline)
 VALUES ("Ecommerce platform for _Adaptive Problemsolvers_", "_Adaptive Probelmsolvers_ are in need of a brand new platform to run ecommerce. They have re...", true, DATE("2025-12-06"), DATE("2026-03-18")),
