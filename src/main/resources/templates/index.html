@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>front-page</title>
+        <link rel="styleSheet" th:href="@{/style.css}"/>
+    </head>
+    <body>
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <div id="frontPageLayout">
+            <div id="frontPageCenterpiece">
+                <a class="backButton" href="/account/login" title="Sign into account">Sign in</a>
+            </div>
+        </div>
+    </body>
+</html>

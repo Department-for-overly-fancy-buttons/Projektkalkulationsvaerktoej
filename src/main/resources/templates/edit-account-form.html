@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Opret bruger</title>
+    <link rel="styleSheet" th:href="@{/style.css}"/>
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
@@ -59,6 +60,7 @@
     <button type="submit">Update</button>
 </form>
 
-<a th:href="@{/account/list}">Tilbage til liste over brugere</a>
+<br>
+<a class="backButton" th:href="@{/account/list}">Tilbage til liste over brugere</a>
 </body>
 </html>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,9 +34,24 @@ public class ProjectController {
         if (account == null) {
             return "redirect:/account/login";
         }
+        List<Project> projects = projectService.getAllProjectsForAccount(account.getAccountID());
+        //Below is for testing progressbar
+        for (Project project : projects) {
+            int hoursInitial = 0;
+            int hoursRemaining = 0;
+            int hoursSpent = 0;
+            for (Task task : taskService.getAllTasksForProjects(project.getProjectID())) {
+                hoursRemaining += taskService.hoursLeftOnTask(task.getTaskID(), false);
+                hoursInitial += taskService.hoursLeftOnTask(task.getTaskID(), true);
+                hoursSpent += task.getHoursSpentOnTask();
+            }
+            project.setHourEstimate(hoursInitial);
+            project.setHoursRemaining(hoursRemaining);
+            project.setHoursSpentOnProject(hoursSpent);
+        }
         model.addAttribute("tasks", taskService.getAllTasksForAccount(account.getAccountID()));
         model.addAttribute("task", new Task());
-        model.addAttribute("projects", projectService.getAllProjectsForAccount(account.getAccountID()));
+        model.addAttribute("projects", projects);
         return "show-my-tasks";
     }
 
@@ -45,9 +61,31 @@ public class ProjectController {
         if (account == null) {
             return "redirect:/account/login";
         }
-        model.addAttribute("projects", projectService.getAllProjects());
+        List<Project> projects = projectService.getAllProjects();
+        //Below is for testing progressbar
+        for (Project project : projects) {
+            int hoursInitial = 0;
+            int hoursRemaining = 0;
+            int hoursSpent = 0;
+            for (Task task : taskService.getAllTasksForProjects(project.getProjectID())) {
+                hoursRemaining += taskService.hoursLeftOnTask(task.getTaskID(), false);
+                hoursInitial += taskService.hoursLeftOnTask(task.getTaskID(), true);
+                hoursSpent += task.getHoursSpentOnTask();
+            }
+            project.setHourEstimate(hoursInitial);
+            project.setHoursRemaining(hoursRemaining);
+            project.setHoursSpentOnProject(hoursSpent);
+        }
+        List<Integer> percentOfProgressDoneList = new ArrayList<>();
+        for(Project project : projects) {
+            percentOfProgressDoneList.add(projectService.percentOfProgressDone(project.getProjectID()));
+        }
+
+        model.addAttribute("percentOfProgressDone", percentOfProgressDoneList);
+        //        return "list-all-projects";
+        model.addAttribute("projects", projects);
         model.addAttribute("role", roleService.getRoleFromID(account.getRoleID()));
-        return "list-all-projects";
+        return "project-overview";
     }
 
     @GetMapping("/create")
@@ -131,6 +169,12 @@ public class ProjectController {
         model.addAttribute("projectMembers", accountsAssignedToProject);
         model.addAttribute("accounts", accounts);
         model.addAttribute("account", new Account());
+
+        List<Integer> percentOfProgressDoneList = new ArrayList<>();
+        for(Task task : tasks) {
+            percentOfProgressDoneList.add(taskService.percentOfProgressDone(task.getTaskID()));
+        }
+        model.addAttribute("percentOfProgressDone", percentOfProgressDoneList);
         return "show-project";
     }
 

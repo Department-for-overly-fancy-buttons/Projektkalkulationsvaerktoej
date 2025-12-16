@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>500</title>
+    <title>500 - internal server error</title>
+    <link rel="styleSheet" th:href="@{/style.css}"/>
 </head>
 <body>
-
+    <div>
+        <h1>500 Internal server error</h1>
+        <p th:text="${message}">An unexpected error occurred. Please try again later.</p>
+        <a th:href="@{/project/list}">Back to your projects</a>
+    </div>
 </body>
 </html>

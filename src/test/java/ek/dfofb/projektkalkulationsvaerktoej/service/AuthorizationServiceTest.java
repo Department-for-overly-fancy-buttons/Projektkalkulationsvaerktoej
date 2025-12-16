@@ -48,7 +48,7 @@ public class AuthorizationServiceTest
 
         when(roleService.getRoleFromID(99)).thenReturn(null);
 
-        assertFalse(authorizationService.hasPermission(account, Permission.VIEW_PROJECT));
+        assertFalse(authorizationService.hasPermission(account.getRoleID(), Permission.VIEW_PROJECT));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class AuthorizationServiceTest
 
         when(roleService.getRoleFromID(1)).thenReturn(role);
 
-        assertTrue(authorizationService.hasPermission(account, Permission.ADD_PROJECTS));
-        assertFalse(authorizationService.hasPermission(account, Permission.DELETE_PROJECTS));
+        assertTrue(authorizationService.hasPermission(account.getRoleID(), Permission.ADD_PROJECTS));
+        assertFalse(authorizationService.hasPermission(account.getRoleID(), Permission.DELETE_PROJECTS));
     }
 }

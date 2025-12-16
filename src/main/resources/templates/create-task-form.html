@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Opret opgave</title>
+    <link rel="styleSheet" th:href="@{/style.css}"/>
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
@@ -41,6 +42,7 @@
     <button type="submit">Opret opgave</button>
 </form>
 
-<a th:href="@{/project/{projectName}(projectName=${projectName})}">Tilbage til projekt</a>
+<br>
+<a class="backButton" th:href="@{/project/{projectName}(projectName=${projectName})}">Tilbage til projekt</a>
 </body>
 </html>

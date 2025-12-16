@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>Færdiggør opgave</title>
+    <title>Complete task</title>
+    <link rel="styleSheet" th:href="@{/style.css}"/>
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
@@ -21,12 +22,12 @@
         <input id="taskID" type="hidden" th:field="*{taskID}"/>
     </div>
 
-    <button th:if="${task.isCompleted == false}" type="submit">Luk opgave</button>
-    <button th:if="${task.isCompleted == true}" type="submit">Åben opgave igen</button>
+    <button th:if="${task.isCompleted == false}" type="submit">Complete task</button>
+    <button th:if="${task.isCompleted == true}" type="submit">Cancel completion of task</button>
 </form>
 
 <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
-    <button type="submit">Tilbage</button>
+    <button type="submit">Back</button>
     <input type="hidden" name="taskID" th:value="${task.taskID}"/>
     <input type="hidden" name="taskName" th:value="${task.name}">
 </form>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <link rel="styleSheet" th:href="@{/style.css}"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<h1>Projects</h1>
+<div id="overviewLayout">
+    <div class="overview">
+        <form method="post" th:action="@{/project/getID}" th:object="${project}" class="overviewItem" th:each="project : ${projects}">
+            <input type="hidden" name="projectID" th:value="${project.projectID}"/>
+            <input type="hidden" name="projectName" th:value="${project.name}">
+            <button id="openProjectButton" type="submit">
+                <div>
+                    <p class="overviewItemText" th:text="${project.name}"></p>
+                    <p class="overviewItemText" th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></p>
+                    <div th:if="${project.hourEstimate} != 0">
+                        <label for="hourProgressTask"></label>
+                        <progress id="hourProgressTask"
+                                  th:value="(${project.hourEstimate}-${project.hoursRemaining})/${project.hourEstimate}"></progress>
+                    </div>
+                </div>
+            </button>
+        </form>
+        <div class="overviewItem" th:if="${role.hasPermission(5)}">
+            <input id="createProjectButton" type="image" onclick="location.href='/project/create'" th:src="@{/images/Add-icon.png}" alt="Create new project">
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
