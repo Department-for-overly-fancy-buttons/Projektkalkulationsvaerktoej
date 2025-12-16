@@ -8,14 +8,14 @@ USE `project_database_dept:ofb`;
 CREATE TABLE Permissions (
                              PermissionID    INT NOT NULL AUTO_INCREMENT,
                              Name VARCHAR(255) UNIQUE NOT NULL,
-                             Description VARCHAR(255),
+                             Description VARCHAR(2555),
                              PRIMARY KEY (PermissionID)
 );
 
 CREATE TABLE Roles (
                        RoleID    INT NOT NULL AUTO_INCREMENT,
                        Name VARCHAR(255) UNIQUE NOT NULL,
-                       Description VARCHAR(255),
+                       Description VARCHAR(2555),
                        PRIMARY KEY (RoleID)
 );
 
@@ -33,10 +33,10 @@ CREATE TABLE RolePermissions (
 CREATE TABLE Projects (
                           ProjectID INT NOT NULL AUTO_INCREMENT,
                           Name VARCHAR(255) UNIQUE NOT NULL,
-                          Description VARCHAR(255),
+                          Description VARCHAR(2555),
                           IsActive BOOLEAN NOT NULL,
-                          StartDate DATE NOT NULL,
-                          Deadline DATE NOT NULL,
+                          StartDate DATE,
+                          Deadline DATE,
                           PRIMARY KEY (ProjectID)
 );
 
@@ -44,8 +44,8 @@ CREATE TABLE Accounts (
                           AccountID INT NOT NULL AUTO_INCREMENT,
                           Name VARCHAR(255) NOT NULL,
                           Email VARCHAR(255) unique not null,
-                          Birthday DATE NOT NULL default ("02-02-02"),
-                          Number VARCHAR(24) NOT NULL default("12345678"),
+                          Birthday DATE NOT NULL,
+                          Number VARCHAR(24) NOT NULL,
                           WeeklyHours INT NOT NULL,
                           Password VARCHAR(255) NOT NULL,
                           RoleID INT NOT NULL,
@@ -68,14 +68,14 @@ CREATE TABLE ProjectMembers (
 CREATE TABLE Tasks (
                        TaskID INT NOT NULL AUTO_INCREMENT,
                        Name VARCHAR(255) NOT NULL,
-                       Description VARCHAR(255),
+                       Description VARCHAR(2555),
                        HourEstimate INT,
                        Completed BOOLEAN NOT NULL,
                        Deadline DATE,
                        StartDate DATE,
                        ProjectID INT NOT NULL,
                        ParentID INT,
-                       HoursSpent int,
+                       HoursSpent INT,
                        UNIQUE(Name, ProjectID, ParentID),
                        PRIMARY KEY (TaskID),
                        FOREIGN KEY (ProjectID) REFERENCES Projects (ProjectID)
