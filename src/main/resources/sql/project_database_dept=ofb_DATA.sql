@@ -122,7 +122,7 @@ VALUES ("Web application", "_Adaptive Probelmsolvers_ need a new webplatform. It
 
 INSERT INTO Tasks (Name, Description, Completed, StartDate, Deadline,HourEstimate, ProjectID, ParentID)
 VALUES ("Front-end", "The webpage is in need of a new look. It requires a new and simpler design, than the current webpage. However responisble parties at _Adaptive Probelmsolvers_, require the page to look similar in layout, to ensure current users are not scared away. Therefore an extensive analysis of the current users and the webpage relationship needs to be investiga...", true, DATE("2025-12-08"), DATE("2026-01-25"), 29, 1, 1),
-       ("Back-end", "The website requires extensive changes to current functionallity. It requires a new database design, that simultaneously discourages duplicants but also can handle large workloads at fast speeds. A more effecient method of handling _Adaptive Probelmsolvers_ large datasets is required and the...", false, DATE("2025-12-09"), DATE("2026-01-27"), 36, 1, 1)
+       ("Back-end", "The website requires extensive changes to current functionallity. It requires a new database design, that simultaneously discourages duplicants but also can handle large workloads at fast speeds. A more effecient method of handling _Adaptive Probelmsolvers_ large datasets is required and the...", false, DATE("2025-12-09"), DATE("2026-01-27"), 36, 1, 1);
 
 INSERT INTO tasklist
 VALUES (1, 1),
