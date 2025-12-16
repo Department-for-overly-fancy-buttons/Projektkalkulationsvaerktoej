@@ -126,12 +126,12 @@
 
     </div>
     <div th:switch="${task.parentID}">
-        <div th:case="'0'"><a
+        <div th:case="'0'"><a class="backButton"
                 th:href="@{/project/{projectName}(projectName=${projectName})}">Back to project</a>
         </div>
         <div th:case="*">
             <form method="post" th:action="@{/project/task/getID}" th:object="${task}">
-                <button class="button" type="submit">Back to task</button>
+                <button class="backButton" type="submit">Back to task</button>
                 <input type="hidden" name="taskID" th:value="${mainTaskID}"/>
                 <input type="hidden" name="taskName" th:value="${mainTask}">
             </form>
