@@ -71,7 +71,7 @@ INSERT INTO Accounts (Name, Email,Birthday,Number, WeeklyHours, Password, RoleID
 VALUES ("Markus Addington", "addington@icloud.com",DATE("1925-12-24"), +4592348348,42, "asdj3(Fsah2", 4),
        ("Tannie Offinlux", "rose89312@gmail.com",DATE("1999-12-31"),+4542348343, 37, "12347", 2),
        ("Hjalte Jernhåndsen", "JernFE@jernhaendsen.dk",DATE("2000-01-01"),+4572348443, 12, "KDSA+!nas", 4),
-       ("Sine Gejlsverk", "fritz111221@icloud.com",DATE("1948-19-22"),+4502348342, 37, "aasd!42FG*adwFV,<>", 1),
+       ("Sine Gejlsverk", "fritz111221@icloud.com",DATE("1948-09-22"),+4502348342, 37, "aasd!42FG*adwFV,<>", 1),
        ("Chalotte Chilkolding", "kolding48@gmail.com",DATE("1977-08-18"),+4511348343, 38, "CC123", 4),
        ("Henrik Sjulsted", "FreeChesseNation@hotmail.com",DATE("1983-09-24"),+4534348343, 15, "aD)9faf1cz", 1),
        ("Silas AllStart", "BurntPizza@gmail.com",DATE("1955-11-12"),+4502048340, 37, "di124.43>fa", 4),
