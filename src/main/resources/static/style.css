@@ -221,7 +221,7 @@ margin: 16px auto;
     gap: 20px;
 }
 
-#createProjectButton {
+#createProjectButton, #createTaskButton {
     height: 8rem;
     padding: 1rem 3.5rem;
 }
@@ -246,7 +246,7 @@ margin: 16px auto;
     margin: 1rem 0;
 }
 
-#overviewStyle {
+#overviewStyle, #overviewStyle2 {
     display: flex;
     flex-direction: column;
     row-gap: 1rem;

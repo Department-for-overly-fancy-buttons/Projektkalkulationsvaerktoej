@@ -6,15 +6,15 @@
     <link rel="styleSheet" th:href="@{/style.css}"/>
 </head>
 <body th:if="${role.hasPermission(1)}">
-    <div th:replace="~{fragments/header :: header}"></div>
-    <div id="overviewLayout">
-        <div class="descriptionBox">
-            <h1 th:text="${project.name}"></h1>
-            <h3 th:text="${'Deadline: ' + #dates.format(project.deadline, 'dd-MM-yyyy')}"></h3>
-            <div id="assignmentDescriptionBox">
-                <p th:text="${project.description}"></p>
-            </div>
-            <div id="additionalInfoBox">
+<div th:replace="~{fragments/header :: header}"></div>
+<div id="overviewLayout">
+    <div class="descriptionBox">
+        <h1 th:text="${project.name}"></h1>
+        <h3 th:text="${'Deadline: ' + #dates.format(project.deadline, 'dd-MM-yyyy')}"></h3>
+        <div id="assignmentDescriptionBox">
+            <p th:text="${project.description}"></p>
+        </div>
+        <div id="additionalInfoBox">
             <div id="memberBox">
                 <h3>Project members:</h3>
                 <h3 th:if="${projectMembers.isEmpty()}">No one is currently assigned to project</h3>
@@ -39,7 +39,8 @@
                     </form>
                 </div>
                 <div th:if="${role.hasPermission(5)} and ${projectMembers.isEmpty()} == false">
-                    <form action="#" th:action="@{/project/remove/assigned/account}" th:object="${account}" method="post">
+                    <form action="#" th:action="@{/project/remove/assigned/account}" th:object="${account}"
+                          method="post">
                         <div>
                             <label for="removeAccount">Remove:</label>
                             <select id="removeAccount" th:field="*{accountID}" required>
@@ -68,32 +69,30 @@
                     </div>
                 </div>
             </div>
-            </div>
-            <a th:if="${role.hasPermission(6)}" class="button"
-               th:href="@{/project/{projectName}/edit (projectName=${project.Name})}">
-                Edit project</a>
-            <a th:if="${role.hasPermission(7)}" class="button"
-               th:href="@{/project/{projectName}/delete (projectName=${project.Name})}">Delete project</a>
-
         </div>
-<div id="overviewStyle">
-<h3>Sub projects</h3>
-        <div>
-    <a th:if="${role.hasPermission(2)}" class="button" th:href="@{/project/{projectName}/create/task (projectName = ${project.Name})}">Opret
-        nyt delprojekt</a>
-        </div>
+        <a th:if="${role.hasPermission(6)}" class="button"
+           th:href="@{/project/{projectName}/edit (projectName=${project.Name})}">
+            Edit project</a>
+        <a th:if="${role.hasPermission(7)}" class="button"
+           th:href="@{/project/{projectName}/delete (projectName=${project.Name})}">Delete project</a>
 
+    </div>
+    <div id="overviewStyle">
+        <h3>Sub projects</h3>
         <div class="overview">
-            <form th:if="!${tasks.isEmpty()}" method="post" th:action="@{/project/task/getID}" th:object="${task}" class="overviewItem" th:each="task : ${tasks}">
+            <form th:if="!${tasks.isEmpty()}" method="post" th:action="@{/project/task/getID}" th:object="${task}"
+                  class="overviewItem" th:each="task : ${tasks}">
                 <input type="hidden" name="taskID" th:value="${task.taskID}"/>
                 <input type="hidden" name="taskName" th:value="${task.name}">
                 <button id="openProjectButton" type="submit">
                     <div>
                         <p class="overviewItemText" th:text="${task.name}"></p>
-                        <p class="overviewItemText" th:text="${#dates.format(task.startDate, 'dd-MM-yyyy') + ' -> ' + #dates.format(task.deadLine, 'dd-MM-yyyy')}"></p>
+                        <p class="overviewItemText"
+                           th:text="${#dates.format(task.startDate, 'dd-MM-yyyy') + ' -> ' + #dates.format(task.deadLine, 'dd-MM-yyyy')}"></p>
                         <div>
                             <label class="overviewItemText" for="hourProgressTask">Progress in hours:</label>
-                            <a class="overviewItemText" th:text="${task.hourEstimate}-${task.hoursRemaining} + '/' + ${task.hourEstimate}"></a>
+                            <a class="overviewItemText"
+                               th:text="${task.hourEstimate}-${task.hoursRemaining} + '/' + ${task.hourEstimate}"></a>
                             <br>
                             <progress id="hourProgressTask"
                                       th:value="(${task.hourEstimate}-${task.hoursRemaining})/${task.hourEstimate}">
@@ -102,7 +101,8 @@
                         </div>
                         <p class="overviewItemText">Tasks completed</p>
                         <div class="progressbarBorder">
-                            <div class="progressbarProgress" th:style="'width:' + (${percentOfProgressDone.removeFirst()}) + '%'">
+                            <div class="progressbarProgress"
+                                 th:style="'width:' + (${percentOfProgressDone.removeFirst()}) + '%'">
                             </div>
                         </div>
                     </div>
@@ -114,9 +114,8 @@
                        th:src="@{/images/Add-icon.png}" alt="Create new subproject">
             </div>
         </div>
-        </div>
-        <a class="button" th:href="@{/project/list}">Back to project list</a>
     </div>
-
+    <a class="button" th:href="@{/project/list}">Back to project list</a>
+</div>
 </body>
 </html>
